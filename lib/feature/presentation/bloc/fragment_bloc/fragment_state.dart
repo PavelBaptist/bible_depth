@@ -1,19 +1,19 @@
 import 'package:bible_depth/feature/domain/entities/fragment_entity.dart';
 import 'package:equatable/equatable.dart';
 
-abstract class FragmentDetailState extends Equatable {
-  const FragmentDetailState();
+abstract class FragmentState extends Equatable {
+  const FragmentState();
 
   @override
   List<Object> get props => [];
 }
 
-class FragmentDetailLoading extends FragmentDetailState {}
+class FragmentLoadingState extends FragmentState {}
 
-class FragmentDetailLoaded extends FragmentDetailState {
+class FragmentLoadedState extends FragmentState {
   final FragmentEntity fragmentEntity;
 
-  const FragmentDetailLoaded({required this.fragmentEntity});
+  const FragmentLoadedState({required this.fragmentEntity});
 
   @override
   List<Object> get props => [fragmentEntity];

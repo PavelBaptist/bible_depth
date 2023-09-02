@@ -13,6 +13,6 @@ class FragmentMockDataSourceImpl implements FragmentMockDataSource {
   }
 
   String _jsonMock() {
-    return '{"id":52,"name":"Первый фрагмент", "text":["В", "начале", "было", "Слово", "и", "Слово", "было", "у Бога", "и", "Слово", "было", "Бог"]}';
+    return '{"id":52,"name":"Первый фрагмент", "text":[{"value": "привет"}]}';
   }
 }

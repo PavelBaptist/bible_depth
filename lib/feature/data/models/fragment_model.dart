@@ -1,3 +1,4 @@
+import 'package:bible_depth/feature/data/models/word_model.dart';
 import 'package:bible_depth/feature/domain/entities/fragment_entity.dart';
 
 class FragmentModel extends FragmentEntity {
@@ -7,11 +8,13 @@ class FragmentModel extends FragmentEntity {
     required super.name,
   });
 
-  factory FragmentModel.fromJson(Map<String, dynamic> json) {
+  factory FragmentModel.fromJson(Map<String, dynamic> jsonString) {
     return FragmentModel(
-      id: json['id'],
-      name: json['name'],
-      text: (json['text'] as List<dynamic>).map((e) => e as String).toList(),
+      id: jsonString['id'],
+      name: jsonString['name'],
+      text: (jsonString['text'] as List<dynamic>)
+          .map((e) => WordModel.fromJson(e))
+          .toList(),
     );
   }
 

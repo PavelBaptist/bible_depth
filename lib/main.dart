@@ -1,5 +1,5 @@
-import 'package:bible_depth/feature/presentation/bloc/fragment_detail/fragment_detail_bloc.dart';
-import 'package:bible_depth/feature/presentation/bloc/fragment_detail/fragment_detail_state.dart';
+import 'package:bible_depth/feature/presentation/bloc/fragment_bloc/fragment_bloc.dart';
+import 'package:bible_depth/feature/presentation/bloc/fragment_bloc/fragment_state.dart';
 import 'package:bible_depth/feature/presentation/pages/fragment_detail_page.dart';
 import 'package:bible_depth/locator_service.dart' as di;
 import 'package:bible_depth/locator_service.dart';
@@ -18,11 +18,8 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<FragmentDetailBloc>(
-      create: (context) => sl<FragmentDetailBloc>(),
-      child: MaterialApp(
-        home: FragmentDetailPage(),
-      ),
+    return MaterialApp(
+      home: FragmentPage(),
     );
   }
 }
