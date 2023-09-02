@@ -22,11 +22,21 @@ class FragmentDetailPage extends StatelessWidget {
             appBar: AppBar(
               title: Text(state.fragmentEntity.name),
             ),
+            body: _bodyFragmentDetail(state),
           );
         } else {
           return Text('no data');
         }
       },
+    );
+  }
+
+  Widget _bodyFragmentDetail(FragmentDetailLoaded state) {
+    return Container(
+      padding: EdgeInsets.all(16),
+      child: Wrap(
+        children: (state.fragmentEntity.text.map((e) => Text(" $e"))).toList(),
+      ),
     );
   }
 }
