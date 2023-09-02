@@ -6,10 +6,11 @@ import 'package:equatable/equatable.dart';
 
 part 'fragment_detail_event.dart';
 
-class BibleDepthBloc extends Bloc<FragmentDetailEvent, FragmentDetailState> {
+class FragmentDetailBloc
+    extends Bloc<FragmentDetailEvent, FragmentDetailState> {
   final GetFragmentById getFragmentById;
 
-  BibleDepthBloc({required this.getFragmentById})
+  FragmentDetailBloc({required this.getFragmentById})
       : super(FragmentDetailLoading()) {
     on<FragmentDetailById>(_onById);
   }
