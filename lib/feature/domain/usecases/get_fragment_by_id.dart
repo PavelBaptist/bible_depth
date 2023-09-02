@@ -1,6 +1,6 @@
 import 'package:bible_depth/core/usecases/usecase.dart';
-import 'package:bible_depth/features/bible_depth/domain/entities/fragment_entity.dart';
-import 'package:bible_depth/features/bible_depth/domain/repositories/fragment_repository.dart';
+import 'package:bible_depth/feature/domain/entities/fragment_entity.dart';
+import 'package:bible_depth/feature/domain/repositories/fragment_repository.dart';
 
 class GetFragmentById
     implements UseCase<FragmentEntity, GetFragmentByIdParams> {

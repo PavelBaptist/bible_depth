@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:bible_depth/features/bible_depth/data/models/fragment_model.dart';
+import 'package:bible_depth/feature/data/models/fragment_model.dart';
 
 abstract class FragmentMockDataSource {
   Future<FragmentModel> getById(int id);

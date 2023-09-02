@@ -1,6 +1,6 @@
-import 'package:bible_depth/features/bible_depth/data/datasources/fragment_mock_data_source.dart';
-import 'package:bible_depth/features/bible_depth/domain/entities/fragment_entity.dart';
-import 'package:bible_depth/features/bible_depth/domain/repositories/fragment_repository.dart';
+import 'package:bible_depth/feature/data/datasources/fragment_mock_data_source.dart';
+import 'package:bible_depth/feature/domain/entities/fragment_entity.dart';
+import 'package:bible_depth/feature/domain/repositories/fragment_repository.dart';
 
 class FragmentRepositoryImpl implements FragmentRepository {
   final FragmentMockDataSource fragmentMockDataSource;
