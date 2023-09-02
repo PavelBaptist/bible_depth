@@ -1,4 +1,6 @@
-class FragmentEntity {
+import 'package:equatable/equatable.dart';
+
+class FragmentEntity extends Equatable {
   int id;
   List<String> text;
   String name;
@@ -8,4 +10,11 @@ class FragmentEntity {
     required this.text,
     required this.name,
   });
+
+  @override
+  List<Object?> get props => [
+        id,
+        text,
+        name,
+      ];
 }

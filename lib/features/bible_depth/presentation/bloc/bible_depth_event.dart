@@ -4,5 +4,5 @@ abstract class BibleDepthEvent extends Equatable {
   const BibleDepthEvent();
 
   @override
-  List<Object> get props => [];
+  List<Object?> get props => [];
 }
