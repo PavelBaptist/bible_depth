@@ -3,6 +3,7 @@ import 'package:bible_depth/feature/presentation/bloc/fragment_bloc/fragment_sta
 import 'package:bible_depth/feature/presentation/bloc/words_bloc/words_bloc.dart';
 import 'package:bible_depth/feature/presentation/widgets/fragment_widget.dart';
 import 'package:bible_depth/feature/presentation/widgets/sceleton_widget.dart';
+import 'package:bible_depth/feature/presentation/widgets/toolbar_widget.dart';
 import 'package:bible_depth/locator_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -37,7 +38,12 @@ class FragmentPage extends StatelessWidget {
             },
           ),
         ),
-        body: FragmentWidget(),
+        body: Column(
+          children: [
+            Expanded(child: FragmentWidget()),
+            ToolbarWidget(),
+          ],
+        ),
       ),
     );
   }
