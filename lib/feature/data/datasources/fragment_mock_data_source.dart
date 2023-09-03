@@ -9,6 +9,7 @@ abstract class FragmentMockDataSource {
 class FragmentMockDataSourceImpl implements FragmentMockDataSource {
   @override
   Future<FragmentModel> getById(int id) async {
+    await Future.delayed(const Duration(milliseconds: 800));
     return FragmentModel.fromJson(json.decode(_jsonMock()));
   }
 
