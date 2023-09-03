@@ -32,16 +32,25 @@ class ToolbarWidget extends StatelessWidget {
 class ColorButtonWidget extends StatelessWidget {
   Color color;
   ColorButtonWidget({super.key, required this.color});
+  bool selected = false;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {},
-      child:
-          BlocBuilder<ToolbarBloc, ToolbarState>(builder: (context, snapshot) {
+      onTap: () {
+        ToolbarBloc toolbarBloc = BlocProvider.of<ToolbarBloc>(context);
+        toolbarBloc
+            .add(ToolbarSelectToolEvent(currentTool: selected ? null : color));
+      },
+      child: BlocBuilder<ToolbarBloc, ToolbarState>(
+          builder: (context, toolbarState) {
+        if (toolbarState is ToolbarSelectedToolState) {
+          selected = color == toolbarState.currentTool;
+        }
+
         return Container(
-          width: 30,
-          height: 30,
+          width: selected ? 10 : 30,
+          height: selected ? 10 : 30,
           color: color,
         );
       }),

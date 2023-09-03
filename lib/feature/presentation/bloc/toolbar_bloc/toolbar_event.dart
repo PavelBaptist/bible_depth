@@ -8,3 +8,8 @@ abstract class ToolbarEvent extends Equatable {
 }
 
 class ToolbarInitEvent extends ToolbarEvent {}
+
+class ToolbarSelectToolEvent extends ToolbarEvent {
+  Color? currentTool;
+  ToolbarSelectToolEvent({required this.currentTool});
+}
