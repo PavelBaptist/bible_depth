@@ -44,6 +44,7 @@ class FragmentWidget extends StatelessWidget {
             );
           } else if (state is WordsLoadedState) {
             return Wrap(
+              spacing: 4,
               children: (state.wordEntityList
                   .map((e) => WordWidget(wordEntity: e))).toList(),
             );

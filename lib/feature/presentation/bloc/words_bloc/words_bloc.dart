@@ -25,7 +25,7 @@ class WordsBloc extends Bloc<WrodsEvent, WordsState> {
 
   _onChangeWord(WordsChangeWordEvent event, Emitter<WordsState> emit) async {
     emit(WordsLoadingState());
-    event.wordEntity.value += '.';
-    //emit(WordsLoadedState());
+    event.currentWordEntity.value += '.';
+    emit(WordsLoadedState(event.wordEntityList));
   }
 }

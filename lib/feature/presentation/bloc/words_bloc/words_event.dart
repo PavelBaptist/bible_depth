@@ -16,6 +16,8 @@ class WordsLoadingEvent extends WrodsEvent {
 }
 
 class WordsChangeWordEvent extends WrodsEvent {
-  WordEntity wordEntity;
-  WordsChangeWordEvent(this.wordEntity);
+  List<WordEntity> wordEntityList;
+  WordEntity currentWordEntity;
+  WordsChangeWordEvent(
+      {required this.wordEntityList, required this.currentWordEntity});
 }
