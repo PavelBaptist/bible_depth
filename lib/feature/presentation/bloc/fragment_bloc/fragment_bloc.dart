@@ -1,3 +1,4 @@
+import 'package:bible_depth/feature/domain/entities/word_entity.dart';
 import 'package:bible_depth/feature/domain/usecases/get_fragment_by_id.dart';
 
 import 'fragment_state.dart';

@@ -2,6 +2,8 @@ import 'dart:math';
 
 import 'package:bible_depth/feature/presentation/bloc/fragment_bloc/fragment_bloc.dart';
 import 'package:bible_depth/feature/presentation/bloc/fragment_bloc/fragment_state.dart';
+import 'package:bible_depth/feature/presentation/bloc/words_bloc/words_bloc.dart';
+import 'package:bible_depth/feature/presentation/bloc/words_bloc/words_state.dart';
 import 'package:bible_depth/feature/presentation/widgets/sceleton_widget.dart';
 import 'package:bible_depth/feature/presentation/widgets/word_widget.dart';
 import 'package:flutter/material.dart';
@@ -12,14 +14,11 @@ class FragmentWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final fragmentBloc = BlocProvider.of<FragmentBloc>(context);
-    FragmentState state = fragmentBloc.state;
-
     return Container(
       padding: const EdgeInsets.all(16.0),
-      child: BlocBuilder<FragmentBloc, FragmentState>(
+      child: BlocBuilder<WordsBloc, WordsState>(
         builder: (context, state) {
-          if (state is FragmentLoadingState) {
+          if (state is WordsLoadingState) {
             return Wrap(
               spacing: 10,
               runSpacing: 4,
@@ -43,9 +42,9 @@ class FragmentWidget extends StatelessWidget {
                 SceletonWidget(15, 15),
               ],
             );
-          } else if (state is FragmentLoadedState) {
+          } else if (state is WordsLoadedState) {
             return Wrap(
-              children: (state.fragmentEntity.text
+              children: (state.wordEntityList
                   .map((e) => WordWidget(wordEntity: e))).toList(),
             );
           } else {
