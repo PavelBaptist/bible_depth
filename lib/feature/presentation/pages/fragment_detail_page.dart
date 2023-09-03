@@ -1,5 +1,6 @@
 import 'package:bible_depth/feature/presentation/bloc/fragment_bloc/fragment_bloc.dart';
 import 'package:bible_depth/feature/presentation/bloc/fragment_bloc/fragment_state.dart';
+import 'package:bible_depth/feature/presentation/bloc/toolbar_bloc/toolbar_bloc.dart';
 import 'package:bible_depth/feature/presentation/bloc/words_bloc/words_bloc.dart';
 import 'package:bible_depth/feature/presentation/widgets/fragment_widget.dart';
 import 'package:bible_depth/feature/presentation/widgets/sceleton_widget.dart';
@@ -21,6 +22,8 @@ class FragmentPage extends StatelessWidget {
                 sl<FragmentBloc>()..add(const FragmentByIdEvent(1)))),
         BlocProvider(
             create: ((context) => sl<WordsBloc>()..add(WordsInitEvent()))),
+        BlocProvider(
+            create: ((context) => sl<ToolbarBloc>()..add(ToolbarInitEvent()))),
       ],
       child: Scaffold(
         appBar: AppBar(
