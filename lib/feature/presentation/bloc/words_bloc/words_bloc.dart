@@ -1,4 +1,5 @@
 import 'package:bible_depth/feature/domain/entities/word_entity.dart';
+import 'package:flutter/material.dart';
 
 import 'words_state.dart';
 import 'package:bloc/bloc.dart';
@@ -25,7 +26,7 @@ class WordsBloc extends Bloc<WrodsEvent, WordsState> {
 
   _onChangeWord(WordsChangeWordEvent event, Emitter<WordsState> emit) async {
     emit(WordsLoadingState());
-    event.currentWordEntity.value += '.';
+    event.currentWordEntity.color = event.tool;
     emit(WordsLoadedState(event.wordEntityList));
   }
 }

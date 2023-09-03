@@ -13,4 +13,8 @@ class WordsLoadingState extends WordsState {}
 class WordsLoadedState extends WordsState {
   List<WordEntity> wordEntityList;
   WordsLoadedState(this.wordEntityList);
+
+  @override
+  // TODO: implement props
+  List<Object> get props => [wordEntityList];
 }

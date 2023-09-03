@@ -18,6 +18,9 @@ class WordsLoadingEvent extends WrodsEvent {
 class WordsChangeWordEvent extends WrodsEvent {
   List<WordEntity> wordEntityList;
   WordEntity currentWordEntity;
+  Color tool;
   WordsChangeWordEvent(
-      {required this.wordEntityList, required this.currentWordEntity});
+      {required this.wordEntityList,
+      required this.currentWordEntity,
+      required this.tool});
 }
