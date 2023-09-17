@@ -22,7 +22,7 @@ class FragmentWidget extends StatelessWidget {
             if (state is WordsLoadingState) {
               return Wrap(
                 spacing: 10,
-                runSpacing: 4,
+                runSpacing: 10,
                 children: [
                   SceletonWidget(30, 15),
                   SceletonWidget(40, 15),
@@ -46,6 +46,7 @@ class FragmentWidget extends StatelessWidget {
             } else if (state is WordsLoadedState) {
               return Wrap(
                 spacing: 4,
+                runSpacing: 10,
                 children: (state.wordEntityList
                     .map((e) => WordWidget(wordEntity: e))).toList(),
               );
