@@ -52,13 +52,20 @@ class MainPage extends StatelessWidget {
                                           ),
                                         ],
                                       )
-                                    : Text(
-                                        wrapEntity.value,
-                                        style: TextStyle(
-                                          backgroundColor:
-                                              wrapEntity.highlightColor,
-                                          color: wrapEntity.fontColor,
-                                          fontSize: c.fontSize.value,
+                                    : Container(
+                                        padding:
+                                            EdgeInsets.symmetric(horizontal: 3),
+                                        decoration: BoxDecoration(
+                                          color: wrapEntity.highlightColor,
+                                          borderRadius: BorderRadius.circular(
+                                              c.fontSize.value / 3),
+                                        ),
+                                        child: Text(
+                                          wrapEntity.value,
+                                          style: TextStyle(
+                                            color: wrapEntity.fontColor,
+                                            fontSize: c.fontSize.value,
+                                          ),
                                         ),
                                       ),
                               ));
@@ -113,9 +120,18 @@ class MainPage extends StatelessWidget {
             ),
           ),
           Container(
-            color: Colors.blue[100],
             width: double.infinity,
             height: 150.0,
+            decoration: BoxDecoration(
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withAlpha(30),
+                  blurRadius: 10,
+                  spreadRadius: 0,
+                )
+              ],
+              color: Colors.grey[100],
+            ),
             child: Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -191,6 +207,7 @@ class HightlightButtonWidget extends StatelessWidget {
             border: color == c.currentHighlightColor.value
                 ? Border.all(color: Colors.black, width: 2)
                 : null,
+            borderRadius: BorderRadius.circular(13),
           ),
         ),
       ),
@@ -218,6 +235,7 @@ class FontColorButtonWidget extends StatelessWidget {
             border: color == c.currentFontColor.value
                 ? Border.all(color: Colors.black, width: 2)
                 : null,
+            borderRadius: BorderRadius.circular(13),
           ),
           child: Center(
             child: Text(

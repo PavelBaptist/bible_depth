@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class MainPageController extends GetxController {
-  Rx<Color> currentHighlightColor = const Color.fromARGB(0, 255, 255, 255).obs;
-  Rx<Color> currentFontColor = const Color.fromARGB(0, 255, 255, 255).obs;
+  Rx<Color> currentHighlightColor = Colors.blue.obs;
+  Rx<Color> currentFontColor = Colors.white.obs;
   Rx<double> fontSize = 14.0.obs;
 
   void applyStyleForWord(Word word) {
