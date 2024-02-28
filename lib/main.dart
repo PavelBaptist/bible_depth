@@ -1,25 +1,28 @@
-import 'package:bible_depth/feature/presentation/bloc/fragment_bloc/fragment_bloc.dart';
-import 'package:bible_depth/feature/presentation/bloc/fragment_bloc/fragment_state.dart';
-import 'package:bible_depth/feature/presentation/pages/fragment_detail_page.dart';
-import 'package:bible_depth/locator_service.dart' as di;
-import 'package:bible_depth/locator_service.dart';
+import 'package:bible_depth/ui/widgets/pages/main/main_page.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await di.init();
-  runApp(const MyApp());
+void main(List<String> args) async {
+  await GetStorage.init();
+
+  runApp(const App());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class App extends StatelessWidget {
+  const App({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: FragmentPage(),
+    return GetMaterialApp(
+      debugShowCheckedModeBanner: false,
+      initialRoute: '/main',
+      getPages: [
+        GetPage(
+          name: '/main',
+          page: () => MainPage(),
+        ),
+      ],
     );
   }
 }
