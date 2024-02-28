@@ -1,12 +1,15 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 
-class Word extends Equatable {
+class WrapEntity {}
+
+class Word extends WrapEntity {
   String value;
   Color? highlightColor = Colors.transparent;
   Color? fontColor = Colors.black;
   Word({required this.value});
-
-  @override
-  List<Object?> get props => [value, highlightColor, fontColor];
 }
+
+class Space extends WrapEntity {}
+
+class LineBreak extends WrapEntity {}

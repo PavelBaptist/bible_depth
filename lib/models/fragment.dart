@@ -1,9 +1,9 @@
-import 'package:bible_depth/models/word.dart';
+import 'package:bible_depth/models/wrap_entity.dart';
 import 'package:equatable/equatable.dart';
 
 class Fragment extends Equatable {
   int id;
-  List<Word> text;
+  List<WrapEntity> text;
   String name;
 
   Fragment({

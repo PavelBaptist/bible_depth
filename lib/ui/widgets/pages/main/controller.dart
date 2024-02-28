@@ -1,4 +1,4 @@
-import 'package:bible_depth/models/word.dart';
+import 'package:bible_depth/models/wrap_entity.dart';
 import 'package:bible_depth/ui/widgets/pages/main/mock_data.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

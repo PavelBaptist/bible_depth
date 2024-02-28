@@ -17,6 +17,7 @@ class App extends StatelessWidget {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       initialRoute: '/main',
+      theme: ThemeData(useMaterial3: true),
       getPages: [
         GetPage(
           name: '/main',

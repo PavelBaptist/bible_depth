@@ -1,7 +1,11 @@
+import 'package:bible_depth/helpers/numbers.dart';
+import 'package:bible_depth/models/wrap_entity.dart';
 import 'package:bible_depth/ui/widgets/pages/main/controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:invert_colors/invert_colors.dart';
+
+enum SampleItem { addSpace, itemTwo, itemThree }
 
 class MainPage extends StatelessWidget {
   MainPage({super.key});
@@ -19,24 +23,90 @@ class MainPage extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: Obx(
-                    () => Wrap(
-                        spacing: 4,
+                    () {
+                      return Wrap(
+                        spacing: 0,
                         runSpacing: c.fontSize.value,
-                        children: (c.fragment.value.text.map(
-                          (word) => GestureDetector(
-                            onTap: () {
-                              c.applyStyleForWord(word);
-                            },
-                            child: Text(
-                              word.value,
-                              style: TextStyle(
-                                backgroundColor: word.highlightColor,
-                                color: word.fontColor,
-                                fontSize: c.fontSize.value,
-                              ),
-                            ),
-                          ),
-                        )).toList()),
+                        children: () {
+                          List<Widget> result = [];
+                          List<WrapEntity> text = c.fragment.value.text;
+
+                          for (var i = 0; i < text.length; i++) {
+                            WrapEntity wrapEntity = text[i];
+                            if (wrapEntity is Word) {
+                              result.add(GestureDetector(
+                                onTap: () {
+                                  c.applyStyleForWord(wrapEntity);
+                                },
+                                child: isNumeric(wrapEntity.value)
+                                    ? Column(
+                                        children: [
+                                          Text(
+                                            wrapEntity.value,
+                                            style: TextStyle(
+                                              backgroundColor:
+                                                  wrapEntity.highlightColor,
+                                              color: wrapEntity.fontColor,
+                                              fontSize: c.fontSize.value / 1.5,
+                                            ),
+                                          ),
+                                        ],
+                                      )
+                                    : Text(
+                                        wrapEntity.value,
+                                        style: TextStyle(
+                                          backgroundColor:
+                                              wrapEntity.highlightColor,
+                                          color: wrapEntity.fontColor,
+                                          fontSize: c.fontSize.value,
+                                        ),
+                                      ),
+                              ));
+                            } else if (wrapEntity is Space) {
+                              bool visabillityMenu = false;
+                              result.add(
+                                PopupMenuButton<SampleItem>(
+                                  iconSize: c.fontSize.value,
+                                  initialValue: null,
+                                  tooltip: 'Параметры',
+                                  onSelected: (SampleItem item) {
+                                    if (item == SampleItem.addSpace) {
+                                      c.fragment.update((val) {
+                                        val?.text[i] = LineBreak();
+                                      });
+                                    }
+                                  },
+                                  itemBuilder: (BuildContext context) =>
+                                      <PopupMenuEntry<SampleItem>>[
+                                    const PopupMenuItem<SampleItem>(
+                                      value: SampleItem.addSpace,
+                                      child: Text('Добавить перенос'),
+                                    ),
+                                    const PopupMenuItem<SampleItem>(
+                                      value: SampleItem.itemTwo,
+                                      child: Text('Item 2'),
+                                    ),
+                                    const PopupMenuItem<SampleItem>(
+                                      value: SampleItem.itemThree,
+                                      child: Text('Item 3'),
+                                    ),
+                                  ],
+                                  child: Container(
+                                    width: c.fontSize.value / 4,
+                                    height: c.fontSize.value,
+                                    color: Colors.transparent,
+                                  ),
+                                ),
+                              );
+                            } else if (wrapEntity is LineBreak) {
+                              result.add(const Row());
+                            }
+                          }
+
+                          return result;
+                        }(),
+                      );
+                    },
                   ),
                 ),
               ],
