@@ -1,3 +1,4 @@
+import 'package:bible_depth/models/fragment.dart';
 import 'package:bible_depth/models/wrap_entity.dart';
 import 'package:bible_depth/ui/widgets/pages/fragment/mock_data.dart';
 import 'package:flutter/material.dart';
@@ -9,11 +10,15 @@ class FragmentPageController extends GetxController {
   Rx<double> fontSize = 14.0.obs;
 
   void applyStyleForWord(Word word) {
-    fragment.update((val) {
+    fragment!.update((val) {
       word.highlightColor = currentHighlightColor.value;
       word.fontColor = currentFontColor.value;
     });
   }
 
-  var fragment = getFragment().obs;
+  Rx<Fragment>? fragment;
+
+  Future<void> initFragment() async {
+    fragment = (await getFragment()).obs;
+  }
 }

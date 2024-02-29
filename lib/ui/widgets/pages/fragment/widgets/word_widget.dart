@@ -16,33 +16,20 @@ class WordWidget extends StatelessWidget {
       onTap: () {
         c.applyStyleForWord(word);
       },
-      child: isNumeric(word.value)
-          ? Column(
-              children: [
-                Text(
-                  word.value,
-                  style: TextStyle(
-                    backgroundColor: word.highlightColor,
-                    color: word.fontColor,
-                    fontSize: c.fontSize.value / 1.5,
-                  ),
-                ),
-              ],
-            )
-          : Container(
-              padding: EdgeInsets.symmetric(horizontal: 3),
-              decoration: BoxDecoration(
-                color: word.highlightColor,
-                borderRadius: BorderRadius.circular(c.fontSize.value / 3),
-              ),
-              child: Text(
-                word.value,
-                style: TextStyle(
-                  color: word.fontColor,
-                  fontSize: c.fontSize.value,
-                ),
-              ),
-            ),
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 3),
+        decoration: BoxDecoration(
+          color: word.highlightColor,
+          borderRadius: BorderRadius.circular(c.fontSize.value / 3),
+        ),
+        child: Text(
+          word.value,
+          style: TextStyle(
+            color: word.fontColor,
+            fontSize: c.fontSize.value,
+          ),
+        ),
+      ),
     );
   }
 }

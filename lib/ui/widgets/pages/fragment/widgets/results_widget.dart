@@ -21,7 +21,7 @@ class ResultsWidget extends StatelessWidget {
             List<Widget> results = [];
 
             Map<String, List<Widget>> map = {};
-            for (var wrapEntity in c.fragment.value.text) {
+            for (var wrapEntity in c.fragment!.value.text) {
               if (wrapEntity is! Word || wrapEntity.styleMatches(emptyWord)) {
                 continue;
               }

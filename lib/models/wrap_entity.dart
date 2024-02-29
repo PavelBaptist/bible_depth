@@ -21,6 +21,12 @@ class Word extends WrapEntity {
   }
 }
 
+class VerseIndex extends WrapEntity {
+  String value;
+
+  VerseIndex({required this.value});
+}
+
 class Space extends WrapEntity {}
 
 class LineBreak extends WrapEntity {}

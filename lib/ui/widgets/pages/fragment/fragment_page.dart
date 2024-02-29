@@ -2,6 +2,7 @@ import 'package:bible_depth/helpers/numbers.dart';
 import 'package:bible_depth/models/wrap_entity.dart';
 import 'package:bible_depth/ui/widgets/pages/fragment/controller.dart';
 import 'package:bible_depth/ui/widgets/pages/fragment/widgets/results_widget.dart';
+import 'package:bible_depth/ui/widgets/pages/fragment/widgets/verse_index_widget.dart';
 import 'package:bible_depth/ui/widgets/pages/fragment/widgets/word_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -15,78 +16,105 @@ class FragmentPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Obx(() => Text(c.fragment.value.name))),
+      appBar: AppBar(title: Text('Изучение отрывка')),
       body: Column(
         children: [
           Expanded(
-            child: ListView(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Obx(
-                    () {
-                      return Wrap(
-                        spacing: 0,
-                        runSpacing: c.fontSize.value,
-                        children: () {
-                          List<Widget> result = [];
-                          List<WrapEntity> text = c.fragment.value.text;
-
-                          for (var i = 0; i < text.length; i++) {
-                            WrapEntity wrapEntity = text[i];
-                            if (wrapEntity is Word) {
-                              result.add(WordWidget(wrapEntity));
-                            } else if (wrapEntity is Space) {
-                              bool visabillityMenu = false;
-                              result.add(
-                                PopupMenuButton<SampleItem>(
-                                  iconSize: c.fontSize.value,
-                                  initialValue: null,
-                                  tooltip: 'Параметры',
-                                  onSelected: (SampleItem item) {
-                                    if (item == SampleItem.addSpace) {
-                                      c.fragment.update((val) {
-                                        val?.text[i] = LineBreak();
-                                      });
-                                    }
-                                  },
-                                  itemBuilder: (BuildContext context) =>
-                                      <PopupMenuEntry<SampleItem>>[
-                                    const PopupMenuItem<SampleItem>(
-                                      value: SampleItem.addSpace,
-                                      child: Text('Добавить перенос'),
-                                    ),
-                                    const PopupMenuItem<SampleItem>(
-                                      value: SampleItem.itemTwo,
-                                      child: Text('Item 2'),
-                                    ),
-                                    const PopupMenuItem<SampleItem>(
-                                      value: SampleItem.itemThree,
-                                      child: Text('Item 3'),
-                                    ),
-                                  ],
-                                  child: Container(
-                                    width: c.fontSize.value / 4,
-                                    height: c.fontSize.value,
-                                    color: Colors.transparent,
-                                  ),
+            child: FutureBuilder(
+                future: c.initFragment(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.done) {
+                    return ListView(
+                      children: [
+                        Obx(
+                          () => Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                c.fragment!.value.name,
+                                style: const TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
                                 ),
-                              );
-                            } else if (wrapEntity is LineBreak) {
-                              result.add(const Row());
-                            }
-                          }
+                              )
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Obx(
+                            () {
+                              return Wrap(
+                                spacing: 0,
+                                runSpacing: c.fontSize.value,
+                                children: () {
+                                  List<Widget> result = [];
+                                  List<WrapEntity> text =
+                                      c.fragment!.value.text;
 
-                          return result;
-                        }(),
-                      );
-                    },
-                  ),
-                ),
-                const Divider(),
-                ResultsWidget(),
-              ],
-            ),
+                                  for (var i = 0; i < text.length; i++) {
+                                    WrapEntity wrapEntity = text[i];
+                                    if (wrapEntity is Word) {
+                                      result.add(WordWidget(wrapEntity));
+                                    } else if (wrapEntity is VerseIndex) {
+                                      result.add(VerseIndexWidget(wrapEntity));
+                                    } else if (wrapEntity is Space) {
+                                      bool visabillityMenu = false;
+                                      result.add(
+                                        PopupMenuButton<SampleItem>(
+                                          iconSize: c.fontSize.value,
+                                          initialValue: null,
+                                          tooltip: 'Параметры',
+                                          onSelected: (SampleItem item) {
+                                            if (item == SampleItem.addSpace) {
+                                              c.fragment!.update((val) {
+                                                val?.text[i] = LineBreak();
+                                              });
+                                            }
+                                          },
+                                          itemBuilder: (BuildContext context) =>
+                                              <PopupMenuEntry<SampleItem>>[
+                                            const PopupMenuItem<SampleItem>(
+                                              value: SampleItem.addSpace,
+                                              child: Text('Добавить перенос'),
+                                            ),
+                                            const PopupMenuItem<SampleItem>(
+                                              value: SampleItem.itemTwo,
+                                              child: Text('Item 2'),
+                                            ),
+                                            const PopupMenuItem<SampleItem>(
+                                              value: SampleItem.itemThree,
+                                              child: Text('Item 3'),
+                                            ),
+                                          ],
+                                          child: Container(
+                                            width: c.fontSize.value / 4,
+                                            height: c.fontSize.value,
+                                            color: Colors.transparent,
+                                          ),
+                                        ),
+                                      );
+                                    } else if (wrapEntity is LineBreak) {
+                                      result.add(const Row());
+                                    }
+                                  }
+
+                                  return result;
+                                }(),
+                              );
+                            },
+                          ),
+                        ),
+                        const Divider(),
+                        ResultsWidget(),
+                      ],
+                    );
+                  } else {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+                }),
           ),
           Container(
             width: double.infinity,
