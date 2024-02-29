@@ -1,4 +1,4 @@
-abstract class BibleTranslation {
+abstract class Bible {
   String get translationId;
   String get name;
   List<Book> get books;

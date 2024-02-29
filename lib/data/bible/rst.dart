@@ -1,9 +1,9 @@
 import 'dart:convert';
 
-import 'package:bible_depth/data/bible/bible_translation.dart';
+import 'package:bible_depth/data/bible/bible.dart';
 import 'package:flutter/services.dart';
 
-class Rst implements BibleTranslation {
+class Rst implements Bible {
   @override
   final String translationId = "RST";
 

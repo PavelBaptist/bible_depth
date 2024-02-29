@@ -1,4 +1,5 @@
 import 'package:bible_depth/ui/widgets/pages/fragment/fragment_page.dart';
+import 'package:bible_depth/ui/widgets/pages/main/main_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -20,8 +21,12 @@ class App extends StatelessWidget {
       theme: ThemeData(useMaterial3: true),
       getPages: [
         GetPage(
-          name: '/main',
+          name: '/fragment',
           page: () => FragmentPage(),
+        ),
+        GetPage(
+          name: '/main',
+          page: () => MainPage(),
         ),
       ],
     );
