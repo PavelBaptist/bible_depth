@@ -1,13 +1,13 @@
 import 'package:bible_depth/models/wrap_entity.dart';
-import 'package:bible_depth/ui/widgets/pages/main/controller.dart';
-import 'package:bible_depth/ui/widgets/pages/main/widgets/word_widget.dart';
+import 'package:bible_depth/ui/widgets/pages/fragment/controller.dart';
+import 'package:bible_depth/ui/widgets/pages/fragment/widgets/word_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ResultsWidget extends StatelessWidget {
   ResultsWidget({super.key});
 
-  final MainPageController c = Get.find();
+  final FragmentPageController c = Get.find();
 
   @override
   Widget build(BuildContext context) {
