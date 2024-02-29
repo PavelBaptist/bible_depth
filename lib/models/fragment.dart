@@ -1,7 +1,6 @@
 import 'package:bible_depth/models/wrap_entity.dart';
-import 'package:equatable/equatable.dart';
 
-class Fragment extends Equatable {
+class Fragment {
   int id;
   List<WrapEntity> text;
   String name;
@@ -11,11 +10,4 @@ class Fragment extends Equatable {
     required this.text,
     required this.name,
   });
-
-  @override
-  List<Object?> get props => [
-        id,
-        text,
-        name,
-      ];
 }
