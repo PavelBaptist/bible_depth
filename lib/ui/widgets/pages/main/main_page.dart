@@ -1,6 +1,8 @@
 import 'package:bible_depth/helpers/numbers.dart';
 import 'package:bible_depth/models/wrap_entity.dart';
 import 'package:bible_depth/ui/widgets/pages/main/controller.dart';
+import 'package:bible_depth/ui/widgets/pages/main/widgets/results_widget.dart';
+import 'package:bible_depth/ui/widgets/pages/main/widgets/word_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:invert_colors/invert_colors.dart';
@@ -34,41 +36,7 @@ class MainPage extends StatelessWidget {
                           for (var i = 0; i < text.length; i++) {
                             WrapEntity wrapEntity = text[i];
                             if (wrapEntity is Word) {
-                              result.add(GestureDetector(
-                                onTap: () {
-                                  c.applyStyleForWord(wrapEntity);
-                                },
-                                child: isNumeric(wrapEntity.value)
-                                    ? Column(
-                                        children: [
-                                          Text(
-                                            wrapEntity.value,
-                                            style: TextStyle(
-                                              backgroundColor:
-                                                  wrapEntity.highlightColor,
-                                              color: wrapEntity.fontColor,
-                                              fontSize: c.fontSize.value / 1.5,
-                                            ),
-                                          ),
-                                        ],
-                                      )
-                                    : Container(
-                                        padding:
-                                            EdgeInsets.symmetric(horizontal: 3),
-                                        decoration: BoxDecoration(
-                                          color: wrapEntity.highlightColor,
-                                          borderRadius: BorderRadius.circular(
-                                              c.fontSize.value / 3),
-                                        ),
-                                        child: Text(
-                                          wrapEntity.value,
-                                          style: TextStyle(
-                                            color: wrapEntity.fontColor,
-                                            fontSize: c.fontSize.value,
-                                          ),
-                                        ),
-                                      ),
-                              ));
+                              result.add(WordWidget(wrapEntity));
                             } else if (wrapEntity is Space) {
                               bool visabillityMenu = false;
                               result.add(
@@ -116,6 +84,8 @@ class MainPage extends StatelessWidget {
                     },
                   ),
                 ),
+                const Divider(),
+                ResultsWidget(),
               ],
             ),
           ),
