@@ -83,12 +83,19 @@ class SpaceAdapter extends TypeAdapter<Space> {
 
   @override
   Space read(BinaryReader reader) {
-    return Space();
+    final numOfFields = reader.readByte();
+    final fields = <int, dynamic>{
+      for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
+    };
+    return Space()..value = fields[0] as String;
   }
 
   @override
   void write(BinaryWriter writer, Space obj) {
-    writer.writeByte(0);
+    writer
+      ..writeByte(1)
+      ..writeByte(0)
+      ..write(obj.value);
   }
 
   @override

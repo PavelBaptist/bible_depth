@@ -52,7 +52,15 @@ class VerseIndex extends WrapEntity {
 }
 
 @HiveType(typeId: 102)
-class Space extends WrapEntity {}
+class Space extends WrapEntity {
+  @HiveField(0)
+  String value = '';
+  Space();
+}
 
 @HiveType(typeId: 103)
-class LineBreak extends WrapEntity {}
+class LineBreak extends WrapEntity {
+  @HiveField(0)
+  String value = '';
+  LineBreak();
+}

@@ -27,26 +27,7 @@ void main(List<String> args) async {
   if (box.get('fragments') == null) {
     await box.put('fragments', FragmentList());
   }
-  // FragmentList fragmentList = box.get('fragments') as FragmentList;
-  // await box.put(
-  //   'fragments',
-  //   fragmentList
-  //     ..list.add(
-  //       Fragment(text: [Word()..value = 'word1'], name: 'name1'),
-  //     ),
-  // );
 
-  // await box.put(
-  //     'fragments', FragmentList()..list.add(Fragment(text: [], name: 'fffff')));
-  // var fragList = FragmentList();
-  // fragList.list = [
-  //   Fragment(text: [Word(value: 'text')], name: "Тестовый фрагмент"),
-  //   Fragment(text: [Word(value: 'text')], name: "Тестовый фрагмент 2"),
-  //   Fragment(text: [Word(value: 'text')], name: "Тестовый фрагмент 3"),
-  // ];
-  // await box.put('1', fragList);
-
-  // print((box.get('1') as FragmentList).list[1].name);
   runApp(const App());
 }
 
