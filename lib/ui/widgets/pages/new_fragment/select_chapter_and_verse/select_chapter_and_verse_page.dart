@@ -29,7 +29,8 @@ class SelectChapterAndVersePage extends StatelessWidget {
                 'Создать (${c.selectedBook!.bookName} ${c.selectedChapterStart}:${c.selectedVerseStart} - ${c.selectedChapterEnd}:${c.selectedVerseEnd})'),
             onPressed: () {
               Fragment newFragment = c.createFragment();
-              mainPageController.fragmentList!.value.list.add(newFragment);
+              mainPageController.fragmentList!.value.list
+                  .insert(0, newFragment);
               mainPageController.fragmentList!.update((val) {});
               mainPageController.updateDataBase();
               Get.until((route) => route.isFirst);

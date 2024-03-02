@@ -1,3 +1,4 @@
+import 'package:bible_depth/core/version_handler.dart';
 import 'package:bible_depth/models/fragment.dart';
 import 'package:bible_depth/models/fragment_list.dart';
 import 'package:bible_depth/models/wrap_entity.dart';
@@ -29,6 +30,8 @@ void main(List<String> args) async {
   }
 
   runApp(const App());
+
+  await VersionHandler.handleDatabaseUpdates();
 }
 
 class App extends StatelessWidget {
