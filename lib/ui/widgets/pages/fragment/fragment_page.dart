@@ -1,11 +1,9 @@
-import 'package:bible_depth/helpers/numbers.dart';
-import 'package:bible_depth/models/fragment.dart';
 import 'package:bible_depth/models/wrap_entity.dart';
 import 'package:bible_depth/ui/widgets/pages/fragment/controller.dart';
 import 'package:bible_depth/ui/widgets/pages/fragment/widgets/results_widget.dart';
 import 'package:bible_depth/ui/widgets/pages/fragment/widgets/verse_index_widget.dart';
 import 'package:bible_depth/ui/widgets/pages/fragment/widgets/word_widget.dart';
-import 'package:bible_depth/ui/widgets/pages/new_fragment/controller.dart';
+import 'package:bible_depth/ui/widgets/pages/main/controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -13,15 +11,15 @@ enum SampleItem { addSpace, itemTwo, itemThree }
 
 class FragmentPage extends StatelessWidget {
   final FragmentPageController c = Get.put(FragmentPageController());
+  final mainPageController = Get.find<MainPageController>();
   FragmentPage({super.key}) {
-    var newFragmentPageController = Get.find<NewFragmentPageController>();
-    c.fragment.value = newFragmentPageController.selectedFragment!;
+    c.fragment.value = mainPageController.selectedFragment!;
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Изучение отрывка')),
+      appBar: AppBar(title: const Text('Изучение отрывка')),
       body: Column(
         children: [
           Expanded(
@@ -67,9 +65,10 @@ class FragmentPage extends StatelessWidget {
                                   tooltip: 'Параметры',
                                   onSelected: (SampleItem item) {
                                     if (item == SampleItem.addSpace) {
-                                      c.fragment!.update((val) {
+                                      c.fragment.update((val) {
                                         val?.text[i] = LineBreak();
                                       });
+                                      mainPageController.updateDataBase();
                                     }
                                   },
                                   itemBuilder: (BuildContext context) =>

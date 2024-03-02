@@ -1,4 +1,3 @@
-import 'package:bible_depth/data/bible/rst.dart';
 import 'package:bible_depth/ui/widgets/pages/new_fragment/controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -9,8 +8,10 @@ class NewFragmentPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var rst = Rst.instance;
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('Выберите книгу Библии'),
+      ),
       body: FutureBuilder(
         future: c.initBible(),
         builder: (context, snapshot) {

@@ -1,3 +1,5 @@
+import 'package:bible_depth/models/fragment.dart';
+import 'package:bible_depth/ui/widgets/pages/main/controller.dart';
 import 'package:bible_depth/ui/widgets/pages/new_fragment/controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -5,6 +7,7 @@ import 'package:get/get.dart';
 class SelectChapterAndVersePage extends StatelessWidget {
   SelectChapterAndVersePage({super.key});
   final NewFragmentPageController c = Get.find();
+  final MainPageController mainPageController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -24,8 +27,11 @@ class SelectChapterAndVersePage extends StatelessWidget {
             child: Text(
                 'Создать (${c.selectedBook!.bookName} ${c.selectedChapterStart}:${c.selectedVerseStart} - ${c.selectedChapterEnd}:${c.selectedVerseEnd})'),
             onPressed: () {
-              c.createFragment();
-              Get.toNamed('/fragment');
+              Fragment newFragment = c.createFragment();
+              mainPageController.fragmentList!.value.list.add(newFragment);
+              mainPageController.fragmentList!.update((val) {});
+              mainPageController.updateDataBase();
+              Get.until((route) => route.isFirst);
             },
           ),
         );

@@ -12,8 +12,6 @@ class NewFragmentPageController extends GetxController {
   Rx<int> selectedVerseStart = 999999.obs;
   Rx<int> selectedVerseEnd = 0.obs;
 
-  Fragment? selectedFragment;
-
   Future<void> initBible() async {
     bible = (await Rst.instance).obs;
   }
@@ -25,7 +23,7 @@ class NewFragmentPageController extends GetxController {
     selectedVerseEnd.value = 0;
   }
 
-  void createFragment() {
+  Fragment createFragment() {
     Fragment newFragment = Fragment.fromBible(
       book: selectedBook!,
       verseStart: selectedVerseStart.value,
@@ -34,6 +32,6 @@ class NewFragmentPageController extends GetxController {
       chapterEnd: selectedChapterEnd.value,
     );
 
-    selectedFragment = newFragment;
+    return newFragment;
   }
 }

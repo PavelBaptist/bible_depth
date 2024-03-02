@@ -1,12 +1,14 @@
 import 'package:bible_depth/helpers/numbers.dart';
 import 'package:bible_depth/models/wrap_entity.dart';
 import 'package:bible_depth/ui/widgets/pages/fragment/controller.dart';
+import 'package:bible_depth/ui/widgets/pages/main/controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class WordWidget extends StatelessWidget {
   final Word word;
   final FragmentPageController c = Get.find();
+  final MainPageController mainPageController = Get.find();
 
   WordWidget(this.word, {super.key});
 
@@ -15,6 +17,7 @@ class WordWidget extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         c.applyStyleForWord(word);
+        mainPageController.updateDataBase();
       },
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 3),

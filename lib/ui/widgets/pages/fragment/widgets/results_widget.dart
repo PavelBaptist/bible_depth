@@ -17,7 +17,7 @@ class ResultsWidget extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: () {
-            Word emptyWord = Word(value: '');
+            Word emptyWord = Word();
             List<Widget> results = [];
 
             Map<String, List<Widget>> map = {};

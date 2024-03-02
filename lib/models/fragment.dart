@@ -1,14 +1,16 @@
 import 'package:bible_depth/data/bible/bible.dart';
-import 'package:bible_depth/data/bible/rst.dart';
 import 'package:bible_depth/models/wrap_entity.dart';
+import 'package:hive/hive.dart';
+part 'fragment.g.dart';
 
+@HiveType(typeId: 2)
 class Fragment {
-  late int id;
-  late List<WrapEntity> text;
-  late String name;
+  @HiveField(0)
+  String name = '';
+  @HiveField(1)
+  List<WrapEntity> text = [];
 
   Fragment({
-    required this.id,
     required this.text,
     required this.name,
   });
@@ -30,17 +32,16 @@ class Fragment {
       for (var v = vStart - 1; (v < chapter.verses.length) && (v < vEnd); v++) {
         var verse = chapter.verses[v];
 
-        listWrap.add(VerseIndex(value: '${chapter.id}:${verse.id}'));
+        listWrap.add(VerseIndex()..value = '${chapter.id}:${verse.id}');
 
         List<String> words = verse.text.split(' ');
         for (var word in words) {
-          listWrap.add(Word(value: word));
+          listWrap.add(Word()..value = word);
           listWrap.add(Space());
         }
       }
     }
 
-    id = 1;
     text = listWrap;
     name = '${book.bookName} $chapterStart:$verseStart-$chapterEnd:$verseEnd';
   }

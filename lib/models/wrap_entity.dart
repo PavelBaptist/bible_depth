@@ -1,12 +1,34 @@
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
+part 'wrap_entity.g.dart';
 
 abstract class WrapEntity {}
 
+@HiveType(typeId: 100)
 class Word extends WrapEntity {
-  String value;
-  Color? highlightColor = Colors.transparent;
-  Color? fontColor = Colors.black;
-  Word({required this.value});
+  @HiveField(0)
+  String value = '';
+  @HiveField(1)
+  String? _highlightColorHex;
+  @HiveField(2)
+  String? _fontColorHex;
+  Word();
+
+  Color? get highlightColor => _highlightColorHex != null
+      ? Color(int.parse(_highlightColorHex!, radix: 16))
+      : null;
+
+  Color? get fontColor => _fontColorHex != null
+      ? Color(int.parse(_fontColorHex!, radix: 16))
+      : null;
+
+  set highlightColor(Color? color) {
+    _highlightColorHex = color != null ? color.value.toRadixString(16) : null;
+  }
+
+  set fontColor(Color? color) {
+    _fontColorHex = color != null ? color.value.toRadixString(16) : null;
+  }
 
   bool styleMatches(WrapEntity wrapEntity) {
     if (wrapEntity is! Word) {
@@ -21,12 +43,16 @@ class Word extends WrapEntity {
   }
 }
 
+@HiveType(typeId: 101)
 class VerseIndex extends WrapEntity {
-  String value;
+  @HiveField(0)
+  String value = '';
 
-  VerseIndex({required this.value});
+  VerseIndex();
 }
 
+@HiveType(typeId: 102)
 class Space extends WrapEntity {}
 
+@HiveType(typeId: 103)
 class LineBreak extends WrapEntity {}
