@@ -1,5 +1,5 @@
 import 'package:bible_depth/models/fragment.dart';
-import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 part 'fragment_list.g.dart';
 
 @HiveType(typeId: 1)

@@ -8,14 +8,14 @@ import 'package:bible_depth/ui/widgets/pages/new_fragment/new_fragment_page.dart
 import 'package:bible_depth/ui/widgets/pages/new_fragment/select_chapter_and_verse/select_chapter_and_verse_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'dart:io';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:path_provider/path_provider.dart';
 
 void main(List<String> args) async {
-  var path = Directory.current.path;
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await Hive.initFlutter((await getApplicationDocumentsDirectory()).path);
   Hive
-    ..initFlutter((await getApplicationDocumentsDirectory()).path)
     ..registerAdapter(FragmentListAdapter())
     ..registerAdapter(FragmentAdapter())
     ..registerAdapter(WordAdapter())

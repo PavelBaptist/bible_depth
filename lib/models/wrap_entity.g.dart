@@ -115,12 +115,19 @@ class LineBreakAdapter extends TypeAdapter<LineBreak> {
 
   @override
   LineBreak read(BinaryReader reader) {
-    return LineBreak();
+    final numOfFields = reader.readByte();
+    final fields = <int, dynamic>{
+      for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
+    };
+    return LineBreak()..value = fields[0] as String;
   }
 
   @override
   void write(BinaryWriter writer, LineBreak obj) {
-    writer.writeByte(0);
+    writer
+      ..writeByte(1)
+      ..writeByte(0)
+      ..write(obj.value);
   }
 
   @override
