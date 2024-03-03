@@ -9,13 +9,13 @@ import 'package:bible_depth/ui/widgets/pages/new_fragment/select_chapter_and_ver
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'dart:io';
-
-import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:path_provider/path_provider.dart';
 
 void main(List<String> args) async {
   var path = Directory.current.path;
   Hive
-    ..init(path)
+    ..initFlutter((await getApplicationDocumentsDirectory()).path)
     ..registerAdapter(FragmentListAdapter())
     ..registerAdapter(FragmentAdapter())
     ..registerAdapter(WordAdapter())
