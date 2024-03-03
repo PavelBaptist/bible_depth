@@ -29,6 +29,7 @@ void main(List<String> args) async {
     await box.put('fragments', FragmentList());
   }
 
+  // bible_depth % flutter run -d 'IPad (2)' --release;
   runApp(const App());
 
 //  await VersionHandler.handleDatabaseUpdates();
