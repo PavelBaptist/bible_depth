@@ -31,7 +31,7 @@ void main(List<String> args) async {
 
   runApp(const App());
 
-  await VersionHandler.handleDatabaseUpdates();
+//  await VersionHandler.handleDatabaseUpdates();
 }
 
 class App extends StatelessWidget {
