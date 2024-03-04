@@ -21,15 +21,17 @@ class ResultsWidget extends StatelessWidget {
             List<Widget> results = [];
 
             Map<String, List<Widget>> map = {};
-            for (var wrapEntity in c.fragment!.value.text) {
-              if (wrapEntity is! Word || wrapEntity.styleMatches(emptyWord)) {
+            for (var wrapEntity in c.fragment.value.text) {
+              if (wrapEntity is! Word ||
+                  wrapEntity.style == null ||
+                  wrapEntity.styleMatches(emptyWord)) {
                 continue;
               }
-              String styleHash = wrapEntity.styleHash();
-              if (map[styleHash] == null) {
-                map[styleHash] = <Widget>[];
+
+              if (map[wrapEntity.style!.id] == null) {
+                map[wrapEntity.style!.id] = <Widget>[];
               }
-              map[styleHash]!.add(WordWidget(wrapEntity));
+              map[wrapEntity.style!.id]!.add(WordWidget(wrapEntity));
             }
 
             List<List<Widget>> list = [];

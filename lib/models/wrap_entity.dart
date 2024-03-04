@@ -1,4 +1,5 @@
-import 'package:flutter/material.dart';
+import 'package:bible_depth/helpers/colors.dart';
+import 'package:bible_depth/models/word_style.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 part 'wrap_entity.g.dart';
 
@@ -8,38 +9,15 @@ abstract class WrapEntity {}
 class Word extends WrapEntity {
   @HiveField(0)
   String value = '';
-  @HiveField(1)
-  String? _highlightColorHex;
-  @HiveField(2)
-  String? _fontColorHex;
+  WordStyle? style;
   Word();
-
-  Color? get highlightColor => _highlightColorHex != null
-      ? Color(int.parse(_highlightColorHex!, radix: 16))
-      : null;
-
-  Color? get fontColor => _fontColorHex != null
-      ? Color(int.parse(_fontColorHex!, radix: 16))
-      : null;
-
-  set highlightColor(Color? color) {
-    _highlightColorHex = color != null ? color.value.toRadixString(16) : null;
-  }
-
-  set fontColor(Color? color) {
-    _fontColorHex = color != null ? color.value.toRadixString(16) : null;
-  }
 
   bool styleMatches(WrapEntity wrapEntity) {
     if (wrapEntity is! Word) {
       return false;
     }
 
-    return styleHash() == wrapEntity.styleHash();
-  }
-
-  String styleHash() {
-    return highlightColor.hashCode.toString() + fontColor.hashCode.toString();
+    return style?.id == wrapEntity.style?.id;
   }
 }
 

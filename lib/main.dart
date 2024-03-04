@@ -1,8 +1,9 @@
-import 'package:bible_depth/core/version_handler.dart';
 import 'package:bible_depth/models/fragment.dart';
 import 'package:bible_depth/models/fragment_list.dart';
+import 'package:bible_depth/models/word_style.dart';
 import 'package:bible_depth/models/wrap_entity.dart';
 import 'package:bible_depth/ui/widgets/pages/fragment/fragment_page.dart';
+import 'package:bible_depth/ui/widgets/pages/fragment/style_constructor/style_constructor_page.dart';
 import 'package:bible_depth/ui/widgets/pages/main/main_page.dart';
 import 'package:bible_depth/ui/widgets/pages/new_fragment/new_fragment_page.dart';
 import 'package:bible_depth/ui/widgets/pages/new_fragment/select_chapter_and_verse/select_chapter_and_verse_page.dart';
@@ -22,6 +23,7 @@ void main(List<String> args) async {
     ..registerAdapter(WordAdapter())
     ..registerAdapter(VerseIndexAdapter())
     ..registerAdapter(SpaceAdapter())
+    ..registerAdapter(WordStyleAdapter())
     ..registerAdapter(LineBreakAdapter());
 
   var box = await Hive.openBox('bible_depth');
@@ -53,6 +55,10 @@ class App extends StatelessWidget {
         GetPage(
           name: '/fragment',
           page: () => FragmentPage(),
+        ),
+        GetPage(
+          name: '/fragment/style_constructor',
+          page: () => StyleConstructorPage(),
         ),
         GetPage(
           name: '/new_fragment',

@@ -1,6 +1,8 @@
+import 'package:bible_depth/models/word_style.dart';
 import 'package:bible_depth/models/wrap_entity.dart';
 import 'package:bible_depth/ui/widgets/pages/fragment/controller.dart';
 import 'package:bible_depth/ui/widgets/pages/fragment/widgets/results_widget.dart';
+import 'package:bible_depth/ui/widgets/pages/fragment/widgets/tool_word_style_widget.dart';
 import 'package:bible_depth/ui/widgets/pages/fragment/widgets/verse_index_widget.dart';
 import 'package:bible_depth/ui/widgets/pages/fragment/widgets/word_widget.dart';
 import 'package:bible_depth/ui/widgets/pages/main/controller.dart';
@@ -12,6 +14,7 @@ enum SampleItem { addSpace, itemTwo, itemThree }
 class FragmentPage extends StatelessWidget {
   final FragmentPageController c = Get.put(FragmentPageController());
   final mainPageController = Get.find<MainPageController>();
+
   FragmentPage({super.key}) {
     c.fragment.value = mainPageController.selectedFragment!;
   }
@@ -53,7 +56,15 @@ class FragmentPage extends StatelessWidget {
                           for (var i = 0; i < text.length; i++) {
                             WrapEntity wrapEntity = text[i];
                             if (wrapEntity is Word) {
-                              result.add(WordWidget(wrapEntity));
+                              result.add(WordWidget(
+                                wrapEntity,
+                                onTap: () {
+                                  wrapEntity.style = c.currentStyle.value;
+                                  mainPageController.updateDataBase();
+                                  c.fragment.update((val) {});
+                                },
+                                fontSize: c.fontSize.value,
+                              ));
                             } else if (wrapEntity is VerseIndex) {
                               result.add(VerseIndexWidget(wrapEntity));
                             } else if (wrapEntity is Space) {
@@ -126,30 +137,23 @@ class FragmentPage extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      FontColorButtonWidget(color: Colors.black),
-                      FontColorButtonWidget(color: Colors.white),
-                      FontColorButtonWidget(color: Colors.green),
-                      FontColorButtonWidget(color: Colors.red),
-                      FontColorButtonWidget(color: Colors.yellow),
-                      FontColorButtonWidget(color: Colors.blue),
-                      FontColorButtonWidget(color: Colors.purple),
-                    ],
-                  ),
-                  const SizedBox(height: 10),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      HightlightButtonWidget(color: Colors.black),
-                      HightlightButtonWidget(color: Colors.white),
-                      HightlightButtonWidget(color: Colors.green),
-                      HightlightButtonWidget(color: Colors.red),
-                      HightlightButtonWidget(color: Colors.yellow),
-                      HightlightButtonWidget(color: Colors.blue),
-                      HightlightButtonWidget(color: Colors.purple),
-                    ],
+                  Container(
+                    height: 60,
+                    child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: c.styles.length,
+                      itemBuilder: (context, index) {
+                        return Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: WordWidget(
+                            Word()
+                              ..value = 'образец'
+                              ..style = c.styles[index],
+                            fontSize: 25,
+                          ),
+                        );
+                      },
+                    ),
                   ),
                   const SizedBox(height: 10),
                   Row(
@@ -164,6 +168,13 @@ class FragmentPage extends StatelessWidget {
                         onPressed: () => c.fontSize.value++,
                         child: const Icon(Icons.plus_one),
                       ),
+                      const SizedBox(width: 30),
+                      ElevatedButton(
+                        onPressed: () {
+                          c.styles.add(WordStyle()..fontColor = Colors.black);
+                        },
+                        child: const Icon(Icons.add),
+                      ),
                     ],
                   ),
                 ],
@@ -171,69 +182,6 @@ class FragmentPage extends StatelessWidget {
             ),
           ),
         ],
-      ),
-    );
-  }
-}
-
-class HightlightButtonWidget extends StatelessWidget {
-  Color color;
-  HightlightButtonWidget({super.key, required this.color});
-
-  final FragmentPageController c = Get.find();
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        c.currentHighlightColor.value = color;
-      },
-      child: Obx(
-        () => Container(
-          width: 30,
-          height: 30,
-          decoration: BoxDecoration(
-            color: color,
-            border: color == c.currentHighlightColor.value
-                ? Border.all(color: Colors.black, width: 2)
-                : null,
-            borderRadius: BorderRadius.circular(13),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class FontColorButtonWidget extends StatelessWidget {
-  Color color;
-  FontColorButtonWidget({super.key, required this.color});
-
-  final FragmentPageController c = Get.find();
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        c.currentFontColor.value = color;
-      },
-      child: Obx(
-        () => Container(
-          width: 30,
-          height: 30,
-          decoration: BoxDecoration(
-            border: color == c.currentFontColor.value
-                ? Border.all(color: Colors.black, width: 2)
-                : null,
-            borderRadius: BorderRadius.circular(13),
-          ),
-          child: Center(
-            child: Text(
-              'A',
-              style: TextStyle(color: color, fontWeight: FontWeight.bold),
-            ),
-          ),
-        ),
       ),
     );
   }
