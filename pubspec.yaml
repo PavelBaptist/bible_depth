@@ -45,6 +45,7 @@ dependencies:
   hive_flutter: ^1.1.0
   # package_info: ^2.0.2
   path_provider: ^2.1.2
+  finger_painter: ^1.1.0
   
   
 dev_dependencies:

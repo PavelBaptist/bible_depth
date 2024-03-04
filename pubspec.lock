@@ -217,6 +217,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "7.0.0"
+  finger_painter:
+    dependency: "direct main"
+    description:
+      name: finger_painter
+      sha256: "989df154a46e32460d383427ecf0cc85179f7b3c5fdf07d7f8e67763524b7505"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.1.0"
   fixnum:
     dependency: transitive
     description:

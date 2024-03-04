@@ -6,6 +6,7 @@ import 'package:bible_depth/ui/widgets/pages/fragment/fragment_page.dart';
 import 'package:bible_depth/ui/widgets/pages/main/main_page.dart';
 import 'package:bible_depth/ui/widgets/pages/new_fragment/new_fragment_page.dart';
 import 'package:bible_depth/ui/widgets/pages/new_fragment/select_chapter_and_verse/select_chapter_and_verse_page.dart';
+import 'package:bible_depth/ui/widgets/pages/paint_test/paint_test.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -60,6 +61,10 @@ class App extends StatelessWidget {
         GetPage(
           name: '/new_fragment/select_chapter_and_verse',
           page: () => SelectChapterAndVersePage(),
+        ),
+        GetPage(
+          name: '/paint_test',
+          page: () => const PaintTest(),
         ),
       ],
     );
