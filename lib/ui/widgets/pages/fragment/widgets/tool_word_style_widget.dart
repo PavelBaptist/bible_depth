@@ -36,6 +36,9 @@ class ToolWordStyleWidget extends StatelessWidget {
           onTap: () {
             c.currentStyle.value = wordStyle;
             c.currentStyle.update((val) {});
+            if (wordStyle.description.isNotEmpty) {
+              Get.snackbar('Описание', wordStyle.description);
+            }
           },
           onLongPress: () {
             c.currentStyle.value = wordStyle;

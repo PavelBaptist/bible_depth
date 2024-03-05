@@ -9,7 +9,7 @@ class WordStyle {
   WordStyle();
   // main
   @HiveField(0)
-  String description = 'Новый стиль';
+  String description = '';
 
   @HiveField(1)
   String id = const Uuid().v4();

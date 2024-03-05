@@ -137,23 +137,20 @@ class FragmentPage extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Container(
-                    height: 60,
-                    child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: c.styles.length,
-                      itemBuilder: (context, index) {
-                        return Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: WordWidget(
-                            Word()
-                              ..value = 'образец'
-                              ..style = c.styles[index],
-                            fontSize: 25,
-                          ),
-                        );
-                      },
-                    ),
+                  SizedBox(
+                    height: 40,
+                    child: Obx(() => ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: c.styles.length,
+                          itemBuilder: (context, index) {
+                            return Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 10),
+                              child: ToolWordStyleWidget(
+                                  wordStyle: c.styles[index]),
+                            );
+                          },
+                        )),
                   ),
                   const SizedBox(height: 10),
                   Row(
@@ -171,7 +168,7 @@ class FragmentPage extends StatelessWidget {
                       const SizedBox(width: 30),
                       ElevatedButton(
                         onPressed: () {
-                          c.styles.add(WordStyle()..fontColor = Colors.black);
+                          c.styles.add(WordStyle());
                         },
                         child: const Icon(Icons.add),
                       ),

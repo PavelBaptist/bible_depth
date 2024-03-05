@@ -22,7 +22,8 @@ class WordWidget extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 3),
         decoration: BoxDecoration(
           color: word.style?.highlightColor,
-          borderRadius: BorderRadius.circular(fontSize / 3),
+          borderRadius: BorderRadius.circular(
+              word.style?.borderIsCircle == true ? 1000 : fontSize / 5),
           border: word.style?.borderColor != null
               ? Border.all(
                   color: word.style!.borderColor!,
@@ -35,6 +36,9 @@ class WordWidget extends StatelessWidget {
           style: TextStyle(
             color: word.style?.fontColor,
             fontSize: fontSize,
+            fontStyle: word.style?.isItalic == true
+                ? FontStyle.italic
+                : FontStyle.normal,
             fontWeight: word.style?.isBold == true
                 ? FontWeight.bold
                 : FontWeight.normal,

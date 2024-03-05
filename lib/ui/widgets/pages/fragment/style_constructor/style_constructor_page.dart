@@ -8,9 +8,11 @@ import 'package:get/get_rx/src/rx_typedefs/rx_typedefs.dart';
 class StyleConstructorPage extends StatelessWidget {
   StyleConstructorPage({super.key});
   final FragmentPageController c = Get.find();
+  TextEditingController descriptionController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+    descriptionController.text = c.currentStyle.value?.description ?? '';
     return Scaffold(
       appBar: AppBar(),
       body: Obx(() {
@@ -23,12 +25,50 @@ class StyleConstructorPage extends StatelessWidget {
                 ..style = c.currentStyle.value,
               fontSize: 50,
             ),
+            TextField(
+              controller: descriptionController,
+              onChanged: (String value) {
+                c.currentStyle.value?.description = value;
+              },
+            ),
+            Row(
+              children: [
+                Text('Жирный'),
+                Checkbox(
+                  value: c.currentStyle.value?.isBold,
+                  onChanged: (value) {
+                    c.currentStyle.value?.isBold = value;
+                    c.currentStyle.update((val) {});
+                  },
+                ),
+                const SizedBox(width: 25),
+                Text('Наклоненный'),
+                Checkbox(
+                  value: c.currentStyle.value?.isItalic,
+                  onChanged: (value) {
+                    c.currentStyle.value?.isItalic = value;
+                    c.currentStyle.update((val) {});
+                  },
+                ),
+                const SizedBox(width: 25),
+                Text('Обводка кругом'),
+                Checkbox(
+                  value: c.currentStyle.value?.borderIsCircle,
+                  onChanged: (value) {
+                    c.currentStyle.value?.borderIsCircle = value ?? false;
+                    c.currentStyle.update((val) {});
+                  },
+                ),
+              ],
+            ),
             ColorPicker(
               label: 'Цвет текста',
               onTap: (color) {
                 c.currentStyle.value?.fontColor = color;
                 c.currentStyle.update((val) {});
               },
+              selectedLogic: (color) =>
+                  c.currentStyle.value?.fontColor == color,
             ),
             ColorPicker(
               label: 'Цвет фона',
@@ -36,6 +76,8 @@ class StyleConstructorPage extends StatelessWidget {
                 c.currentStyle.value?.highlightColor = color;
                 c.currentStyle.update((val) {});
               },
+              selectedLogic: (color) =>
+                  c.currentStyle.value?.highlightColor == color,
             ),
             ColorPicker(
               label: 'Цвет обводки',
@@ -43,6 +85,8 @@ class StyleConstructorPage extends StatelessWidget {
                 c.currentStyle.value?.borderColor = color;
                 c.currentStyle.update((val) {});
               },
+              selectedLogic: (color) =>
+                  c.currentStyle.value?.borderColor == color,
             ),
           ],
         );
@@ -78,8 +122,14 @@ class ColorPicker extends StatelessWidget {
   ];
 
   String label;
-  void Function(Color) onTap;
-  ColorPicker({super.key, required this.label, required this.onTap});
+  void Function(Color color) onTap;
+  bool Function(Color color) selectedLogic;
+  ColorPicker({
+    super.key,
+    required this.label,
+    required this.onTap,
+    required this.selectedLogic,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -103,7 +153,10 @@ class ColorPicker extends StatelessWidget {
                   height: 30,
                   decoration: BoxDecoration(
                     color: colors[index],
-                    border: Border.all(color: Colors.black),
+                    border: Border.all(
+                      color: Colors.black,
+                      width: selectedLogic(colors[index]) ? 3 : 1,
+                    ),
                   ),
                   child: colors[index] == Colors.transparent
                       ? const Center(child: Text('П'))
