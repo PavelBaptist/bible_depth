@@ -1,15 +1,25 @@
+import 'dart:convert';
+
 import 'package:bible_depth/models/wrap_entity.dart';
 import 'package:bible_depth/ui/widgets/pages/fragment/controller.dart';
 import 'package:bible_depth/ui/widgets/pages/fragment/widgets/word_widget.dart';
+import 'package:finger_painter/finger_painter.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_rx/src/rx_typedefs/rx_typedefs.dart';
+import 'dart:ui' as ui;
 
 class StyleConstructorPage extends StatelessWidget {
   StyleConstructorPage({super.key});
   final FragmentPageController c = Get.find();
   TextEditingController descriptionController = TextEditingController();
-
+  late PainterController painterController = PainterController()
+    ..setStrokeColor(paintColor)
+    ..setMinStrokeWidth(3)
+    ..setMaxStrokeWidth(15)
+    ..setBlurSigma(0.0)
+    ..setPenType(PenType.paintbrush2)
+    ..setBlendMode(ui.BlendMode.srcOver);
+  Color paintColor = Colors.red;
   @override
   Widget build(BuildContext context) {
     descriptionController.text = c.currentStyle.value?.description ?? '';
@@ -21,7 +31,7 @@ class StyleConstructorPage extends StatelessWidget {
           children: [
             WordWidget(
               Word()
-                ..value = 'образец'
+                ..value = 'и'
                 ..style = c.currentStyle.value,
               fontSize: 50,
             ),
@@ -87,6 +97,42 @@ class StyleConstructorPage extends StatelessWidget {
               },
               selectedLogic: (color) =>
                   c.currentStyle.value?.borderColor == color,
+            ),
+            Painter(
+              controller: painterController,
+              backgroundColor: Colors.black.withAlpha(30),
+              onDrawingEnded: (bytes) async {
+                if (bytes != null) {
+                  String base64Data = base64Encode(bytes);
+                  c.currentStyle.value?.image = base64Data;
+                  c.currentStyle.update((val) {});
+                }
+              },
+              size: const Size(230, 80),
+              // child: Image.asset('assets/map.png', fit: BoxFit.cover),
+            ),
+            ColorPicker(
+              label: 'Цвет чернил',
+              onTap: (color) {
+                painterController.setStrokeColor(color);
+                paintColor = color;
+              },
+              selectedLogic: (color) => paintColor == color,
+            ),
+            IconButton(
+                onPressed: () {
+                  painterController.clearContent();
+                  c.currentStyle.value?.image = null;
+                },
+                icon: const Icon(Icons.clear)),
+            const SizedBox(width: 25),
+            Text('Растягивать картинку'),
+            Checkbox(
+              value: c.currentStyle.value?.stretchImage,
+              onChanged: (value) {
+                c.currentStyle.value?.stretchImage = value ?? false;
+                c.currentStyle.update((val) {});
+              },
             ),
           ],
         );
