@@ -152,6 +152,8 @@ class FragmentPage extends StatelessWidget {
                           },
                         )),
                   ),
+                  const SizedBox(height: 3),
+                  Text('*для изменения стиля удерживайте на нем'),
                   const SizedBox(height: 10),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
