@@ -34,7 +34,8 @@ class StyleConstructorPage extends StatelessWidget {
             WordWidget(
               Word()
                 ..value = 'образец'
-                ..style = c.currentStyle.value,
+                ..styleId = c.currentStyle.value!.id,
+              wordStyleList: mainPageController.wordStyleList!.value,
               fontSize: 50,
             ),
             TextField(

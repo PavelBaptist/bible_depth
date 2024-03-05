@@ -1,26 +1,37 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
+import 'package:bible_depth/models/word_style.dart';
+import 'package:bible_depth/models/word_style_list.dart';
 import 'package:bible_depth/models/wrap_entity.dart';
-import 'package:bible_depth/ui/widgets/pages/main/controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class WordWidget extends StatelessWidget {
   final Word word;
   final double fontSize;
-  final MainPageController mainPageController = Get.find();
+  final WordStyleList wordStyleList;
   final void Function()? onTap;
   final void Function()? onLongPress;
+  WordStyle? style;
 
-  WordWidget(this.word,
-      {super.key, this.onTap, this.onLongPress, this.fontSize = 14});
+  WordWidget(
+    this.word, {
+    super.key,
+    this.onTap,
+    this.onLongPress,
+    this.fontSize = 14,
+    required this.wordStyleList,
+  });
 
   @override
   Widget build(BuildContext context) {
+    style = wordStyleList.list
+        .firstWhereOrNull((element) => element.id == word.styleId);
+
     Uint8List? imageBytes;
-    if (word.style?.image != null) {
-      imageBytes = base64Decode(word.style!.image!);
+    if (style?.image != null) {
+      imageBytes = base64Decode(style!.image!);
     }
 
     double? widthImage;
@@ -32,12 +43,12 @@ class WordWidget extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 3),
         decoration: BoxDecoration(
-          color: word.style?.highlightColor,
+          color: style?.highlightColor,
           borderRadius: BorderRadius.circular(
-              word.style?.borderIsCircle == true ? 1000 : fontSize / 5),
-          border: word.style?.borderColor != null
+              style?.borderIsCircle == true ? 1000 : fontSize / 5),
+          border: style?.borderColor != null
               ? Border.all(
-                  color: word.style!.borderColor!,
+                  color: style!.borderColor!,
                   width: fontSize / 9,
                 )
               : null,
@@ -48,18 +59,17 @@ class WordWidget extends StatelessWidget {
           children: [
             () {
               var textStyle = TextStyle(
-                color: word.style?.fontColor,
+                color: style?.fontColor,
                 fontSize: fontSize,
-                fontStyle: word.style?.isItalic == true
+                fontStyle: style?.isItalic == true
                     ? FontStyle.italic
                     : FontStyle.normal,
-                fontWeight: word.style?.isBold == true
-                    ? FontWeight.bold
-                    : FontWeight.normal,
+                fontWeight:
+                    style?.isBold == true ? FontWeight.bold : FontWeight.normal,
               );
 
               // вычисляем размер текста для image
-              if (word.style?.stretchImage == true) {
+              if (style?.stretchImage == true) {
                 TextSpan textSpan = TextSpan(
                   text: word.value,
                   style: textStyle,

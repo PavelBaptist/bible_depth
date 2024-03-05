@@ -18,7 +18,7 @@ class WordAdapter extends TypeAdapter<Word> {
     };
     return Word()
       ..value = fields[0] as String
-      ..style = fields[1] as WordStyle?;
+      ..styleId = fields[1] as String;
   }
 
   @override
@@ -28,7 +28,7 @@ class WordAdapter extends TypeAdapter<Word> {
       ..writeByte(0)
       ..write(obj.value)
       ..writeByte(1)
-      ..write(obj.style);
+      ..write(obj.styleId);
   }
 
   @override

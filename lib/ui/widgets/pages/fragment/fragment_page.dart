@@ -58,8 +58,10 @@ class FragmentPage extends StatelessWidget {
                             if (wrapEntity is Word) {
                               result.add(WordWidget(
                                 wrapEntity,
+                                wordStyleList:
+                                    mainPageController.wordStyleList!.value,
                                 onTap: () {
-                                  wrapEntity.style = c.currentStyle.value;
+                                  wrapEntity.styleId = c.currentStyle.value!.id;
                                   mainPageController.updateDataBaseFragments();
                                   c.fragment.update((val) {});
                                 },

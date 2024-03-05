@@ -10,7 +10,7 @@ class Word extends WrapEntity {
   @HiveField(0)
   String value = '';
   @HiveField(1)
-  WordStyle? style;
+  String styleId = '';
   Word();
 
   bool styleMatches(WrapEntity wrapEntity) {
@@ -18,7 +18,7 @@ class Word extends WrapEntity {
       return false;
     }
 
-    return style?.id == wrapEntity.style?.id;
+    return styleId == wrapEntity.styleId;
   }
 }
 

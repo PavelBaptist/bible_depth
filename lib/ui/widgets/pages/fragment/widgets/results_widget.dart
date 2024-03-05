@@ -1,6 +1,7 @@
 import 'package:bible_depth/models/wrap_entity.dart';
 import 'package:bible_depth/ui/widgets/pages/fragment/controller.dart';
 import 'package:bible_depth/ui/widgets/pages/fragment/widgets/word_widget.dart';
+import 'package:bible_depth/ui/widgets/pages/main/controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -8,6 +9,7 @@ class ResultsWidget extends StatelessWidget {
   ResultsWidget({super.key});
 
   final FragmentPageController c = Get.find();
+  final MainPageController mainPageController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -23,15 +25,18 @@ class ResultsWidget extends StatelessWidget {
             Map<String, List<Widget>> map = {};
             for (var wrapEntity in c.fragment.value.text) {
               if (wrapEntity is! Word ||
-                  wrapEntity.style == null ||
+                  wrapEntity.styleId == '' ||
                   wrapEntity.styleMatches(emptyWord)) {
                 continue;
               }
 
-              if (map[wrapEntity.style!.id] == null) {
-                map[wrapEntity.style!.id] = <Widget>[];
+              if (map[wrapEntity.styleId] == null) {
+                map[wrapEntity.styleId] = <Widget>[];
               }
-              map[wrapEntity.style!.id]!.add(WordWidget(wrapEntity));
+              map[wrapEntity.styleId]!.add(WordWidget(
+                wrapEntity,
+                wordStyleList: mainPageController.wordStyleList!.value,
+              ));
             }
 
             List<List<Widget>> list = [];

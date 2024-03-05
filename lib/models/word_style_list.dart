@@ -1,4 +1,3 @@
-import 'package:bible_depth/models/fragment.dart';
 import 'package:bible_depth/models/word_style.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 part 'word_style_list.g.dart';

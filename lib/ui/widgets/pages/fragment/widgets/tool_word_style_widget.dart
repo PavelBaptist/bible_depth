@@ -2,6 +2,7 @@ import 'package:bible_depth/models/word_style.dart';
 import 'package:bible_depth/models/wrap_entity.dart';
 import 'package:bible_depth/ui/widgets/pages/fragment/controller.dart';
 import 'package:bible_depth/ui/widgets/pages/fragment/widgets/word_widget.dart';
+import 'package:bible_depth/ui/widgets/pages/main/controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -10,12 +11,13 @@ class ToolWordStyleWidget extends StatelessWidget {
   ToolWordStyleWidget({super.key, required this.wordStyle});
 
   final FragmentPageController c = Get.find();
+  final MainPageController mainPageController = Get.find();
 
   @override
   Widget build(BuildContext context) {
     final Word word = Word();
     word.value = 'стиль';
-    word.style = wordStyle;
+    word.styleId = wordStyle.id;
     return Obx(
       () => Container(
         decoration: wordStyle == c.currentStyle.value
@@ -32,6 +34,7 @@ class ToolWordStyleWidget extends StatelessWidget {
             : null,
         child: WordWidget(
           word,
+          wordStyleList: mainPageController.wordStyleList!.value,
           fontSize: 25,
           onTap: () {
             c.currentStyle.value = wordStyle;
