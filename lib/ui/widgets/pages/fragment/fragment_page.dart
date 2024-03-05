@@ -10,7 +10,12 @@ import 'package:bible_depth/ui/widgets/pages/main/controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-enum SampleItem { addSpace, itemTwo, itemThree }
+enum SampleItem {
+  addSpaceBefore,
+  addSpaceAfter,
+  copyStyle,
+  splitWords,
+}
 
 class FragmentPage extends StatelessWidget {
   final FragmentPageController c = Get.put(FragmentPageController());
@@ -109,48 +114,80 @@ class FragmentPage extends StatelessWidget {
                                   mainPageController.updateDataBaseFragments();
                                   c.fragment.update((val) {});
                                 },
+                                onLongPress: (context) {
+                                  showPopupMenu(
+                                    context,
+                                    popupMenuList: <PopupMenuEntry<SampleItem>>[
+                                      const PopupMenuItem<SampleItem>(
+                                        value: SampleItem.copyStyle,
+                                        child: Text('Скопировать стиль'),
+                                      ),
+                                      const PopupMenuItem<SampleItem>(
+                                        value: SampleItem.addSpaceBefore,
+                                        child: Text('Добавить перенос ДО'),
+                                      ),
+                                      const PopupMenuItem<SampleItem>(
+                                        value: SampleItem.addSpaceAfter,
+                                        child: Text('Добавить перенос ПОСЛЕ'),
+                                      ),
+                                      const PopupMenuItem<SampleItem>(
+                                        value: SampleItem.splitWords,
+                                        child: Text('Разделить слова'),
+                                      ),
+                                    ],
+                                    onValue: (value) {
+                                      if (value == SampleItem.addSpaceBefore) {
+                                        c.fragment.update((val) {
+                                          val?.text.insert(i, LineBreak());
+                                        });
+                                        mainPageController
+                                            .updateDataBaseFragments();
+                                      } else if (value ==
+                                          SampleItem.addSpaceAfter) {
+                                        c.fragment.update((val) {
+                                          val?.text.insert(i + 2, LineBreak());
+                                        });
+                                        mainPageController
+                                            .updateDataBaseFragments();
+                                      } else if (value ==
+                                          SampleItem.copyStyle) {
+                                        c.currentStyle.value =
+                                            mainPageController
+                                                .wordStyleList?.value
+                                                .getWordStyleById(
+                                                    wrapEntity.styleId);
+                                      } else if (value ==
+                                          SampleItem.splitWords) {
+                                        var words = wrapEntity.value.split(' ');
+                                        var wordsWidgets = <WrapEntity>[];
+                                        for (var word in words) {
+                                          wordsWidgets.add(
+                                            Word()
+                                              ..value = word
+                                              ..styleId = wrapEntity.styleId,
+                                          );
+                                          wordsWidgets.add(Space());
+                                        }
+                                        wordsWidgets
+                                            .removeAt(wordsWidgets.length - 1);
+
+                                        text.removeAt(i);
+                                        text.insertAll(i, wordsWidgets);
+
+                                        mainPageController
+                                            .updateDataBaseFragments();
+                                        c.fragment.update((val) {});
+                                      }
+                                    },
+                                  );
+                                },
                                 fontSize: c.fontSize.value,
                               ));
                             } else if (wrapEntity is VerseIndex) {
                               result.add(VerseIndexWidget(wrapEntity));
                             } else if (wrapEntity is Space) {
-                              bool visabillityMenu = false;
-                              result.add(
-                                PopupMenuButton<SampleItem>(
-                                  iconSize: c.fontSize.value,
-                                  initialValue: null,
-                                  tooltip: 'Параметры',
-                                  onSelected: (SampleItem item) {
-                                    if (item == SampleItem.addSpace) {
-                                      c.fragment.update((val) {
-                                        val?.text[i] = LineBreak();
-                                      });
-                                      mainPageController
-                                          .updateDataBaseFragments();
-                                    }
-                                  },
-                                  itemBuilder: (BuildContext context) =>
-                                      <PopupMenuEntry<SampleItem>>[
-                                    const PopupMenuItem<SampleItem>(
-                                      value: SampleItem.addSpace,
-                                      child: Text('Добавить перенос'),
-                                    ),
-                                    const PopupMenuItem<SampleItem>(
-                                      value: SampleItem.itemTwo,
-                                      child: Text('Item 2'),
-                                    ),
-                                    const PopupMenuItem<SampleItem>(
-                                      value: SampleItem.itemThree,
-                                      child: Text('Item 3'),
-                                    ),
-                                  ],
-                                  child: Container(
-                                    width: c.fontSize.value / 4,
-                                    height: c.fontSize.value,
-                                    color: Colors.transparent,
-                                  ),
-                                ),
-                              );
+                              result
+                                  .add(SizedBox(width: c.fontSize.value / 2.5));
                             } else if (wrapEntity is LineBreak) {
                               result.add(const Row());
                             }

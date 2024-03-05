@@ -12,7 +12,7 @@ class WordWidget extends StatelessWidget {
   final double fontSize;
   final WordStyleList wordStyleList;
   final void Function()? onTap;
-  final void Function()? onLongPress;
+  final void Function(BuildContext context)? onLongPress;
   WordStyle? style;
 
   WordWidget(
@@ -39,7 +39,11 @@ class WordWidget extends StatelessWidget {
 
     return GestureDetector(
       onTap: onTap,
-      onLongPress: onLongPress,
+      onLongPress: () {
+        if (onLongPress != null) {
+          onLongPress!(context);
+        }
+      },
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 3),
         decoration: BoxDecoration(

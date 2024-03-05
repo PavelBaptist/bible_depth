@@ -34,3 +34,19 @@ Future<void> showConfirmationDialog(BuildContext context,
     },
   );
 }
+
+void showPopupMenu(BuildContext context,
+    {required List<PopupMenuEntry> popupMenuList,
+    required Function(dynamic) onValue}) {
+  final RenderBox overlay =
+      Overlay.of(context).context.findRenderObject() as RenderBox;
+  final RenderBox button = context.findRenderObject() as RenderBox;
+  final Offset position = button.localToGlobal(Offset.zero, ancestor: overlay);
+
+  showMenu(
+    context: context,
+    position: RelativeRect.fromLTRB(position.dx, position.dy,
+        overlay.size.width - position.dx, overlay.size.height - position.dy),
+    items: popupMenuList,
+  ).then(onValue);
+}

@@ -7,4 +7,11 @@ class WordStyleList {
   @HiveField(0)
   List<WordStyle> list = [];
   WordStyleList();
+
+  WordStyle? getWordStyleById(String id) {
+    if (id == '') {
+      return null;
+    }
+    return list.firstWhere((element) => element.id == id);
+  }
 }

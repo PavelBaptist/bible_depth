@@ -43,7 +43,7 @@ class ToolWordStyleWidget extends StatelessWidget {
               Get.snackbar('Описание', wordStyle.description);
             }
           },
-          onLongPress: () {
+          onLongPress: (context) {
             c.currentStyle.value = wordStyle;
             c.currentStyle.update((val) {});
             Get.toNamed('/fragment/style_constructor');
