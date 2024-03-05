@@ -1,3 +1,4 @@
+import 'package:bible_depth/helpers/dialogs.dart';
 import 'package:bible_depth/models/word_style.dart';
 import 'package:bible_depth/models/wrap_entity.dart';
 import 'package:bible_depth/ui/widgets/pages/fragment/controller.dart';
@@ -62,6 +63,49 @@ class FragmentPage extends StatelessWidget {
                                     mainPageController.wordStyleList!.value,
                                 onTap: () {
                                   wrapEntity.styleId = c.currentStyle.value!.id;
+                                  int indexBefore = i <= 1 ? i : i - 2;
+                                  Word? wordBefore = text[indexBefore] is Word
+                                      ? text[indexBefore] as Word
+                                      : null;
+                                  int indexAfter =
+                                      i >= text.length - 1 ? i : i + 2;
+                                  Word? wordAfter = text[indexAfter] is Word
+                                      ? text[indexAfter] as Word
+                                      : null;
+
+                                  if (wordBefore?.styleId ==
+                                      wrapEntity.styleId) {
+                                    showConfirmationDialog(
+                                      context,
+                                      titleText: 'Объединить?',
+                                      text:
+                                          'Предыдущее слово "${wordBefore!.value}" можно объединить с выбранным "${wrapEntity.value}"',
+                                      onTapYes: () {
+                                        wordBefore.value +=
+                                            ' ${wrapEntity.value}';
+                                        text.removeAt(i);
+                                        text.removeAt(i - 1);
+                                        c.fragment.update((val) {});
+                                      },
+                                    );
+                                  }
+                                  if (wordAfter?.styleId ==
+                                      wrapEntity.styleId) {
+                                    showConfirmationDialog(
+                                      context,
+                                      titleText: 'Объединить?',
+                                      text:
+                                          'Выбранное слово "${wrapEntity.value}" можно объединить со следующим "${wordAfter!.value}"',
+                                      onTapYes: () {
+                                        wordAfter.value =
+                                            '${wrapEntity.value} ${wordAfter.value}';
+                                        text.removeAt(i + 1);
+                                        text.removeAt(i);
+                                        c.fragment.update((val) {});
+                                      },
+                                    );
+                                  }
+
                                   mainPageController.updateDataBaseFragments();
                                   c.fragment.update((val) {});
                                 },
