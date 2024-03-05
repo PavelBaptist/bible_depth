@@ -7,18 +7,4 @@ class FragmentPageController extends GetxController {
   Rx<WordStyle?> currentStyle = WordStyle().obs;
   Rx<double> fontSize = 14.0.obs;
   Rx<Fragment> fragment = Fragment(text: [], name: '').obs;
-  RxList<WordStyle> styles = RxList([
-    WordStyle()
-      ..fontColor = Colors.white
-      ..highlightColor = Colors.blue,
-    WordStyle()
-      ..fontColor = Colors.white
-      ..highlightColor = Colors.green,
-    WordStyle()
-      ..fontColor = Colors.white
-      ..highlightColor = Colors.black,
-    WordStyle()
-      ..isBold = true
-      ..borderColor = Colors.red,
-  ]);
 }

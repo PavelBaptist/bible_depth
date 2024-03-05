@@ -60,7 +60,7 @@ class FragmentPage extends StatelessWidget {
                                 wrapEntity,
                                 onTap: () {
                                   wrapEntity.style = c.currentStyle.value;
-                                  mainPageController.updateDataBase();
+                                  mainPageController.updateDataBaseFragments();
                                   c.fragment.update((val) {});
                                 },
                                 fontSize: c.fontSize.value,
@@ -79,7 +79,8 @@ class FragmentPage extends StatelessWidget {
                                       c.fragment.update((val) {
                                         val?.text[i] = LineBreak();
                                       });
-                                      mainPageController.updateDataBase();
+                                      mainPageController
+                                          .updateDataBaseFragments();
                                     }
                                   },
                                   itemBuilder: (BuildContext context) =>
@@ -141,13 +142,15 @@ class FragmentPage extends StatelessWidget {
                     height: 40,
                     child: Obx(() => ListView.builder(
                           scrollDirection: Axis.horizontal,
-                          itemCount: c.styles.length,
+                          itemCount: mainPageController
+                              .wordStyleList!.value.list.length,
                           itemBuilder: (context, index) {
                             return Padding(
                               padding:
                                   const EdgeInsets.symmetric(horizontal: 10),
                               child: ToolWordStyleWidget(
-                                  wordStyle: c.styles[index]),
+                                  wordStyle: mainPageController
+                                      .wordStyleList!.value.list[index]),
                             );
                           },
                         )),
@@ -170,7 +173,10 @@ class FragmentPage extends StatelessWidget {
                       const SizedBox(width: 30),
                       ElevatedButton(
                         onPressed: () {
-                          c.styles.add(WordStyle());
+                          mainPageController.wordStyleList!.value.list
+                              .add(WordStyle());
+                          mainPageController.updateDataBaseWordStyles();
+                          mainPageController.wordStyleList?.update((val) {});
                         },
                         child: const Icon(Icons.add),
                       ),

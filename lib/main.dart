@@ -1,6 +1,7 @@
 import 'package:bible_depth/models/fragment.dart';
 import 'package:bible_depth/models/fragment_list.dart';
 import 'package:bible_depth/models/word_style.dart';
+import 'package:bible_depth/models/word_style_list.dart';
 import 'package:bible_depth/models/wrap_entity.dart';
 import 'package:bible_depth/ui/widgets/pages/fragment/fragment_page.dart';
 import 'package:bible_depth/ui/widgets/pages/fragment/style_constructor/style_constructor_page.dart';
@@ -16,6 +17,7 @@ import 'package:path_provider/path_provider.dart';
 void main(List<String> args) async {
   WidgetsFlutterBinding.ensureInitialized();
 
+  print((await getApplicationDocumentsDirectory()).path);
   await Hive.initFlutter((await getApplicationDocumentsDirectory()).path);
   Hive
     ..registerAdapter(FragmentListAdapter())
@@ -24,12 +26,32 @@ void main(List<String> args) async {
     ..registerAdapter(VerseIndexAdapter())
     ..registerAdapter(SpaceAdapter())
     ..registerAdapter(WordStyleAdapter())
+    ..registerAdapter(WordStyleListAdapter())
     ..registerAdapter(LineBreakAdapter());
 
   var box = await Hive.openBox('bible_depth');
 
   if (box.get('fragments') == null) {
     await box.put('fragments', FragmentList());
+  }
+  if (box.get('word_styles') == null) {
+    await box.put(
+        'word_styles',
+        WordStyleList()
+          ..list = [
+            WordStyle()
+              ..fontColor = Colors.white
+              ..highlightColor = Colors.blue,
+            WordStyle()
+              ..fontColor = Colors.white
+              ..highlightColor = Colors.green,
+            WordStyle()
+              ..fontColor = Colors.white
+              ..highlightColor = Colors.black,
+            WordStyle()
+              ..isBold = true
+              ..borderColor = Colors.red,
+          ]);
   }
 
   // bible_depth % flutter run -d 'IPad (2)' --release;

@@ -16,15 +16,19 @@ class WordAdapter extends TypeAdapter<Word> {
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return Word()..value = fields[0] as String;
+    return Word()
+      ..value = fields[0] as String
+      ..style = fields[1] as WordStyle?;
   }
 
   @override
   void write(BinaryWriter writer, Word obj) {
     writer
-      ..writeByte(1)
+      ..writeByte(2)
       ..writeByte(0)
-      ..write(obj.value);
+      ..write(obj.value)
+      ..writeByte(1)
+      ..write(obj.style);
   }
 
   @override

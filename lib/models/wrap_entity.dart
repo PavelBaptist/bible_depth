@@ -9,6 +9,7 @@ abstract class WrapEntity {}
 class Word extends WrapEntity {
   @HiveField(0)
   String value = '';
+  @HiveField(1)
   WordStyle? style;
   Word();
 

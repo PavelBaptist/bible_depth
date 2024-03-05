@@ -3,7 +3,7 @@ import 'package:bible_depth/models/wrap_entity.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 part 'fragment.g.dart';
 
-@HiveType(typeId: 2)
+@HiveType(typeId: 3)
 class Fragment {
   @HiveField(0)
   String name = '';

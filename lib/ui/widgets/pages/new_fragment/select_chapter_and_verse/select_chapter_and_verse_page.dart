@@ -32,7 +32,7 @@ class SelectChapterAndVersePage extends StatelessWidget {
               mainPageController.fragmentList!.value.list
                   .insert(0, newFragment);
               mainPageController.fragmentList!.update((val) {});
-              mainPageController.updateDataBase();
+              mainPageController.updateDataBaseFragments();
               Get.until((route) => route.isFirst);
             },
           ),

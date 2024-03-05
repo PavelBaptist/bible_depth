@@ -1,35 +1,30 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'fragment.dart';
+part of 'word_style_list.dart';
 
 // **************************************************************************
 // TypeAdapterGenerator
 // **************************************************************************
 
-class FragmentAdapter extends TypeAdapter<Fragment> {
+class WordStyleListAdapter extends TypeAdapter<WordStyleList> {
   @override
-  final int typeId = 3;
+  final int typeId = 2;
 
   @override
-  Fragment read(BinaryReader reader) {
+  WordStyleList read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return Fragment(
-      text: (fields[1] as List).cast<WrapEntity>(),
-      name: fields[0] as String,
-    );
+    return WordStyleList()..list = (fields[0] as List).cast<WordStyle>();
   }
 
   @override
-  void write(BinaryWriter writer, Fragment obj) {
+  void write(BinaryWriter writer, WordStyleList obj) {
     writer
-      ..writeByte(2)
-      ..writeByte(0)
-      ..write(obj.name)
       ..writeByte(1)
-      ..write(obj.text);
+      ..writeByte(0)
+      ..write(obj.list);
   }
 
   @override
@@ -38,7 +33,7 @@ class FragmentAdapter extends TypeAdapter<Fragment> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is FragmentAdapter &&
+      other is WordStyleListAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }

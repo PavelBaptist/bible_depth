@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:bible_depth/models/wrap_entity.dart';
 import 'package:bible_depth/ui/widgets/pages/fragment/controller.dart';
 import 'package:bible_depth/ui/widgets/pages/fragment/widgets/word_widget.dart';
+import 'package:bible_depth/ui/widgets/pages/main/controller.dart';
 import 'package:finger_painter/finger_painter.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -11,6 +12,7 @@ import 'dart:ui' as ui;
 class StyleConstructorPage extends StatelessWidget {
   StyleConstructorPage({super.key});
   final FragmentPageController c = Get.find();
+  final MainPageController mainPageController = Get.find();
   TextEditingController descriptionController = TextEditingController();
   late PainterController painterController = PainterController()
     ..setStrokeColor(paintColor)
@@ -31,7 +33,7 @@ class StyleConstructorPage extends StatelessWidget {
           children: [
             WordWidget(
               Word()
-                ..value = 'стиль'
+                ..value = 'образец'
                 ..style = c.currentStyle.value,
               fontSize: 50,
             ),
@@ -39,6 +41,7 @@ class StyleConstructorPage extends StatelessWidget {
               controller: descriptionController,
               onChanged: (String value) {
                 c.currentStyle.value?.description = value;
+                mainPageController.updateDataBaseWordStyles();
               },
             ),
             Row(
@@ -49,6 +52,7 @@ class StyleConstructorPage extends StatelessWidget {
                   onChanged: (value) {
                     c.currentStyle.value?.isBold = value;
                     c.currentStyle.update((val) {});
+                    mainPageController.updateDataBaseWordStyles();
                   },
                 ),
                 const SizedBox(width: 25),
@@ -58,6 +62,7 @@ class StyleConstructorPage extends StatelessWidget {
                   onChanged: (value) {
                     c.currentStyle.value?.isItalic = value;
                     c.currentStyle.update((val) {});
+                    mainPageController.updateDataBaseWordStyles();
                   },
                 ),
                 const SizedBox(width: 25),
@@ -67,6 +72,7 @@ class StyleConstructorPage extends StatelessWidget {
                   onChanged: (value) {
                     c.currentStyle.value?.borderIsCircle = value ?? false;
                     c.currentStyle.update((val) {});
+                    mainPageController.updateDataBaseWordStyles();
                   },
                 ),
               ],
@@ -76,6 +82,7 @@ class StyleConstructorPage extends StatelessWidget {
               onTap: (color) {
                 c.currentStyle.value?.fontColor = color;
                 c.currentStyle.update((val) {});
+                mainPageController.updateDataBaseWordStyles();
               },
               selectedLogic: (color) =>
                   c.currentStyle.value?.fontColor == color,
@@ -85,6 +92,7 @@ class StyleConstructorPage extends StatelessWidget {
               onTap: (color) {
                 c.currentStyle.value?.highlightColor = color;
                 c.currentStyle.update((val) {});
+                mainPageController.updateDataBaseWordStyles();
               },
               selectedLogic: (color) =>
                   c.currentStyle.value?.highlightColor == color,
@@ -94,6 +102,7 @@ class StyleConstructorPage extends StatelessWidget {
               onTap: (color) {
                 c.currentStyle.value?.borderColor = color;
                 c.currentStyle.update((val) {});
+                mainPageController.updateDataBaseWordStyles();
               },
               selectedLogic: (color) =>
                   c.currentStyle.value?.borderColor == color,
@@ -106,6 +115,7 @@ class StyleConstructorPage extends StatelessWidget {
                   String base64Data = base64Encode(bytes);
                   c.currentStyle.value?.image = base64Data;
                   c.currentStyle.update((val) {});
+                  mainPageController.updateDataBaseWordStyles();
                 }
               },
               size: const Size(230, 80),
@@ -123,6 +133,7 @@ class StyleConstructorPage extends StatelessWidget {
                 onPressed: () {
                   painterController.clearContent();
                   c.currentStyle.value?.image = null;
+                  mainPageController.updateDataBaseWordStyles();
                 },
                 icon: const Icon(Icons.clear)),
             const SizedBox(width: 25),
@@ -132,6 +143,7 @@ class StyleConstructorPage extends StatelessWidget {
               onChanged: (value) {
                 c.currentStyle.value?.stretchImage = value ?? false;
                 c.currentStyle.update((val) {});
+                mainPageController.updateDataBaseWordStyles();
               },
             ),
           ],
