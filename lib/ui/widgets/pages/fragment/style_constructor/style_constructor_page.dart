@@ -31,7 +31,7 @@ class StyleConstructorPage extends StatelessWidget {
           children: [
             WordWidget(
               Word()
-                ..value = 'и'
+                ..value = 'стиль'
                 ..style = c.currentStyle.value,
               fontSize: 50,
             ),
