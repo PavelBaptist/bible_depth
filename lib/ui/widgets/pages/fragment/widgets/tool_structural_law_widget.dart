@@ -1,26 +1,23 @@
-import 'package:bible_depth/models/word_style.dart';
-import 'package:bible_depth/models/wrap_entity.dart';
+import 'package:bible_depth/models/structural_law.dart';
 import 'package:bible_depth/ui/widgets/pages/fragment/controller.dart';
-import 'package:bible_depth/ui/widgets/pages/fragment/widgets/word_widget.dart';
+import 'package:bible_depth/ui/widgets/pages/fragment/widgets/structural_law_widget.dart';
+
 import 'package:bible_depth/ui/widgets/pages/main/controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class ToolWordStyleWidget extends StatelessWidget {
-  WordStyle wordStyle;
-  ToolWordStyleWidget({super.key, required this.wordStyle});
+class ToolStructuralLawWidget extends StatelessWidget {
+  StructuralLaw structuralLaw;
+  ToolStructuralLawWidget({super.key, required this.structuralLaw});
 
   final FragmentPageController c = Get.find();
   final MainPageController mainPageController = Get.find();
 
   @override
   Widget build(BuildContext context) {
-    final Word word = Word();
-    word.value = 'стиль';
-    word.styleId = wordStyle.id;
     return Obx(
       () => Container(
-        decoration: wordStyle == c.currentTool.value
+        decoration: c.currentTool.value == structuralLaw
             ? BoxDecoration(
                 boxShadow: [
                   BoxShadow(
@@ -32,18 +29,18 @@ class ToolWordStyleWidget extends StatelessWidget {
                 borderRadius: BorderRadius.circular(6),
               )
             : null,
-        child: WordWidget(
-          word,
-          fontSize: 25,
+        child: StructuralLawWidget(
+          structuralLaw.id,
+          size: 25,
           onTap: () {
-            c.currentTool.value = wordStyle;
+            c.currentTool.value = structuralLaw;
             c.currentTool.update((val) {});
-            if (wordStyle.description.isNotEmpty) {
-              Get.snackbar('Описание', wordStyle.description);
+            if (structuralLaw.description.isNotEmpty) {
+              Get.snackbar('Описание', structuralLaw.description);
             }
           },
           onLongPress: (context) {
-            c.currentTool.value = wordStyle;
+            c.currentTool.value = structuralLaw;
             c.currentTool.update((val) {});
             Get.toNamed('/fragment/style_constructor');
           },

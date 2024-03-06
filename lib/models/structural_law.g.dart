@@ -19,19 +19,22 @@ class StructuralLawAdapter extends TypeAdapter<StructuralLaw> {
     return StructuralLaw()
       ..id = fields[0] as String
       ..isAssetsSource = fields[1] as bool
-      ..image = fields[2] as String;
+      ..image = fields[2] as String
+      ..description = fields[3] as String;
   }
 
   @override
   void write(BinaryWriter writer, StructuralLaw obj) {
     writer
-      ..writeByte(3)
+      ..writeByte(4)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
       ..write(obj.isAssetsSource)
       ..writeByte(2)
-      ..write(obj.image);
+      ..write(obj.image)
+      ..writeByte(3)
+      ..write(obj.description);
   }
 
   @override

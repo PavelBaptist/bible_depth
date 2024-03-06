@@ -1,11 +1,12 @@
 import 'package:bible_depth/helpers/colors.dart';
+import 'package:bible_depth/models/tool.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:uuid/uuid.dart';
 part 'word_style.g.dart';
 
 @HiveType(typeId: 200)
-class WordStyle {
+class WordStyle extends Tool {
   WordStyle();
   // main
   @HiveField(0)

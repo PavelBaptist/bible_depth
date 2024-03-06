@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:bible_depth/models/word_style.dart';
 import 'package:bible_depth/models/wrap_entity.dart';
 import 'package:bible_depth/ui/widgets/pages/fragment/controller.dart';
 import 'package:bible_depth/ui/widgets/pages/fragment/widgets/word_widget.dart';
@@ -24,7 +25,8 @@ class StyleConstructorPage extends StatelessWidget {
   Color paintColor = Colors.red;
   @override
   Widget build(BuildContext context) {
-    descriptionController.text = c.currentStyle.value?.description ?? '';
+    descriptionController.text =
+        (c.currentTool.value as WordStyle).description ?? '';
     return Scaffold(
       appBar: AppBar(),
       body: Obx(() {
@@ -34,13 +36,13 @@ class StyleConstructorPage extends StatelessWidget {
             WordWidget(
               Word()
                 ..value = 'образец'
-                ..styleId = c.currentStyle.value!.id,
+                ..styleId = (c.currentTool.value as WordStyle).id,
               fontSize: 50,
             ),
             TextField(
               controller: descriptionController,
               onChanged: (String value) {
-                c.currentStyle.value?.description = value;
+                (c.currentTool.value as WordStyle).description = value;
                 mainPageController.updateDataBaseWordStyles();
               },
             ),
@@ -48,30 +50,31 @@ class StyleConstructorPage extends StatelessWidget {
               children: [
                 Text('Жирный'),
                 Checkbox(
-                  value: c.currentStyle.value?.isBold,
+                  value: (c.currentTool.value as WordStyle).isBold,
                   onChanged: (value) {
-                    c.currentStyle.value?.isBold = value;
-                    c.currentStyle.update((val) {});
+                    (c.currentTool.value as WordStyle).isBold = value;
+                    c.currentTool.update((val) {});
                     mainPageController.updateDataBaseWordStyles();
                   },
                 ),
                 const SizedBox(width: 25),
                 Text('Наклоненный'),
                 Checkbox(
-                  value: c.currentStyle.value?.isItalic,
+                  value: (c.currentTool.value as WordStyle).isItalic,
                   onChanged: (value) {
-                    c.currentStyle.value?.isItalic = value;
-                    c.currentStyle.update((val) {});
+                    (c.currentTool.value as WordStyle).isItalic = value;
+                    c.currentTool.update((val) {});
                     mainPageController.updateDataBaseWordStyles();
                   },
                 ),
                 const SizedBox(width: 25),
                 Text('Обводка кругом'),
                 Checkbox(
-                  value: c.currentStyle.value?.borderIsCircle,
+                  value: (c.currentTool.value as WordStyle).borderIsCircle,
                   onChanged: (value) {
-                    c.currentStyle.value?.borderIsCircle = value ?? false;
-                    c.currentStyle.update((val) {});
+                    (c.currentTool.value as WordStyle).borderIsCircle =
+                        value ?? false;
+                    c.currentTool.update((val) {});
                     mainPageController.updateDataBaseWordStyles();
                   },
                 ),
@@ -80,32 +83,32 @@ class StyleConstructorPage extends StatelessWidget {
             ColorPicker(
               label: 'Цвет текста',
               onTap: (color) {
-                c.currentStyle.value?.fontColor = color;
-                c.currentStyle.update((val) {});
+                (c.currentTool.value as WordStyle).fontColor = color;
+                c.currentTool.update((val) {});
                 mainPageController.updateDataBaseWordStyles();
               },
               selectedLogic: (color) =>
-                  c.currentStyle.value?.fontColor == color,
+                  (c.currentTool.value as WordStyle).fontColor == color,
             ),
             ColorPicker(
               label: 'Цвет фона',
               onTap: (color) {
-                c.currentStyle.value?.highlightColor = color;
-                c.currentStyle.update((val) {});
+                (c.currentTool.value as WordStyle).highlightColor = color;
+                c.currentTool.update((val) {});
                 mainPageController.updateDataBaseWordStyles();
               },
               selectedLogic: (color) =>
-                  c.currentStyle.value?.highlightColor == color,
+                  (c.currentTool.value as WordStyle).highlightColor == color,
             ),
             ColorPicker(
               label: 'Цвет обводки',
               onTap: (color) {
-                c.currentStyle.value?.borderColor = color;
-                c.currentStyle.update((val) {});
+                (c.currentTool.value as WordStyle).borderColor = color;
+                c.currentTool.update((val) {});
                 mainPageController.updateDataBaseWordStyles();
               },
               selectedLogic: (color) =>
-                  c.currentStyle.value?.borderColor == color,
+                  (c.currentTool.value as WordStyle).borderColor == color,
             ),
             Painter(
               controller: painterController,
@@ -113,8 +116,8 @@ class StyleConstructorPage extends StatelessWidget {
               onDrawingEnded: (bytes) async {
                 if (bytes != null) {
                   String base64Data = base64Encode(bytes);
-                  c.currentStyle.value?.image = base64Data;
-                  c.currentStyle.update((val) {});
+                  (c.currentTool.value as WordStyle).image = base64Data;
+                  c.currentTool.update((val) {});
                   mainPageController.updateDataBaseWordStyles();
                 }
               },
@@ -132,17 +135,18 @@ class StyleConstructorPage extends StatelessWidget {
             IconButton(
                 onPressed: () {
                   painterController.clearContent();
-                  c.currentStyle.value?.image = null;
+                  (c.currentTool.value as WordStyle).image = null;
                   mainPageController.updateDataBaseWordStyles();
                 },
                 icon: const Icon(Icons.clear)),
             const SizedBox(width: 25),
             Text('Растягивать картинку'),
             Checkbox(
-              value: c.currentStyle.value?.stretchImage,
+              value: (c.currentTool.value as WordStyle).stretchImage,
               onChanged: (value) {
-                c.currentStyle.value?.stretchImage = value ?? false;
-                c.currentStyle.update((val) {});
+                (c.currentTool.value as WordStyle).stretchImage =
+                    value ?? false;
+                c.currentTool.update((val) {});
                 mainPageController.updateDataBaseWordStyles();
               },
             ),

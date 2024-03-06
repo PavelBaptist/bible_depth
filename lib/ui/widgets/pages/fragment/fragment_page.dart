@@ -6,6 +6,7 @@ import 'package:bible_depth/models/wrap_entity.dart';
 import 'package:bible_depth/ui/widgets/pages/fragment/controller.dart';
 import 'package:bible_depth/ui/widgets/pages/fragment/widgets/results_widget.dart';
 import 'package:bible_depth/ui/widgets/pages/fragment/widgets/structural_law_widget.dart';
+import 'package:bible_depth/ui/widgets/pages/fragment/widgets/tool_structural_law_widget.dart';
 import 'package:bible_depth/ui/widgets/pages/fragment/widgets/tool_word_style_widget.dart';
 import 'package:bible_depth/ui/widgets/pages/fragment/widgets/verse_index_widget.dart';
 import 'package:bible_depth/ui/widgets/pages/fragment/widgets/word_widget.dart';
@@ -68,82 +69,84 @@ class FragmentPage extends StatelessWidget {
                               result.add(WordWidget(
                                 wrapEntity,
                                 onTap: () {
-                                  //////////////////
+                                  if (c.currentTool.value is StructuralLaw) {
+                                    text.insert(
+                                        i + 1,
+                                        StructuralLawPlace()
+                                          ..structuralLawId = (c.currentTool
+                                                  .value as StructuralLaw)
+                                              .id);
 
-                                  text.insert(
-                                      i + 1,
-                                      StructuralLawPlace()
-                                        ..structuralLawId = 'contrast');
+                                    wrapEntity.structuralLawId =
+                                        (c.currentTool.value as StructuralLaw)
+                                            .id;
+                                  } else if (c.currentTool.value is WordStyle) {
+                                    wrapEntity.styleId =
+                                        (c.currentTool.value as WordStyle).id;
+                                    int indexBefore = i <= 1 ? i : i - 2;
+                                    Word? wordBefore = text[indexBefore] is Word
+                                        ? text[indexBefore] as Word
+                                        : null;
+                                    int indexAfter =
+                                        i >= text.length - 1 ? i : i + 2;
+                                    Word? wordAfter = text[indexAfter] is Word
+                                        ? text[indexAfter] as Word
+                                        : null;
 
-                                  wrapEntity.structuralLawId = 'contrast';
-
-                                  //////////////////
-
-                                  wrapEntity.styleId = c.currentStyle.value!.id;
-                                  int indexBefore = i <= 1 ? i : i - 2;
-                                  Word? wordBefore = text[indexBefore] is Word
-                                      ? text[indexBefore] as Word
-                                      : null;
-                                  int indexAfter =
-                                      i >= text.length - 1 ? i : i + 2;
-                                  Word? wordAfter = text[indexAfter] is Word
-                                      ? text[indexAfter] as Word
-                                      : null;
-
-                                  if (wordBefore?.styleId ==
-                                          wrapEntity.styleId &&
-                                      wordAfter?.styleId ==
-                                          wrapEntity.styleId) {
-                                    showConfirmationDialog(
-                                      context,
-                                      titleText: 'Объединить?',
-                                      text:
-                                          'Можно объединить "${wordBefore!.value}" + "${wrapEntity.value}" + "${wordAfter!.value}"',
-                                      onTapYes: () {
-                                        wordBefore.value +=
-                                            ' ${wrapEntity.value} ${wordAfter.value}';
-                                        text.removeAt(i + 2);
-                                        text.removeAt(i + 1);
-                                        text.removeAt(i);
-                                        text.removeAt(i - 1);
-                                        c.fragment.update((val) {});
-                                      },
-                                    );
-                                  } else {
                                     if (wordBefore?.styleId ==
-                                        wrapEntity.styleId) {
+                                            wrapEntity.styleId &&
+                                        wordAfter?.styleId ==
+                                            wrapEntity.styleId) {
                                       showConfirmationDialog(
                                         context,
                                         titleText: 'Объединить?',
                                         text:
-                                            'Можно объединить "${wordBefore!.value}" + "${wrapEntity.value}"',
+                                            'Можно объединить "${wordBefore!.value}" + "${wrapEntity.value}" + "${wordAfter!.value}"',
                                         onTapYes: () {
                                           wordBefore.value +=
-                                              ' ${wrapEntity.value}';
+                                              ' ${wrapEntity.value} ${wordAfter.value}';
+                                          text.removeAt(i + 2);
+                                          text.removeAt(i + 1);
                                           text.removeAt(i);
                                           text.removeAt(i - 1);
                                           c.fragment.update((val) {});
                                         },
                                       );
-                                    }
-                                    if (wordAfter?.styleId ==
-                                        wrapEntity.styleId) {
-                                      showConfirmationDialog(
-                                        context,
-                                        titleText: 'Объединить?',
-                                        text:
-                                            'Можно объединить "${wrapEntity.value}" + "${wordAfter!.value}"',
-                                        onTapYes: () {
-                                          wordAfter.value =
-                                              '${wrapEntity.value} ${wordAfter.value}';
-                                          text.removeAt(i + 1);
-                                          text.removeAt(i);
-                                          c.fragment.update((val) {});
-                                        },
-                                      );
+                                    } else {
+                                      if (wordBefore?.styleId ==
+                                          wrapEntity.styleId) {
+                                        showConfirmationDialog(
+                                          context,
+                                          titleText: 'Объединить?',
+                                          text:
+                                              'Можно объединить "${wordBefore!.value}" + "${wrapEntity.value}"',
+                                          onTapYes: () {
+                                            wordBefore.value +=
+                                                ' ${wrapEntity.value}';
+                                            text.removeAt(i);
+                                            text.removeAt(i - 1);
+                                            c.fragment.update((val) {});
+                                          },
+                                        );
+                                      }
+                                      if (wordAfter?.styleId ==
+                                          wrapEntity.styleId) {
+                                        showConfirmationDialog(
+                                          context,
+                                          titleText: 'Объединить?',
+                                          text:
+                                              'Можно объединить "${wrapEntity.value}" + "${wordAfter!.value}"',
+                                          onTapYes: () {
+                                            wordAfter.value =
+                                                '${wrapEntity.value} ${wordAfter.value}';
+                                            text.removeAt(i + 1);
+                                            text.removeAt(i);
+                                            c.fragment.update((val) {});
+                                          },
+                                        );
+                                      }
                                     }
                                   }
-
                                   mainPageController.updateDataBaseFragments();
                                   c.fragment.update((val) {});
                                 },
@@ -184,11 +187,10 @@ class FragmentPage extends StatelessWidget {
                                             .updateDataBaseFragments();
                                       } else if (value ==
                                           SampleItem.copyStyle) {
-                                        c.currentStyle.value =
-                                            mainPageController
-                                                .wordStyleList?.value
-                                                .getWordStyleById(
-                                                    wrapEntity.styleId);
+                                        c.currentTool.value = mainPageController
+                                            .wordStyleList?.value
+                                            .getWordStyleById(
+                                                wrapEntity.styleId);
                                       } else if (value ==
                                           SampleItem.splitWords) {
                                         var words = wrapEntity.value.split(' ');
@@ -244,7 +246,7 @@ class FragmentPage extends StatelessWidget {
           ),
           Container(
             width: double.infinity,
-            height: 150.0,
+            height: 180.0,
             decoration: BoxDecoration(
               boxShadow: [
                 BoxShadow(
@@ -270,14 +272,34 @@ class FragmentPage extends StatelessWidget {
                               padding:
                                   const EdgeInsets.symmetric(horizontal: 10),
                               child: ToolWordStyleWidget(
-                                  wordStyle: mainPageController
-                                      .wordStyleList!.value.list[index]),
+                                wordStyle: mainPageController
+                                    .wordStyleList!.value.list[index],
+                              ),
+                            );
+                          },
+                        )),
+                  ),
+                  const SizedBox(height: 10),
+                  SizedBox(
+                    height: 40,
+                    child: Obx(() => ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: mainPageController
+                              .structuralLawList!.value.list.length,
+                          itemBuilder: (context, index) {
+                            return Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 10),
+                              child: ToolStructuralLawWidget(
+                                structuralLaw: mainPageController
+                                    .structuralLawList!.value.list[index],
+                              ),
                             );
                           },
                         )),
                   ),
                   const SizedBox(height: 3),
-                  Text('*для изменения стиля удерживайте на нем'),
+                  Text('*для изменения стиля или значка удерживайте на нем'),
                   const SizedBox(height: 10),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
