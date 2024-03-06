@@ -148,7 +148,7 @@ class FragmentPage extends StatelessWidget {
                                         .updateDataBaseFragments();
                                   } else if (value == Menu.addSpaceAfter) {
                                     c.fragment.update((val) {
-                                      val?.text.insert(i + 2, LineBreak());
+                                      val?.text.insert(i + 1, LineBreak());
                                     });
                                     mainPageController
                                         .updateDataBaseFragments();
@@ -186,7 +186,7 @@ class FragmentPage extends StatelessWidget {
                                       Menu.addStructuralLawAfter) {
                                     c.fragment.update((val) {
                                       val?.text.insert(
-                                          i + 2,
+                                          i + 1,
                                           StructuralLawPlace()
                                             ..structuralLawId = (c.currentTool
                                                     .value as StructuralLaw)
@@ -230,10 +230,7 @@ class FragmentPage extends StatelessWidget {
                                             ..value = word
                                             ..styleId = wrapEntity.styleId,
                                         );
-                                        wordsWidgets.add(Space());
                                       }
-                                      wordsWidgets
-                                          .removeAt(wordsWidgets.length - 1);
 
                                       text.removeAt(i);
                                       text.insertAll(i, wordsWidgets);
@@ -263,12 +260,12 @@ class FragmentPage extends StatelessWidget {
                                   } else if (c.currentTool.value is WordStyle) {
                                     wrapEntity.styleId =
                                         (c.currentTool.value as WordStyle).id;
-                                    int indexBefore = i <= 1 ? i : i - 2;
+                                    int indexBefore = i < 1 ? i : i - 1;
                                     Word? wordBefore = text[indexBefore] is Word
                                         ? text[indexBefore] as Word
                                         : null;
                                     int indexAfter =
-                                        i >= text.length - 1 ? i : i + 2;
+                                        i > text.length - 1 ? i : i + 1;
                                     Word? wordAfter = text[indexAfter] is Word
                                         ? text[indexAfter] as Word
                                         : null;
@@ -285,10 +282,9 @@ class FragmentPage extends StatelessWidget {
                                         onTapYes: () {
                                           wordBefore.value +=
                                               ' ${wrapEntity.value} ${wordAfter.value}';
-                                          text.removeAt(i + 2);
                                           text.removeAt(i + 1);
                                           text.removeAt(i);
-                                          text.removeAt(i - 1);
+
                                           c.fragment.update((val) {});
                                         },
                                       );
@@ -304,7 +300,7 @@ class FragmentPage extends StatelessWidget {
                                             wordBefore.value +=
                                                 ' ${wrapEntity.value}';
                                             text.removeAt(i);
-                                            text.removeAt(i - 1);
+
                                             c.fragment.update((val) {});
                                           },
                                         );
@@ -319,7 +315,7 @@ class FragmentPage extends StatelessWidget {
                                           onTapYes: () {
                                             wordAfter.value =
                                                 '${wrapEntity.value} ${wordAfter.value}';
-                                            text.removeAt(i + 1);
+
                                             text.removeAt(i);
                                             c.fragment.update((val) {});
                                           },
@@ -334,12 +330,12 @@ class FragmentPage extends StatelessWidget {
                                 fontSize: c.fontSize.value,
                               ));
                             } else if (wrapEntity is VerseIndex) {
-                              result.add(VerseIndexWidget(wrapEntity));
-                            } else if (wrapEntity is Space) {
-                              result
-                                  .add(SizedBox(width: c.fontSize.value / 2.5));
+                              result.add(VerseIndexWidget(
+                                wrapEntity,
+                                onLongPress: onLongPress,
+                              ));
                             } else if (wrapEntity is LineBreak) {
-                              result.add(const Row());
+                              result.add(Row());
                             } else if (wrapEntity is StructuralLawPlace) {
                               result.add(StructuralLawWidget(
                                 wrapEntity.structuralLawId,

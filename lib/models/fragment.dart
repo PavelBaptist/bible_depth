@@ -37,7 +37,6 @@ class Fragment {
         List<String> words = verse.text.split(' ');
         for (var word in words) {
           listWrap.add(Word()..value = word);
-          listWrap.add(Space());
         }
       }
     }

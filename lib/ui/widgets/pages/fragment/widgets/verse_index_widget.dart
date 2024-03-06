@@ -7,17 +7,29 @@ import 'package:get/get.dart';
 class VerseIndexWidget extends StatelessWidget {
   final VerseIndex verseIndex;
   final FragmentPageController c = Get.find();
+  void Function(BuildContext context)? onLongPress;
 
-  VerseIndexWidget(this.verseIndex, {super.key});
+  VerseIndexWidget(
+    this.verseIndex, {
+    super.key,
+    this.onLongPress,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Text(
-          verseIndex.value,
-          style: TextStyle(
-            fontSize: c.fontSize.value / 1.5,
+        GestureDetector(
+          onLongPress: () {
+            if (onLongPress != null) {
+              onLongPress!(context);
+            }
+          },
+          child: Text(
+            verseIndex.value,
+            style: TextStyle(
+              fontSize: c.fontSize.value / 1.5,
+            ),
           ),
         ),
       ],

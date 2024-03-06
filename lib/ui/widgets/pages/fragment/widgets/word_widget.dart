@@ -54,6 +54,7 @@ class WordWidget extends StatelessWidget {
       },
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 3),
+        margin: const EdgeInsets.symmetric(horizontal: 1),
         decoration: BoxDecoration(
           color: style?.highlightColor,
           borderRadius: BorderRadius.circular(
@@ -105,7 +106,11 @@ class WordWidget extends StatelessWidget {
             if (structuralLaw != null)
               Positioned(
                 top: fontSize / 1.5 * -1,
-                child: StructuralLawWidget(structuralLaw!.id, size: fontSize),
+                child: StructuralLawWidget(
+                  structuralLaw!.id,
+                  size: fontSize,
+                  onLongPress: onLongPress,
+                ),
               ),
             if (imageBytes != null)
               Positioned(

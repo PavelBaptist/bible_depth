@@ -27,7 +27,6 @@ void main(List<String> args) async {
     ..registerAdapter(FragmentAdapter())
     ..registerAdapter(WordAdapter())
     ..registerAdapter(VerseIndexAdapter())
-    ..registerAdapter(SpaceAdapter())
     ..registerAdapter(WordStyleAdapter())
     ..registerAdapter(WordStyleListAdapter())
     ..registerAdapter(StructuralLawAdapter())
