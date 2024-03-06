@@ -34,7 +34,6 @@ class ToolWordStyleWidget extends StatelessWidget {
             : null,
         child: WordWidget(
           word,
-          wordStyleList: mainPageController.wordStyleList!.value,
           fontSize: 25,
           onTap: () {
             c.currentStyle.value = wordStyle;

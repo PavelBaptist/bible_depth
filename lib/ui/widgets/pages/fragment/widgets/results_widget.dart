@@ -33,10 +33,7 @@ class ResultsWidget extends StatelessWidget {
               if (map[wrapEntity.styleId] == null) {
                 map[wrapEntity.styleId] = <Widget>[];
               }
-              map[wrapEntity.styleId]!.add(WordWidget(
-                wrapEntity,
-                wordStyleList: mainPageController.wordStyleList!.value,
-              ));
+              map[wrapEntity.styleId]!.add(WordWidget(wrapEntity));
             }
 
             List<List<Widget>> list = [];

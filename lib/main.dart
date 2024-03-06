@@ -1,5 +1,7 @@
 import 'package:bible_depth/models/fragment.dart';
 import 'package:bible_depth/models/fragment_list.dart';
+import 'package:bible_depth/models/structural_law.dart';
+import 'package:bible_depth/models/structural_law_list.dart';
 import 'package:bible_depth/models/word_style.dart';
 import 'package:bible_depth/models/word_style_list.dart';
 import 'package:bible_depth/models/wrap_entity.dart';
@@ -27,6 +29,9 @@ void main(List<String> args) async {
     ..registerAdapter(SpaceAdapter())
     ..registerAdapter(WordStyleAdapter())
     ..registerAdapter(WordStyleListAdapter())
+    ..registerAdapter(StructuralLawAdapter())
+    ..registerAdapter(StructuralLawListAdapter())
+    ..registerAdapter(StructuralLawPlaceAdapter())
     ..registerAdapter(LineBreakAdapter());
 
   var box = await Hive.openBox('bible_depth');
@@ -34,6 +39,7 @@ void main(List<String> args) async {
   if (box.get('fragments') == null) {
     await box.put('fragments', FragmentList());
   }
+
   if (box.get('word_styles') == null) {
     await box.put(
         'word_styles',
@@ -51,6 +57,23 @@ void main(List<String> args) async {
             WordStyle()
               ..isBold = true
               ..borderColor = Colors.red,
+          ]);
+  }
+
+  if (box.get('structural_laws') == null) {
+    await box.put(
+        'structural_laws',
+        StructuralLawList()
+          ..list = [
+            StructuralLaw()
+              ..id = 'contrast'
+              ..image = 'contrast.png',
+            StructuralLaw()
+              ..id = 'goal'
+              ..image = 'goal.png',
+            StructuralLaw()
+              ..id = 'comparison'
+              ..image = 'comparison.png',
           ]);
   }
 

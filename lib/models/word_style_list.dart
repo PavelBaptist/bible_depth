@@ -1,4 +1,5 @@
 import 'package:bible_depth/models/word_style.dart';
+import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 part 'word_style_list.g.dart';
 
@@ -12,6 +13,6 @@ class WordStyleList {
     if (id == '') {
       return null;
     }
-    return list.firstWhere((element) => element.id == id);
+    return list.firstWhereOrNull((style) => style.id == id);
   }
 }

@@ -1,8 +1,11 @@
 import 'package:bible_depth/helpers/dialogs.dart';
+import 'package:bible_depth/models/structural_law.dart';
+import 'package:bible_depth/models/structural_law_list.dart';
 import 'package:bible_depth/models/word_style.dart';
 import 'package:bible_depth/models/wrap_entity.dart';
 import 'package:bible_depth/ui/widgets/pages/fragment/controller.dart';
 import 'package:bible_depth/ui/widgets/pages/fragment/widgets/results_widget.dart';
+import 'package:bible_depth/ui/widgets/pages/fragment/widgets/structural_law_widget.dart';
 import 'package:bible_depth/ui/widgets/pages/fragment/widgets/tool_word_style_widget.dart';
 import 'package:bible_depth/ui/widgets/pages/fragment/widgets/verse_index_widget.dart';
 import 'package:bible_depth/ui/widgets/pages/fragment/widgets/word_widget.dart';
@@ -64,9 +67,18 @@ class FragmentPage extends StatelessWidget {
                             if (wrapEntity is Word) {
                               result.add(WordWidget(
                                 wrapEntity,
-                                wordStyleList:
-                                    mainPageController.wordStyleList!.value,
                                 onTap: () {
+                                  //////////////////
+
+                                  text.insert(
+                                      i + 1,
+                                      StructuralLawPlace()
+                                        ..structuralLawId = 'contrast');
+
+                                  wrapEntity.structuralLawId = 'contrast';
+
+                                  //////////////////
+
                                   wrapEntity.styleId = c.currentStyle.value!.id;
                                   int indexBefore = i <= 1 ? i : i - 2;
                                   Word? wordBefore = text[indexBefore] is Word
@@ -211,6 +223,11 @@ class FragmentPage extends StatelessWidget {
                                   .add(SizedBox(width: c.fontSize.value / 2.5));
                             } else if (wrapEntity is LineBreak) {
                               result.add(const Row());
+                            } else if (wrapEntity is StructuralLawPlace) {
+                              result.add(StructuralLawWidget(
+                                wrapEntity.structuralLawId,
+                                size: c.fontSize.value,
+                              ));
                             }
                           }
 

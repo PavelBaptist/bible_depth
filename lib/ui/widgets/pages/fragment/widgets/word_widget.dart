@@ -1,19 +1,23 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
+import 'package:bible_depth/models/structural_law.dart';
+import 'package:bible_depth/models/structural_law_list.dart';
 import 'package:bible_depth/models/word_style.dart';
 import 'package:bible_depth/models/word_style_list.dart';
 import 'package:bible_depth/models/wrap_entity.dart';
+import 'package:bible_depth/ui/widgets/pages/fragment/widgets/structural_law_widget.dart';
+import 'package:bible_depth/ui/widgets/pages/main/controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class WordWidget extends StatelessWidget {
   final Word word;
   final double fontSize;
-  final WordStyleList wordStyleList;
   final void Function()? onTap;
   final void Function(BuildContext context)? onLongPress;
   WordStyle? style;
+  StructuralLaw? structuralLaw;
 
   WordWidget(
     this.word, {
@@ -21,14 +25,18 @@ class WordWidget extends StatelessWidget {
     this.onTap,
     this.onLongPress,
     this.fontSize = 14,
-    required this.wordStyleList,
-  });
+  }) {
+    MainPageController mpc = Get.find<MainPageController>();
+
+    WordStyleList wsl = mpc.wordStyleList!.value;
+    style = wsl.getWordStyleById(word.styleId);
+
+    StructuralLawList sll = mpc.structuralLawList!.value;
+    structuralLaw = sll.getWordStyleById(word.structuralLawId);
+  }
 
   @override
   Widget build(BuildContext context) {
-    style = wordStyleList.list
-        .firstWhereOrNull((element) => element.id == word.styleId);
-
     Uint8List? imageBytes;
     if (style?.image != null) {
       imageBytes = base64Decode(style!.image!);
@@ -94,6 +102,11 @@ class WordWidget extends StatelessWidget {
                 style: textStyle,
               );
             }(),
+            if (structuralLaw != null)
+              Positioned(
+                top: fontSize / 1.5 * -1,
+                child: StructuralLawWidget(structuralLaw!.id, size: fontSize),
+              ),
             if (imageBytes != null)
               Positioned(
                 top: widthImage == null ? 0 : fontSize / 2.6,
@@ -106,7 +119,7 @@ class WordWidget extends StatelessWidget {
                     fit: BoxFit.fill,
                   ),
                 ),
-              )
+              ),
           ],
         ),
       ),

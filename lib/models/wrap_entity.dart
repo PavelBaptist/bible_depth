@@ -11,6 +11,9 @@ class Word extends WrapEntity {
   String value = '';
   @HiveField(1)
   String styleId = '';
+  @HiveField(2)
+  String structuralLawId = '';
+
   Word();
 
   bool styleMatches(WrapEntity wrapEntity) {
@@ -42,4 +45,15 @@ class LineBreak extends WrapEntity {
   @HiveField(0)
   String value = '';
   LineBreak();
+}
+
+@HiveType(typeId: 104)
+class StructuralLawPlace extends WrapEntity {
+  @HiveField(0)
+  String value = '';
+
+  @HiveField(1)
+  String structuralLawId = '';
+
+  StructuralLawPlace();
 }
