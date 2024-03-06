@@ -18,4 +18,23 @@ class StructuralLaw extends Tool {
 
   @HiveField(3)
   String description = '';
+
+  void copyProps(StructuralLaw structuralLaw) {
+    id = structuralLaw.id;
+    isAssetsSource = structuralLaw.isAssetsSource;
+    image = structuralLaw.image;
+    description = structuralLaw.description;
+  }
+
+  static final List<StructuralLaw> defaultSet = [
+    StructuralLaw()
+      ..id = 'contrast'
+      ..image = 'contrast.png',
+    StructuralLaw()
+      ..id = 'goal'
+      ..image = 'goal.png',
+    StructuralLaw()
+      ..id = 'comparison'
+      ..image = 'comparison.png',
+  ];
 }

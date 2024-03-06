@@ -6,6 +6,7 @@ import 'package:bible_depth/models/word_style.dart';
 import 'package:bible_depth/models/word_style_list.dart';
 import 'package:bible_depth/models/wrap_entity.dart';
 import 'package:bible_depth/ui/widgets/pages/fragment/fragment_page.dart';
+import 'package:bible_depth/ui/widgets/pages/fragment/structural_law_constructor/structural_law_constructor_page.dart';
 import 'package:bible_depth/ui/widgets/pages/fragment/style_constructor/style_constructor_page.dart';
 import 'package:bible_depth/ui/widgets/pages/main/main_page.dart';
 import 'package:bible_depth/ui/widgets/pages/new_fragment/new_fragment_page.dart';
@@ -61,20 +62,8 @@ void main(List<String> args) async {
   }
 
   if (box.get('structural_laws') == null) {
-    await box.put(
-        'structural_laws',
-        StructuralLawList()
-          ..list = [
-            StructuralLaw()
-              ..id = 'contrast'
-              ..image = 'contrast.png',
-            StructuralLaw()
-              ..id = 'goal'
-              ..image = 'goal.png',
-            StructuralLaw()
-              ..id = 'comparison'
-              ..image = 'comparison.png',
-          ]);
+    await box.put('structural_laws',
+        StructuralLawList()..list = StructuralLaw.defaultSet);
   }
 
   // bible_depth % flutter run -d 'IPad (2)' --release;
@@ -104,6 +93,10 @@ class App extends StatelessWidget {
         GetPage(
           name: '/fragment/style_constructor',
           page: () => StyleConstructorPage(),
+        ),
+        GetPage(
+          name: '/fragment/structural_law_constructor',
+          page: () => StructuralLawConstructorPage(),
         ),
         GetPage(
           name: '/new_fragment',

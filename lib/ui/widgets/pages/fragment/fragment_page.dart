@@ -1,6 +1,5 @@
 import 'package:bible_depth/helpers/dialogs.dart';
 import 'package:bible_depth/models/structural_law.dart';
-import 'package:bible_depth/models/structural_law_list.dart';
 import 'package:bible_depth/models/word_style.dart';
 import 'package:bible_depth/models/wrap_entity.dart';
 import 'package:bible_depth/ui/widgets/pages/fragment/controller.dart';
@@ -32,7 +31,20 @@ class FragmentPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Изучение отрывка')),
+      appBar: AppBar(
+        actions: [
+          IconButton(
+            onPressed: () => c.fontSize.value--,
+            icon: const Icon(Icons.zoom_out),
+          ),
+          const SizedBox(width: 5),
+          IconButton(
+            onPressed: () => c.fontSize.value++,
+            icon: const Icon(Icons.zoom_in),
+          ),
+          const SizedBox(width: 16),
+        ],
+      ),
       body: Column(
         children: [
           Expanded(
@@ -261,70 +273,78 @@ class FragmentPage extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  SizedBox(
-                    height: 40,
-                    child: Obx(() => ListView.builder(
-                          scrollDirection: Axis.horizontal,
-                          itemCount: mainPageController
-                              .wordStyleList!.value.list.length,
-                          itemBuilder: (context, index) {
-                            return Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 10),
-                              child: ToolWordStyleWidget(
-                                wordStyle: mainPageController
-                                    .wordStyleList!.value.list[index],
-                              ),
-                            );
-                          },
-                        )),
-                  ),
-                  const SizedBox(height: 10),
-                  SizedBox(
-                    height: 40,
-                    child: Obx(() => ListView.builder(
-                          scrollDirection: Axis.horizontal,
-                          itemCount: mainPageController
-                              .structuralLawList!.value.list.length,
-                          itemBuilder: (context, index) {
-                            return Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 10),
-                              child: ToolStructuralLawWidget(
-                                structuralLaw: mainPageController
-                                    .structuralLawList!.value.list[index],
-                              ),
-                            );
-                          },
-                        )),
-                  ),
-                  const SizedBox(height: 3),
-                  Text('*для изменения стиля или значка удерживайте на нем'),
-                  const SizedBox(height: 10),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      ElevatedButton(
-                        onPressed: () => c.fontSize.value--,
-                        child: const Icon(Icons.exposure_minus_1_outlined),
-                      ),
-                      const SizedBox(width: 10),
-                      ElevatedButton(
-                        onPressed: () => c.fontSize.value++,
-                        child: const Icon(Icons.plus_one),
-                      ),
-                      const SizedBox(width: 30),
+                      const SizedBox(width: 15),
                       ElevatedButton(
                         onPressed: () {
                           mainPageController.wordStyleList!.value.list
-                              .add(WordStyle());
+                              .insert(0, WordStyle());
                           mainPageController.updateDataBaseWordStyles();
                           mainPageController.wordStyleList?.update((val) {});
                         },
                         child: const Icon(Icons.add),
                       ),
+                      Expanded(
+                        child: SizedBox(
+                          height: 40,
+                          child: Obx(() => ListView.builder(
+                                scrollDirection: Axis.horizontal,
+                                itemCount: mainPageController
+                                    .wordStyleList!.value.list.length,
+                                itemBuilder: (context, index) {
+                                  return Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 10),
+                                    child: ToolWordStyleWidget(
+                                      wordStyle: mainPageController
+                                          .wordStyleList!.value.list[index],
+                                    ),
+                                  );
+                                },
+                              )),
+                        ),
+                      ),
                     ],
                   ),
+                  const SizedBox(height: 10),
+                  Row(
+                    children: [
+                      const SizedBox(width: 15),
+                      ElevatedButton(
+                        onPressed: () {
+                          mainPageController.structuralLawList!.value.list
+                              .insert(0, StructuralLaw());
+                          mainPageController.updateDataBaseStructuralLaws();
+                          mainPageController.structuralLawList
+                              ?.update((val) {});
+                        },
+                        child: const Icon(Icons.add),
+                      ),
+                      Expanded(
+                        child: SizedBox(
+                          height: 40,
+                          child: Obx(() => ListView.builder(
+                                scrollDirection: Axis.horizontal,
+                                itemCount: mainPageController
+                                    .structuralLawList!.value.list.length,
+                                itemBuilder: (context, index) {
+                                  return Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 10),
+                                    child: ToolStructuralLawWidget(
+                                      structuralLaw: mainPageController
+                                          .structuralLawList!.value.list[index],
+                                    ),
+                                  );
+                                },
+                              )),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 3),
+                  Text('*для изменения стиля или значка удерживайте на нем'),
                 ],
               ),
             ),

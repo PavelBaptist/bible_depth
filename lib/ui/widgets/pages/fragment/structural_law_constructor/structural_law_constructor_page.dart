@@ -1,17 +1,17 @@
 import 'dart:convert';
 
-import 'package:bible_depth/models/word_style.dart';
-import 'package:bible_depth/models/wrap_entity.dart';
+import 'package:bible_depth/helpers/strings.dart';
+import 'package:bible_depth/models/structural_law.dart';
 import 'package:bible_depth/ui/widgets/pages/fragment/controller.dart';
-import 'package:bible_depth/ui/widgets/pages/fragment/widgets/word_widget.dart';
+import 'package:bible_depth/ui/widgets/pages/fragment/widgets/structural_law_widget.dart';
 import 'package:bible_depth/ui/widgets/pages/main/controller.dart';
 import 'package:finger_painter/finger_painter.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'dart:ui' as ui;
 
-class StyleConstructorPage extends StatelessWidget {
-  StyleConstructorPage({super.key});
+class StructuralLawConstructorPage extends StatelessWidget {
+  StructuralLawConstructorPage({super.key});
   final FragmentPageController c = Get.find();
   final MainPageController mainPageController = Get.find();
   final TextEditingController descriptionController = TextEditingController();
@@ -22,93 +22,27 @@ class StyleConstructorPage extends StatelessWidget {
     ..setBlurSigma(0.0)
     ..setPenType(PenType.paintbrush2)
     ..setBlendMode(ui.BlendMode.srcOver);
-  Color paintColor = Colors.red;
+  Color paintColor = Colors.black;
   @override
   Widget build(BuildContext context) {
     descriptionController.text =
-        (c.currentTool.value as WordStyle).description ?? '';
+        (c.currentTool.value as StructuralLaw).description;
     return Scaffold(
       appBar: AppBar(),
       body: Obx(() {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            WordWidget(
-              Word()
-                ..value = 'образец'
-                ..styleId = (c.currentTool.value as WordStyle).id,
-              fontSize: 50,
+            StructuralLawWidget(
+              (c.currentTool.value as StructuralLaw).id,
+              size: 64,
             ),
             TextField(
               controller: descriptionController,
               onChanged: (String value) {
-                (c.currentTool.value as WordStyle).description = value;
-                mainPageController.updateDataBaseWordStyles();
+                (c.currentTool.value as StructuralLaw).description = value;
+                mainPageController.updateDataBaseStructuralLaws();
               },
-            ),
-            Row(
-              children: [
-                Text('Жирный'),
-                Checkbox(
-                  value: (c.currentTool.value as WordStyle).isBold,
-                  onChanged: (value) {
-                    (c.currentTool.value as WordStyle).isBold = value;
-                    c.currentTool.update((val) {});
-                    mainPageController.updateDataBaseWordStyles();
-                  },
-                ),
-                const SizedBox(width: 25),
-                Text('Наклоненный'),
-                Checkbox(
-                  value: (c.currentTool.value as WordStyle).isItalic,
-                  onChanged: (value) {
-                    (c.currentTool.value as WordStyle).isItalic = value;
-                    c.currentTool.update((val) {});
-                    mainPageController.updateDataBaseWordStyles();
-                  },
-                ),
-                const SizedBox(width: 25),
-                Text('Обводка кругом'),
-                Checkbox(
-                  value: (c.currentTool.value as WordStyle).borderIsCircle,
-                  onChanged: (value) {
-                    (c.currentTool.value as WordStyle).borderIsCircle =
-                        value ?? false;
-                    c.currentTool.update((val) {});
-                    mainPageController.updateDataBaseWordStyles();
-                  },
-                ),
-              ],
-            ),
-            ColorPicker(
-              label: 'Цвет текста',
-              onTap: (color) {
-                (c.currentTool.value as WordStyle).fontColor = color;
-                c.currentTool.update((val) {});
-                mainPageController.updateDataBaseWordStyles();
-              },
-              selectedLogic: (color) =>
-                  (c.currentTool.value as WordStyle).fontColor == color,
-            ),
-            ColorPicker(
-              label: 'Цвет фона',
-              onTap: (color) {
-                (c.currentTool.value as WordStyle).highlightColor = color;
-                c.currentTool.update((val) {});
-                mainPageController.updateDataBaseWordStyles();
-              },
-              selectedLogic: (color) =>
-                  (c.currentTool.value as WordStyle).highlightColor == color,
-            ),
-            ColorPicker(
-              label: 'Цвет обводки',
-              onTap: (color) {
-                (c.currentTool.value as WordStyle).borderColor = color;
-                c.currentTool.update((val) {});
-                mainPageController.updateDataBaseWordStyles();
-              },
-              selectedLogic: (color) =>
-                  (c.currentTool.value as WordStyle).borderColor == color,
             ),
             Painter(
               controller: painterController,
@@ -116,12 +50,13 @@ class StyleConstructorPage extends StatelessWidget {
               onDrawingEnded: (bytes) async {
                 if (bytes != null) {
                   String base64Data = base64Encode(bytes);
-                  (c.currentTool.value as WordStyle).image = base64Data;
+                  (c.currentTool.value as StructuralLaw).image = base64Data;
+                  (c.currentTool.value as StructuralLaw).isAssetsSource = false;
                   c.currentTool.update((val) {});
-                  mainPageController.updateDataBaseWordStyles();
+                  mainPageController.updateDataBaseStructuralLaws();
                 }
               },
-              size: const Size(230, 80),
+              size: const Size(64, 64),
               // child: Image.asset('assets/map.png', fit: BoxFit.cover),
             ),
             ColorPicker(
@@ -135,21 +70,23 @@ class StyleConstructorPage extends StatelessWidget {
             IconButton(
                 onPressed: () {
                   painterController.clearContent();
-                  (c.currentTool.value as WordStyle).image = null;
-                  mainPageController.updateDataBaseWordStyles();
+                  if (isGuid((c.currentTool.value as StructuralLaw).id)) {
+                    (c.currentTool.value as StructuralLaw)
+                        .copyProps(StructuralLaw());
+                  } else {
+                    (c.currentTool.value as StructuralLaw)
+                        .copyProps(StructuralLaw.defaultSet.lastWhere(
+                      (element) =>
+                          element.id ==
+                          (c.currentTool.value as StructuralLaw).id,
+                    ));
+                  }
+
+                  c.currentTool.update((val) {});
+                  mainPageController.updateDataBaseStructuralLaws();
                 },
                 icon: const Icon(Icons.clear)),
             const SizedBox(width: 25),
-            Text('Растягивать картинку'),
-            Checkbox(
-              value: (c.currentTool.value as WordStyle).stretchImage,
-              onChanged: (value) {
-                (c.currentTool.value as WordStyle).stretchImage =
-                    value ?? false;
-                c.currentTool.update((val) {});
-                mainPageController.updateDataBaseWordStyles();
-              },
-            ),
           ],
         );
       }),

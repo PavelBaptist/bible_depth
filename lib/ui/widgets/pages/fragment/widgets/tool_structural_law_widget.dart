@@ -42,7 +42,7 @@ class ToolStructuralLawWidget extends StatelessWidget {
           onLongPress: (context) {
             c.currentTool.value = structuralLaw;
             c.currentTool.update((val) {});
-            Get.toNamed('/fragment/style_constructor');
+            Get.toNamed('/fragment/structural_law_constructor');
           },
         ),
       ),
