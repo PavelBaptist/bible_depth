@@ -1,5 +1,6 @@
 import 'package:bible_depth/models/wrap_entity.dart';
 import 'package:bible_depth/ui/widgets/pages/fragment/controller.dart';
+import 'package:bible_depth/ui/widgets/pages/fragment/widgets/structural_law_widget.dart';
 import 'package:bible_depth/ui/widgets/pages/fragment/widgets/word_widget.dart';
 import 'package:bible_depth/ui/widgets/pages/main/controller.dart';
 import 'package:flutter/material.dart';
@@ -22,7 +23,18 @@ class ResultsWidget extends StatelessWidget {
             Word emptyWord = Word();
             List<Widget> results = [];
 
-            Map<String, List<Widget>> map = {};
+            // итоги повторяющихся слов
+
+            results.add(
+              const Text(
+                'Итого повторяющихся слов:',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            );
+
+            Map<String, List<Widget>> wordsGroup = {};
             for (var wrapEntity in c.fragment.value.text) {
               if (wrapEntity is! Word ||
                   wrapEntity.styleId == '' ||
@@ -30,15 +42,15 @@ class ResultsWidget extends StatelessWidget {
                 continue;
               }
 
-              if (map[wrapEntity.styleId] == null) {
-                map[wrapEntity.styleId] = <Widget>[];
+              if (wordsGroup[wrapEntity.styleId] == null) {
+                wordsGroup[wrapEntity.styleId] = <Widget>[];
               }
-              map[wrapEntity.styleId]!.add(WordWidget(wrapEntity));
+              wordsGroup[wrapEntity.styleId]!.add(WordWidget(wrapEntity));
             }
 
             List<List<Widget>> list = [];
 
-            map.forEach(
+            wordsGroup.forEach(
               (key, value) {
                 list.add(value);
               },
@@ -51,6 +63,66 @@ class ResultsWidget extends StatelessWidget {
             );
 
             for (var value in list) {
+              value.insert(0, Text(value.length.toString() + ' повтор.: '));
+              results.add(
+                Padding(
+                  padding: const EdgeInsets.only(top: 10),
+                  child: Wrap(
+                    spacing: c.fontSize.value / 4,
+                    runSpacing: c.fontSize.value / 4,
+                    children: value,
+                  ),
+                ),
+              );
+            }
+
+            // итоги структурных законов
+
+            results.add(const SizedBox(height: 16));
+
+            results.add(
+              const Text(
+                'Итого повторяющихся структурных законов:',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            );
+
+            Map<String, List<Widget>> structuredLawsGroup = {};
+            for (var wrapEntity in c.fragment.value.text) {
+              String structuralLawId = '';
+              if (wrapEntity is Word && wrapEntity.structuralLawId != '') {
+                structuralLawId = wrapEntity.structuralLawId;
+              } else if (wrapEntity is StructuralLawPlace &&
+                  wrapEntity.structuralLawId != '') {
+                structuralLawId = wrapEntity.structuralLawId;
+              } else {
+                continue;
+              }
+
+              if (structuredLawsGroup[structuralLawId] == null) {
+                structuredLawsGroup[structuralLawId] = <Widget>[];
+              }
+              structuredLawsGroup[structuralLawId]!
+                  .add(StructuralLawWidget(structuralLawId));
+            }
+
+            List<List<Widget>> listStructuredLaws = [];
+
+            structuredLawsGroup.forEach(
+              (key, value) {
+                listStructuredLaws.add(value);
+              },
+            );
+
+            listStructuredLaws.sort(
+              (a, b) {
+                return b.length - a.length;
+              },
+            );
+
+            for (var value in listStructuredLaws) {
               value.insert(0, Text(value.length.toString() + ' повтор.: '));
               results.add(
                 Padding(

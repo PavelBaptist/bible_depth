@@ -16,6 +16,10 @@ import 'package:get/get.dart';
 enum SampleItem {
   addSpaceBefore,
   addSpaceAfter,
+  addStructuralLawBefore,
+  addStructuralLawAfter,
+  clearStructuralLaw,
+  copyStructuralLaw,
   copyStyle,
   splitWords,
 }
@@ -82,13 +86,6 @@ class FragmentPage extends StatelessWidget {
                                 wrapEntity,
                                 onTap: () {
                                   if (c.currentTool.value is StructuralLaw) {
-                                    text.insert(
-                                        i + 1,
-                                        StructuralLawPlace()
-                                          ..structuralLawId = (c.currentTool
-                                                  .value as StructuralLaw)
-                                              .id);
-
                                     wrapEntity.structuralLawId =
                                         (c.currentTool.value as StructuralLaw)
                                             .id;
@@ -170,6 +167,27 @@ class FragmentPage extends StatelessWidget {
                                         value: SampleItem.copyStyle,
                                         child: Text('Скопировать стиль'),
                                       ),
+                                      const PopupMenuDivider(),
+                                      const PopupMenuItem<SampleItem>(
+                                        value:
+                                            SampleItem.addStructuralLawBefore,
+                                        child: Text('Структурный закон ДО'),
+                                      ),
+                                      const PopupMenuItem<SampleItem>(
+                                        value: SampleItem.addStructuralLawAfter,
+                                        child: Text('Структурный закон ПОСЛЕ'),
+                                      ),
+                                      const PopupMenuItem<SampleItem>(
+                                        value: SampleItem.clearStructuralLaw,
+                                        child:
+                                            Text('Очистить структурный закон'),
+                                      ),
+                                      const PopupMenuItem<SampleItem>(
+                                        value: SampleItem.copyStructuralLaw,
+                                        child: Text(
+                                            'Скопировать структурный закон'),
+                                      ),
+                                      const PopupMenuDivider(),
                                       const PopupMenuItem<SampleItem>(
                                         value: SampleItem.addSpaceBefore,
                                         child: Text('Добавить перенос ДО'),
@@ -178,6 +196,7 @@ class FragmentPage extends StatelessWidget {
                                         value: SampleItem.addSpaceAfter,
                                         child: Text('Добавить перенос ПОСЛЕ'),
                                       ),
+                                      const PopupMenuDivider(),
                                       const PopupMenuItem<SampleItem>(
                                         value: SampleItem.splitWords,
                                         child: Text('Разделить слова'),
@@ -197,6 +216,44 @@ class FragmentPage extends StatelessWidget {
                                         });
                                         mainPageController
                                             .updateDataBaseFragments();
+                                      } else if (value ==
+                                          SampleItem.addStructuralLawBefore) {
+                                        c.fragment.update((val) {
+                                          val?.text.insert(
+                                              i,
+                                              StructuralLawPlace()
+                                                ..structuralLawId = (c
+                                                        .currentTool
+                                                        .value as StructuralLaw)
+                                                    .id);
+                                        });
+                                        mainPageController
+                                            .updateDataBaseFragments();
+                                      } else if (value ==
+                                          SampleItem.addStructuralLawAfter) {
+                                        c.fragment.update((val) {
+                                          val?.text.insert(
+                                              i + 2,
+                                              StructuralLawPlace()
+                                                ..structuralLawId = (c
+                                                        .currentTool
+                                                        .value as StructuralLaw)
+                                                    .id);
+                                        });
+                                        mainPageController
+                                            .updateDataBaseFragments();
+                                      } else if (value ==
+                                          SampleItem.clearStructuralLaw) {
+                                        wrapEntity.structuralLawId = '';
+                                        c.fragment.update((val) {});
+                                        mainPageController
+                                            .updateDataBaseFragments();
+                                      } else if (value ==
+                                          SampleItem.copyStructuralLaw) {
+                                        c.currentTool.value = mainPageController
+                                            .structuralLawList?.value
+                                            .getWordStyleById(
+                                                wrapEntity.structuralLawId);
                                       } else if (value ==
                                           SampleItem.copyStyle) {
                                         c.currentTool.value = mainPageController
