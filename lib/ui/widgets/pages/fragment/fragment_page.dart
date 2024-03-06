@@ -79,36 +79,57 @@ class FragmentPage extends StatelessWidget {
                                       : null;
 
                                   if (wordBefore?.styleId ==
-                                      wrapEntity.styleId) {
+                                          wrapEntity.styleId &&
+                                      wordAfter?.styleId ==
+                                          wrapEntity.styleId) {
                                     showConfirmationDialog(
                                       context,
                                       titleText: 'Объединить?',
                                       text:
-                                          'Предыдущее слово "${wordBefore!.value}" можно объединить с выбранным "${wrapEntity.value}"',
+                                          'Можно объединить "${wordBefore!.value}" + "${wrapEntity.value}" + "${wordAfter!.value}"',
                                       onTapYes: () {
                                         wordBefore.value +=
-                                            ' ${wrapEntity.value}';
+                                            ' ${wrapEntity.value} ${wordAfter.value}';
+                                        text.removeAt(i + 2);
+                                        text.removeAt(i + 1);
                                         text.removeAt(i);
                                         text.removeAt(i - 1);
                                         c.fragment.update((val) {});
                                       },
                                     );
-                                  }
-                                  if (wordAfter?.styleId ==
-                                      wrapEntity.styleId) {
-                                    showConfirmationDialog(
-                                      context,
-                                      titleText: 'Объединить?',
-                                      text:
-                                          'Выбранное слово "${wrapEntity.value}" можно объединить со следующим "${wordAfter!.value}"',
-                                      onTapYes: () {
-                                        wordAfter.value =
-                                            '${wrapEntity.value} ${wordAfter.value}';
-                                        text.removeAt(i + 1);
-                                        text.removeAt(i);
-                                        c.fragment.update((val) {});
-                                      },
-                                    );
+                                  } else {
+                                    if (wordBefore?.styleId ==
+                                        wrapEntity.styleId) {
+                                      showConfirmationDialog(
+                                        context,
+                                        titleText: 'Объединить?',
+                                        text:
+                                            'Можно объединить "${wordBefore!.value}" + "${wrapEntity.value}"',
+                                        onTapYes: () {
+                                          wordBefore.value +=
+                                              ' ${wrapEntity.value}';
+                                          text.removeAt(i);
+                                          text.removeAt(i - 1);
+                                          c.fragment.update((val) {});
+                                        },
+                                      );
+                                    }
+                                    if (wordAfter?.styleId ==
+                                        wrapEntity.styleId) {
+                                      showConfirmationDialog(
+                                        context,
+                                        titleText: 'Объединить?',
+                                        text:
+                                            'Можно объединить "${wrapEntity.value}" + "${wordAfter!.value}"',
+                                        onTapYes: () {
+                                          wordAfter.value =
+                                              '${wrapEntity.value} ${wordAfter.value}';
+                                          text.removeAt(i + 1);
+                                          text.removeAt(i);
+                                          c.fragment.update((val) {});
+                                        },
+                                      );
+                                    }
                                   }
 
                                   mainPageController.updateDataBaseFragments();
