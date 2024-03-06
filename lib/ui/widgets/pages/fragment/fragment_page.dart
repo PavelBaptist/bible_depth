@@ -13,14 +13,17 @@ import 'package:bible_depth/ui/widgets/pages/main/controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-enum SampleItem {
+enum Menu {
   addSpaceBefore,
   addSpaceAfter,
+  deleteSpaceBefore,
+  deleteSpaceAfter,
   addStructuralLawBefore,
   addStructuralLawAfter,
   clearStructuralLaw,
   copyStructuralLaw,
   copyStyle,
+  delete,
   splitWords,
 }
 
@@ -81,6 +84,174 @@ class FragmentPage extends StatelessWidget {
 
                           for (var i = 0; i < text.length; i++) {
                             WrapEntity wrapEntity = text[i];
+
+                            // ignore: prefer_function_declarations_over_variables
+                            var onLongPress = (context) {
+                              showPopupMenu(
+                                context,
+                                popupMenuList: <PopupMenuEntry<Menu>>[
+                                  const PopupMenuItem<Menu>(
+                                    value: Menu.copyStyle,
+                                    child: Text('Скопировать стиль'),
+                                  ),
+                                  const PopupMenuDivider(),
+                                  const PopupMenuItem<Menu>(
+                                    value: Menu.addStructuralLawBefore,
+                                    child: Text('Структурный закон ДО'),
+                                  ),
+                                  const PopupMenuItem<Menu>(
+                                    value: Menu.addStructuralLawAfter,
+                                    child: Text('Структурный закон ПОСЛЕ'),
+                                  ),
+                                  const PopupMenuItem<Menu>(
+                                    value: Menu.clearStructuralLaw,
+                                    child: Text('Очистить структурный закон'),
+                                  ),
+                                  const PopupMenuItem<Menu>(
+                                    value: Menu.copyStructuralLaw,
+                                    child:
+                                        Text('Скопировать структурный закон'),
+                                  ),
+                                  const PopupMenuDivider(),
+                                  const PopupMenuItem<Menu>(
+                                    value: Menu.addSpaceBefore,
+                                    child: Text('Добавить перенос ДО'),
+                                  ),
+                                  const PopupMenuItem<Menu>(
+                                    value: Menu.addSpaceAfter,
+                                    child: Text('Добавить перенос ПОСЛЕ'),
+                                  ),
+                                  const PopupMenuItem<Menu>(
+                                    value: Menu.deleteSpaceBefore,
+                                    child: Text('Удалить перенос ДО'),
+                                  ),
+                                  const PopupMenuItem<Menu>(
+                                    value: Menu.deleteSpaceAfter,
+                                    child: Text('Удалить перенос ПОСЛЕ'),
+                                  ),
+                                  const PopupMenuDivider(),
+                                  const PopupMenuItem<Menu>(
+                                    value: Menu.splitWords,
+                                    child: Text('Разделить слова'),
+                                  ),
+                                  const PopupMenuItem<Menu>(
+                                    value: Menu.delete,
+                                    child: Text('Удалить'),
+                                  ),
+                                ],
+                                onValue: (value) {
+                                  if (value == Menu.addSpaceBefore) {
+                                    c.fragment.update((val) {
+                                      val?.text.insert(i, LineBreak());
+                                    });
+                                    mainPageController
+                                        .updateDataBaseFragments();
+                                  } else if (value == Menu.addSpaceAfter) {
+                                    c.fragment.update((val) {
+                                      val?.text.insert(i + 2, LineBreak());
+                                    });
+                                    mainPageController
+                                        .updateDataBaseFragments();
+                                  } else if (value == Menu.deleteSpaceBefore) {
+                                    if (c.fragment.value.text[i - 1]
+                                        is LineBreak) {
+                                      c.fragment.update((val) {
+                                        val?.text.removeAt(i - 1);
+                                      });
+                                      mainPageController
+                                          .updateDataBaseFragments();
+                                    }
+                                  } else if (value == Menu.deleteSpaceAfter) {
+                                    if (c.fragment.value.text[i + 1]
+                                        is LineBreak) {
+                                      c.fragment.update((val) {
+                                        val?.text.removeAt(i + 1);
+                                      });
+                                      mainPageController
+                                          .updateDataBaseFragments();
+                                    }
+                                  } else if (value ==
+                                      Menu.addStructuralLawBefore) {
+                                    c.fragment.update((val) {
+                                      val?.text.insert(
+                                          i,
+                                          StructuralLawPlace()
+                                            ..structuralLawId = (c.currentTool
+                                                    .value as StructuralLaw)
+                                                .id);
+                                    });
+                                    mainPageController
+                                        .updateDataBaseFragments();
+                                  } else if (value ==
+                                      Menu.addStructuralLawAfter) {
+                                    c.fragment.update((val) {
+                                      val?.text.insert(
+                                          i + 2,
+                                          StructuralLawPlace()
+                                            ..structuralLawId = (c.currentTool
+                                                    .value as StructuralLaw)
+                                                .id);
+                                    });
+                                    mainPageController
+                                        .updateDataBaseFragments();
+                                  } else if (value == Menu.clearStructuralLaw) {
+                                    if (wrapEntity is Word) {
+                                      wrapEntity.structuralLawId = '';
+                                      c.fragment.update((val) {});
+                                      mainPageController
+                                          .updateDataBaseFragments();
+                                    }
+                                  } else if (value == Menu.copyStructuralLaw) {
+                                    if (wrapEntity is Word) {
+                                      c.currentTool.value = mainPageController
+                                          .structuralLawList?.value
+                                          .getWordStyleById(
+                                              wrapEntity.structuralLawId);
+                                    } else if (wrapEntity
+                                        is StructuralLawPlace) {
+                                      c.currentTool.value = mainPageController
+                                          .structuralLawList?.value
+                                          .getWordStyleById(
+                                              wrapEntity.structuralLawId);
+                                    }
+                                  } else if (value == Menu.copyStyle) {
+                                    if (wrapEntity is Word) {
+                                      c.currentTool.value = mainPageController
+                                          .wordStyleList?.value
+                                          .getWordStyleById(wrapEntity.styleId);
+                                    }
+                                  } else if (value == Menu.splitWords) {
+                                    if (wrapEntity is Word) {
+                                      var words = wrapEntity.value.split(' ');
+                                      var wordsWidgets = <WrapEntity>[];
+                                      for (var word in words) {
+                                        wordsWidgets.add(
+                                          Word()
+                                            ..value = word
+                                            ..styleId = wrapEntity.styleId,
+                                        );
+                                        wordsWidgets.add(Space());
+                                      }
+                                      wordsWidgets
+                                          .removeAt(wordsWidgets.length - 1);
+
+                                      text.removeAt(i);
+                                      text.insertAll(i, wordsWidgets);
+
+                                      mainPageController
+                                          .updateDataBaseFragments();
+                                      c.fragment.update((val) {});
+                                    }
+                                  } else if (value == Menu.delete) {
+                                    c.fragment.update((val) {
+                                      val?.text.removeAt(i);
+                                    });
+                                    mainPageController
+                                        .updateDataBaseFragments();
+                                  }
+                                },
+                              );
+                            };
                             if (wrapEntity is Word) {
                               result.add(WordWidget(
                                 wrapEntity,
@@ -159,132 +330,7 @@ class FragmentPage extends StatelessWidget {
                                   mainPageController.updateDataBaseFragments();
                                   c.fragment.update((val) {});
                                 },
-                                onLongPress: (context) {
-                                  showPopupMenu(
-                                    context,
-                                    popupMenuList: <PopupMenuEntry<SampleItem>>[
-                                      const PopupMenuItem<SampleItem>(
-                                        value: SampleItem.copyStyle,
-                                        child: Text('Скопировать стиль'),
-                                      ),
-                                      const PopupMenuDivider(),
-                                      const PopupMenuItem<SampleItem>(
-                                        value:
-                                            SampleItem.addStructuralLawBefore,
-                                        child: Text('Структурный закон ДО'),
-                                      ),
-                                      const PopupMenuItem<SampleItem>(
-                                        value: SampleItem.addStructuralLawAfter,
-                                        child: Text('Структурный закон ПОСЛЕ'),
-                                      ),
-                                      const PopupMenuItem<SampleItem>(
-                                        value: SampleItem.clearStructuralLaw,
-                                        child:
-                                            Text('Очистить структурный закон'),
-                                      ),
-                                      const PopupMenuItem<SampleItem>(
-                                        value: SampleItem.copyStructuralLaw,
-                                        child: Text(
-                                            'Скопировать структурный закон'),
-                                      ),
-                                      const PopupMenuDivider(),
-                                      const PopupMenuItem<SampleItem>(
-                                        value: SampleItem.addSpaceBefore,
-                                        child: Text('Добавить перенос ДО'),
-                                      ),
-                                      const PopupMenuItem<SampleItem>(
-                                        value: SampleItem.addSpaceAfter,
-                                        child: Text('Добавить перенос ПОСЛЕ'),
-                                      ),
-                                      const PopupMenuDivider(),
-                                      const PopupMenuItem<SampleItem>(
-                                        value: SampleItem.splitWords,
-                                        child: Text('Разделить слова'),
-                                      ),
-                                    ],
-                                    onValue: (value) {
-                                      if (value == SampleItem.addSpaceBefore) {
-                                        c.fragment.update((val) {
-                                          val?.text.insert(i, LineBreak());
-                                        });
-                                        mainPageController
-                                            .updateDataBaseFragments();
-                                      } else if (value ==
-                                          SampleItem.addSpaceAfter) {
-                                        c.fragment.update((val) {
-                                          val?.text.insert(i + 2, LineBreak());
-                                        });
-                                        mainPageController
-                                            .updateDataBaseFragments();
-                                      } else if (value ==
-                                          SampleItem.addStructuralLawBefore) {
-                                        c.fragment.update((val) {
-                                          val?.text.insert(
-                                              i,
-                                              StructuralLawPlace()
-                                                ..structuralLawId = (c
-                                                        .currentTool
-                                                        .value as StructuralLaw)
-                                                    .id);
-                                        });
-                                        mainPageController
-                                            .updateDataBaseFragments();
-                                      } else if (value ==
-                                          SampleItem.addStructuralLawAfter) {
-                                        c.fragment.update((val) {
-                                          val?.text.insert(
-                                              i + 2,
-                                              StructuralLawPlace()
-                                                ..structuralLawId = (c
-                                                        .currentTool
-                                                        .value as StructuralLaw)
-                                                    .id);
-                                        });
-                                        mainPageController
-                                            .updateDataBaseFragments();
-                                      } else if (value ==
-                                          SampleItem.clearStructuralLaw) {
-                                        wrapEntity.structuralLawId = '';
-                                        c.fragment.update((val) {});
-                                        mainPageController
-                                            .updateDataBaseFragments();
-                                      } else if (value ==
-                                          SampleItem.copyStructuralLaw) {
-                                        c.currentTool.value = mainPageController
-                                            .structuralLawList?.value
-                                            .getWordStyleById(
-                                                wrapEntity.structuralLawId);
-                                      } else if (value ==
-                                          SampleItem.copyStyle) {
-                                        c.currentTool.value = mainPageController
-                                            .wordStyleList?.value
-                                            .getWordStyleById(
-                                                wrapEntity.styleId);
-                                      } else if (value ==
-                                          SampleItem.splitWords) {
-                                        var words = wrapEntity.value.split(' ');
-                                        var wordsWidgets = <WrapEntity>[];
-                                        for (var word in words) {
-                                          wordsWidgets.add(
-                                            Word()
-                                              ..value = word
-                                              ..styleId = wrapEntity.styleId,
-                                          );
-                                          wordsWidgets.add(Space());
-                                        }
-                                        wordsWidgets
-                                            .removeAt(wordsWidgets.length - 1);
-
-                                        text.removeAt(i);
-                                        text.insertAll(i, wordsWidgets);
-
-                                        mainPageController
-                                            .updateDataBaseFragments();
-                                        c.fragment.update((val) {});
-                                      }
-                                    },
-                                  );
-                                },
+                                onLongPress: onLongPress,
                                 fontSize: c.fontSize.value,
                               ));
                             } else if (wrapEntity is VerseIndex) {
@@ -298,6 +344,17 @@ class FragmentPage extends StatelessWidget {
                               result.add(StructuralLawWidget(
                                 wrapEntity.structuralLawId,
                                 size: c.fontSize.value,
+                                onTap: () {
+                                  if (c.currentTool.value is StructuralLaw) {
+                                    c.fragment.update((val) {
+                                      (val!.text[i] as StructuralLawPlace)
+                                              .structuralLawId =
+                                          (c.currentTool.value as StructuralLaw)
+                                              .id;
+                                    });
+                                  }
+                                },
+                                onLongPress: onLongPress,
                               ));
                             }
                           }
