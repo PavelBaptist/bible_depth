@@ -45,7 +45,7 @@ class ToolWordStyleWidget extends StatelessWidget {
           onLongPress: (context) {
             c.currentTool.value = wordStyle;
             c.currentTool.update((val) {});
-            Get.toNamed('/fragment/style_constructor');
+            Get.toNamed('/fragment/word_style_editor');
           },
         ),
       ),

@@ -50,3 +50,14 @@ class StructuralLawPlace extends WrapEntity {
 
   StructuralLawPlace();
 }
+
+@HiveType(typeId: 105)
+class Header extends WrapEntity {
+  @HiveField(0)
+  String value = '';
+
+  @HiveField(1)
+  int level = 4;
+
+  Header();
+}

@@ -6,8 +6,9 @@ import 'package:bible_depth/models/word_style.dart';
 import 'package:bible_depth/models/word_style_list.dart';
 import 'package:bible_depth/models/wrap_entity.dart';
 import 'package:bible_depth/ui/widgets/pages/fragment/fragment_page.dart';
-import 'package:bible_depth/ui/widgets/pages/fragment/structural_law_constructor/structural_law_constructor_page.dart';
-import 'package:bible_depth/ui/widgets/pages/fragment/style_constructor/style_constructor_page.dart';
+import 'package:bible_depth/ui/widgets/pages/fragment/header_editor/header_editor_page.dart';
+import 'package:bible_depth/ui/widgets/pages/fragment/structural_law_editor/structural_law_editor_page.dart';
+import 'package:bible_depth/ui/widgets/pages/fragment/word_style_editor/word_style_editor_page.dart';
 import 'package:bible_depth/ui/widgets/pages/main/main_page.dart';
 import 'package:bible_depth/ui/widgets/pages/new_fragment/new_fragment_page.dart';
 import 'package:bible_depth/ui/widgets/pages/new_fragment/select_chapter_and_verse/select_chapter_and_verse_page.dart';
@@ -90,12 +91,16 @@ class App extends StatelessWidget {
           page: () => FragmentPage(),
         ),
         GetPage(
-          name: '/fragment/style_constructor',
-          page: () => StyleConstructorPage(),
+          name: '/fragment/word_style_editor',
+          page: () => WordStyleEditorPage(),
         ),
         GetPage(
-          name: '/fragment/structural_law_constructor',
-          page: () => StructuralLawConstructorPage(),
+          name: '/fragment/structural_law_editor',
+          page: () => StructuralLawEditorPage(),
+        ),
+        GetPage(
+          name: '/fragment/header_editor',
+          page: () => HeaderEditorPage(),
         ),
         GetPage(
           name: '/new_fragment',

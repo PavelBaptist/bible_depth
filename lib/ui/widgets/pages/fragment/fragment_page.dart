@@ -3,6 +3,7 @@ import 'package:bible_depth/models/structural_law.dart';
 import 'package:bible_depth/models/word_style.dart';
 import 'package:bible_depth/models/wrap_entity.dart';
 import 'package:bible_depth/ui/widgets/pages/fragment/controller.dart';
+import 'package:bible_depth/ui/widgets/pages/fragment/widgets/header_widget.dart';
 import 'package:bible_depth/ui/widgets/pages/fragment/widgets/results_widget.dart';
 import 'package:bible_depth/ui/widgets/pages/fragment/widgets/structural_law_widget.dart';
 import 'package:bible_depth/ui/widgets/pages/fragment/widgets/tool_structural_law_widget.dart';
@@ -14,8 +15,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 enum Menu {
+  edit,
   addSpaceBefore,
   addSpaceAfter,
+  addHeaderBefore,
+  addHeaderAfter,
   deleteSpaceBefore,
   deleteSpaceAfter,
   addStructuralLawBefore,
@@ -91,6 +95,10 @@ class FragmentPage extends StatelessWidget {
                                 context,
                                 popupMenuList: <PopupMenuEntry<Menu>>[
                                   const PopupMenuItem<Menu>(
+                                    value: Menu.edit,
+                                    child: Text('Изменить'),
+                                  ),
+                                  const PopupMenuItem<Menu>(
                                     value: Menu.copyStyle,
                                     child: Text('Скопировать стиль'),
                                   ),
@@ -111,6 +119,15 @@ class FragmentPage extends StatelessWidget {
                                     value: Menu.copyStructuralLaw,
                                     child:
                                         Text('Скопировать структурный закон'),
+                                  ),
+                                  const PopupMenuDivider(),
+                                  const PopupMenuItem<Menu>(
+                                    value: Menu.addHeaderBefore,
+                                    child: Text('Добавить заголовок ДО'),
+                                  ),
+                                  const PopupMenuItem<Menu>(
+                                    value: Menu.addHeaderAfter,
+                                    child: Text('Добавить заголовок ПОСЛЕ'),
                                   ),
                                   const PopupMenuDivider(),
                                   const PopupMenuItem<Menu>(
@@ -140,7 +157,32 @@ class FragmentPage extends StatelessWidget {
                                   ),
                                 ],
                                 onValue: (value) {
-                                  if (value == Menu.addSpaceBefore) {
+                                  if (value == Menu.edit) {
+                                    if (wrapEntity is Header) {
+                                      Get.toNamed('/fragment/header_editor',
+                                          arguments: {'header': wrapEntity});
+                                    }
+                                  } else if (value == Menu.addHeaderBefore) {
+                                    Header newHeader = Header();
+
+                                    c.fragment.update((val) {
+                                      val?.text.insert(i, newHeader);
+                                    });
+                                    mainPageController
+                                        .updateDataBaseFragments();
+                                    Get.toNamed('/fragment/header_editor',
+                                        arguments: {'header': newHeader});
+                                  } else if (value == Menu.addHeaderAfter) {
+                                    Header newHeader = Header();
+
+                                    c.fragment.update((val) {
+                                      val?.text.insert(i + 1, newHeader);
+                                    });
+                                    mainPageController
+                                        .updateDataBaseFragments();
+                                    Get.toNamed('/fragment/header_editor',
+                                        arguments: {'header': newHeader});
+                                  } else if (value == Menu.addSpaceBefore) {
                                     c.fragment.update((val) {
                                       val?.text.insert(i, LineBreak());
                                     });
@@ -336,6 +378,12 @@ class FragmentPage extends StatelessWidget {
                               ));
                             } else if (wrapEntity is LineBreak) {
                               result.add(Row());
+                            } else if (wrapEntity is Header) {
+                              result.add(HeaderWidget(
+                                wrapEntity,
+                                onLongPress: onLongPress,
+                                fontSize: c.fontSize.value,
+                              ));
                             } else if (wrapEntity is StructuralLawPlace) {
                               result.add(StructuralLawWidget(
                                 wrapEntity.structuralLawId,
