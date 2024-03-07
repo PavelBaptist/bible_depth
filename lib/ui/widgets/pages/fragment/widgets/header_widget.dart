@@ -51,11 +51,14 @@ class HeaderWidget extends StatelessWidget {
             : const EdgeInsets.all(0),
         child: Row(
           children: [
-            Text(
-              header.value == '' ? 'Новый заголовок' : header.value,
-              style: TextStyle(
-                fontSize: textSize,
-                fontWeight: FontWeight.bold,
+            Expanded(
+              child: Text(
+                header.value == '' ? 'Новый заголовок' : header.value,
+                overflow: TextOverflow.clip,
+                style: TextStyle(
+                  fontSize: textSize,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
           ],
