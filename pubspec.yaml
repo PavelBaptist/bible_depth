@@ -47,6 +47,8 @@ dependencies:
   path_provider: ^2.1.2
   finger_painter: ^1.1.0
   uuid: ^4.2.2
+  html: ^0.15.4
+  windows1251: ^2.0.0
   
   
 dev_dependencies:

@@ -1,5 +1,4 @@
 import 'package:bible_depth/ui/widgets/pages/main/controller.dart';
-import 'package:bible_depth/ui/widgets/pages/new_fragment/new_fragment_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
