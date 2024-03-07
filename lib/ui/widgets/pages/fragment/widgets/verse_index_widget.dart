@@ -28,8 +28,7 @@ class VerseIndexWidget extends StatelessWidget {
           child: Text(
             verseIndex.value,
             style: TextStyle(
-              fontSize: c.fontSize.value / 1.5,
-            ),
+                fontSize: c.fontSize.value, color: Colors.grey.shade400),
           ),
         ),
       ],

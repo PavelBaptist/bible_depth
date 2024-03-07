@@ -19,7 +19,7 @@ class FragmentAdapter extends TypeAdapter<Fragment> {
     return Fragment(
       text: (fields[1] as List).cast<WrapEntity>(),
       name: fields[0] as String,
-    )..description = fields[2] as String;
+    )..description = fields[2] as String?;
   }
 
   @override

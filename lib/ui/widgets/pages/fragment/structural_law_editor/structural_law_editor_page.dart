@@ -41,19 +41,21 @@ class StructuralLawEditorPage extends StatelessWidget {
               controller: descriptionController,
               onChanged: (String value) {
                 (c.currentTool.value as StructuralLaw).description = value;
-                mainPageController.updateDataBaseStructuralLaws();
+
+                update();
               },
             ),
             Painter(
               controller: painterController,
               backgroundColor: Colors.black.withAlpha(30),
+
               onDrawingEnded: (bytes) async {
                 if (bytes != null) {
                   String base64Data = base64Encode(bytes);
                   (c.currentTool.value as StructuralLaw).image = base64Data;
                   (c.currentTool.value as StructuralLaw).isAssetsSource = false;
-                  c.currentTool.update((val) {});
-                  mainPageController.updateDataBaseStructuralLaws();
+
+                  update();
                 }
               },
               size: const Size(64, 64),
@@ -82,8 +84,7 @@ class StructuralLawEditorPage extends StatelessWidget {
                     ));
                   }
 
-                  c.currentTool.update((val) {});
-                  mainPageController.updateDataBaseStructuralLaws();
+                  update();
                 },
                 icon: const Icon(Icons.clear)),
             const SizedBox(width: 25),
@@ -91,6 +92,12 @@ class StructuralLawEditorPage extends StatelessWidget {
         );
       }),
     );
+  }
+
+  void update() {
+    c.fragment.update((val) {});
+    c.currentTool.update((val) {});
+    mainPageController.updateDataBaseStructuralLaws();
   }
 }
 

@@ -43,7 +43,7 @@ class WordStyleEditorPage extends StatelessWidget {
               controller: descriptionController,
               onChanged: (String value) {
                 (c.currentTool.value as WordStyle).description = value;
-                mainPageController.updateDataBaseWordStyles();
+                update();
               },
             ),
             Row(
@@ -53,8 +53,7 @@ class WordStyleEditorPage extends StatelessWidget {
                   value: (c.currentTool.value as WordStyle).isBold,
                   onChanged: (value) {
                     (c.currentTool.value as WordStyle).isBold = value;
-                    c.currentTool.update((val) {});
-                    mainPageController.updateDataBaseWordStyles();
+                    update();
                   },
                 ),
                 const SizedBox(width: 25),
@@ -63,8 +62,7 @@ class WordStyleEditorPage extends StatelessWidget {
                   value: (c.currentTool.value as WordStyle).isItalic,
                   onChanged: (value) {
                     (c.currentTool.value as WordStyle).isItalic = value;
-                    c.currentTool.update((val) {});
-                    mainPageController.updateDataBaseWordStyles();
+                    update();
                   },
                 ),
                 const SizedBox(width: 25),
@@ -74,8 +72,7 @@ class WordStyleEditorPage extends StatelessWidget {
                   onChanged: (value) {
                     (c.currentTool.value as WordStyle).borderIsCircle =
                         value ?? false;
-                    c.currentTool.update((val) {});
-                    mainPageController.updateDataBaseWordStyles();
+                    update();
                   },
                 ),
               ],
@@ -84,8 +81,7 @@ class WordStyleEditorPage extends StatelessWidget {
               label: 'Цвет текста',
               onTap: (color) {
                 (c.currentTool.value as WordStyle).fontColor = color;
-                c.currentTool.update((val) {});
-                mainPageController.updateDataBaseWordStyles();
+                update();
               },
               selectedLogic: (color) =>
                   (c.currentTool.value as WordStyle).fontColor == color,
@@ -94,8 +90,7 @@ class WordStyleEditorPage extends StatelessWidget {
               label: 'Цвет фона',
               onTap: (color) {
                 (c.currentTool.value as WordStyle).highlightColor = color;
-                c.currentTool.update((val) {});
-                mainPageController.updateDataBaseWordStyles();
+                update();
               },
               selectedLogic: (color) =>
                   (c.currentTool.value as WordStyle).highlightColor == color,
@@ -104,8 +99,7 @@ class WordStyleEditorPage extends StatelessWidget {
               label: 'Цвет обводки',
               onTap: (color) {
                 (c.currentTool.value as WordStyle).borderColor = color;
-                c.currentTool.update((val) {});
-                mainPageController.updateDataBaseWordStyles();
+                update();
               },
               selectedLogic: (color) =>
                   (c.currentTool.value as WordStyle).borderColor == color,
@@ -117,8 +111,7 @@ class WordStyleEditorPage extends StatelessWidget {
                 if (bytes != null) {
                   String base64Data = base64Encode(bytes);
                   (c.currentTool.value as WordStyle).image = base64Data;
-                  c.currentTool.update((val) {});
-                  mainPageController.updateDataBaseWordStyles();
+                  update();
                 }
               },
               size: const Size(230, 80),
@@ -136,7 +129,7 @@ class WordStyleEditorPage extends StatelessWidget {
                 onPressed: () {
                   painterController.clearContent();
                   (c.currentTool.value as WordStyle).image = null;
-                  mainPageController.updateDataBaseWordStyles();
+                  update();
                 },
                 icon: const Icon(Icons.clear)),
             const SizedBox(width: 25),
@@ -146,14 +139,20 @@ class WordStyleEditorPage extends StatelessWidget {
               onChanged: (value) {
                 (c.currentTool.value as WordStyle).stretchImage =
                     value ?? false;
-                c.currentTool.update((val) {});
-                mainPageController.updateDataBaseWordStyles();
+
+                update();
               },
             ),
           ],
         );
       }),
     );
+  }
+
+  void update() {
+    c.fragment.update((val) {});
+    c.currentTool.update((val) {});
+    mainPageController.updateDataBaseWordStyles();
   }
 }
 

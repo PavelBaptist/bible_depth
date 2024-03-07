@@ -28,6 +28,7 @@ enum Menu {
   clearStructuralLaw,
   copyStructuralLaw,
   copyStyle,
+  clearStyle,
   delete,
   splitWords,
 }
@@ -43,7 +44,7 @@ class FragmentPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    descriptionController.text = c.fragment.value.description;
+    descriptionController.text = c.fragment.value.description ?? '';
     return Scaffold(
       appBar: AppBar(
         actions: [
@@ -104,6 +105,10 @@ class FragmentPage extends StatelessWidget {
                                   const PopupMenuItem<Menu>(
                                     value: Menu.copyStyle,
                                     child: Text('Скопировать стиль'),
+                                  ),
+                                  const PopupMenuItem<Menu>(
+                                    value: Menu.clearStyle,
+                                    child: Text('Очистить стиль'),
                                   ),
                                   const PopupMenuDivider(),
                                   const PopupMenuItem<Menu>(
@@ -242,11 +247,13 @@ class FragmentPage extends StatelessWidget {
                                   } else if (value == Menu.clearStructuralLaw) {
                                     if (wrapEntity is Word) {
                                       wrapEntity.structuralLawId = '';
-                                      c.fragment.update((val) {});
                                       mainPageController
                                           .updateDataBaseFragments();
+                                      c.fragment.update((val) {});
                                     } else if (wrapEntity
                                         is StructuralLawPlace) {
+                                      mainPageController
+                                          .updateDataBaseFragments();
                                       c.fragment.update((val) {
                                         val?.text.removeAt(i);
                                       });
@@ -269,6 +276,19 @@ class FragmentPage extends StatelessWidget {
                                       c.currentTool.value = mainPageController
                                           .wordStyleList?.value
                                           .getWordStyleById(wrapEntity.styleId);
+                                    } else if (wrapEntity
+                                        is StructuralLawPlace) {
+                                      c.currentTool.value = mainPageController
+                                          .structuralLawList?.value
+                                          .getWordStyleById(
+                                              wrapEntity.structuralLawId);
+                                    }
+                                  } else if (value == Menu.clearStyle) {
+                                    if (wrapEntity is Word) {
+                                      wrapEntity.styleId = '';
+                                      mainPageController
+                                          .updateDataBaseFragments();
+                                      c.fragment.update((val) {});
                                     }
                                   } else if (value == Menu.splitWords) {
                                     if (wrapEntity is Word) {
@@ -290,7 +310,8 @@ class FragmentPage extends StatelessWidget {
                                       c.fragment.update((val) {});
                                     }
                                   } else if (value == Menu.delete) {
-                                    if (wrapEntity is! Word) {
+                                    if (wrapEntity is! Word &&
+                                        wrapEntity is! VerseIndex) {
                                       c.fragment.update((val) {
                                         val?.text.removeAt(i);
                                       });
@@ -313,14 +334,18 @@ class FragmentPage extends StatelessWidget {
                                     wrapEntity.styleId =
                                         (c.currentTool.value as WordStyle).id;
                                     int indexBefore = i < 1 ? i : i - 1;
-                                    Word? wordBefore = text[indexBefore] is Word
-                                        ? text[indexBefore] as Word
-                                        : null;
+                                    Word? wordBefore = i == 0
+                                        ? null
+                                        : text[indexBefore] is Word
+                                            ? text[indexBefore] as Word
+                                            : null;
                                     int indexAfter =
-                                        i > text.length - 1 ? i : i + 1;
-                                    Word? wordAfter = text[indexAfter] is Word
-                                        ? text[indexAfter] as Word
-                                        : null;
+                                        i >= text.length - 1 ? i : i + 1;
+                                    Word? wordAfter = i == text.length - 1
+                                        ? null
+                                        : text[indexAfter] is Word
+                                            ? text[indexAfter] as Word
+                                            : null;
 
                                     if (wordBefore?.styleId ==
                                             wrapEntity.styleId &&
@@ -420,10 +445,73 @@ class FragmentPage extends StatelessWidget {
                   ),
                 ),
                 const Divider(),
-                ResultsWidget(),
-                TextField(
-                  controller: descriptionController,
-                  maxLines: null,
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Container(
+                    padding: const EdgeInsets.all(16.0),
+                    decoration: BoxDecoration(
+                      color: Colors.blue.shade50,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withAlpha(50),
+                          blurRadius: 10,
+                          spreadRadius: 0,
+                        )
+                      ],
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Center(
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 16),
+                            child: Text(
+                              'Автоматические итоги',
+                              style: TextStyle(fontSize: 24),
+                            ),
+                          ),
+                        ),
+                        ResultsWidget(),
+                      ],
+                    ),
+                  ),
+                ),
+                const Divider(),
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Container(
+                    padding: const EdgeInsets.all(16.0),
+                    decoration: BoxDecoration(
+                      color: Colors.amber.shade50,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withAlpha(50),
+                          blurRadius: 10,
+                          spreadRadius: 0,
+                        )
+                      ],
+                    ),
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          child: Text(
+                            'Заметки',
+                            style: TextStyle(fontSize: 24),
+                          ),
+                        ),
+                        TextField(
+                          controller: descriptionController,
+                          maxLines: null,
+                          onChanged: (value) {
+                            c.fragment.value.description =
+                                descriptionController.text;
+                            mainPageController.updateDataBaseFragments();
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
               ],
             ),
