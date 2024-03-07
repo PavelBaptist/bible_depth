@@ -12,6 +12,7 @@ import 'package:bible_depth/ui/widgets/pages/fragment/widgets/verse_index_widget
 import 'package:bible_depth/ui/widgets/pages/fragment/widgets/word_widget.dart';
 import 'package:bible_depth/ui/widgets/pages/main/controller.dart';
 import 'package:flutter/material.dart';
+
 import 'package:get/get.dart';
 
 enum Menu {
@@ -34,6 +35,7 @@ enum Menu {
 class FragmentPage extends StatelessWidget {
   final FragmentPageController c = Get.put(FragmentPageController());
   final mainPageController = Get.find<MainPageController>();
+  TextEditingController descriptionController = TextEditingController();
 
   FragmentPage({super.key}) {
     c.fragment.value = mainPageController.selectedFragment!;
@@ -41,6 +43,7 @@ class FragmentPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    descriptionController.text = c.fragment.value.description;
     return Scaffold(
       appBar: AppBar(
         actions: [
@@ -242,6 +245,11 @@ class FragmentPage extends StatelessWidget {
                                       c.fragment.update((val) {});
                                       mainPageController
                                           .updateDataBaseFragments();
+                                    } else if (wrapEntity
+                                        is StructuralLawPlace) {
+                                      c.fragment.update((val) {
+                                        val?.text.removeAt(i);
+                                      });
                                     }
                                   } else if (value == Menu.copyStructuralLaw) {
                                     if (wrapEntity is Word) {
@@ -282,11 +290,13 @@ class FragmentPage extends StatelessWidget {
                                       c.fragment.update((val) {});
                                     }
                                   } else if (value == Menu.delete) {
-                                    c.fragment.update((val) {
-                                      val?.text.removeAt(i);
-                                    });
-                                    mainPageController
-                                        .updateDataBaseFragments();
+                                    if (wrapEntity is! Word) {
+                                      c.fragment.update((val) {
+                                        val?.text.removeAt(i);
+                                      });
+                                      mainPageController
+                                          .updateDataBaseFragments();
+                                    }
                                   }
                                 },
                               );
@@ -411,6 +421,10 @@ class FragmentPage extends StatelessWidget {
                 ),
                 const Divider(),
                 ResultsWidget(),
+                TextField(
+                  controller: descriptionController,
+                  maxLines: null,
+                ),
               ],
             ),
           ),

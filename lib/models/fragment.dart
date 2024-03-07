@@ -9,6 +9,8 @@ class Fragment {
   String name = '';
   @HiveField(1)
   List<WrapEntity> text = [];
+  @HiveField(2)
+  String description = '';
 
   Fragment({
     required this.text,
