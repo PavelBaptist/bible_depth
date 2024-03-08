@@ -28,10 +28,12 @@ class MainPage extends StatelessWidget {
             c.fragmentList?.value.list.forEach((fragment) {
               result.add(InkWell(
                 child: ListTile(
+                  trailing: Icon(Icons.arrow_forward_ios_outlined),
                   title: Text(fragment.name),
-                  onTap: () {
+                  onTap: () async {
                     c.selectedFragment = fragment;
-                    Get.toNamed('/fragment');
+                    await Get.toNamed('/fragment');
+                    c.fragmentList!.update((val) {});
                   },
                 ),
               ));

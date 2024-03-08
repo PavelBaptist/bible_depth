@@ -39,7 +39,7 @@ class FragmentPage extends StatelessWidget {
   final FragmentPageController c = Get.put(FragmentPageController());
   final mainPageController = Get.find<MainPageController>();
   TextEditingController descriptionController = TextEditingController();
-
+  TextEditingController nameController = TextEditingController();
   FragmentPage({super.key}) {
     c.fragment.value = mainPageController.selectedFragment!;
   }
@@ -47,6 +47,7 @@ class FragmentPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     descriptionController.text = c.fragment.value.description ?? '';
+    nameController.text = c.fragment.value.name;
     return Scaffold(
       appBar: AppBar(
         actions: [
@@ -67,18 +68,14 @@ class FragmentPage extends StatelessWidget {
           Expanded(
             child: ListView(
               children: [
-                Obx(
-                  () => Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        c.fragment.value.name,
-                        style: const TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      )
-                    ],
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: TextField(
+                    controller: nameController,
+                    onChanged: (value) {
+                      c.fragment.value.name = value;
+                      mainPageController.updateDataBaseFragments();
+                    },
                   ),
                 ),
                 Padding(
