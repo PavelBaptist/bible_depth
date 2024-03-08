@@ -1,4 +1,5 @@
 import 'package:bible_depth/helpers/dialogs.dart';
+import 'package:bible_depth/helpers/lists.dart';
 import 'package:bible_depth/models/structural_law.dart';
 import 'package:bible_depth/models/word_style.dart';
 import 'package:bible_depth/models/wrap_entity.dart';
@@ -14,11 +15,12 @@ import 'package:bible_depth/ui/widgets/pages/main/controller.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
 enum Menu {
   edit,
-  addSpaceBefore,
-  addSpaceAfter,
+  addLineBreakBefore,
+  addLineBreakAfter,
   addHeaderBefore,
   addHeaderAfter,
   deleteSpaceBefore,
@@ -98,71 +100,206 @@ class FragmentPage extends StatelessWidget {
                               showPopupMenu(
                                 context,
                                 popupMenuList: <PopupMenuEntry<Menu>>[
-                                  const PopupMenuItem<Menu>(
-                                    value: Menu.edit,
-                                    child: Text('Изменить'),
-                                  ),
-                                  const PopupMenuItem<Menu>(
-                                    value: Menu.copyStyle,
-                                    child: Text('Скопировать стиль'),
-                                  ),
-                                  const PopupMenuItem<Menu>(
-                                    value: Menu.clearStyle,
-                                    child: Text('Очистить стиль'),
-                                  ),
+                                  // важное
+                                  if (wrapEntity is Header)
+                                    myPopupItem(Menu.edit,
+                                        icon: const Icon(Icons.edit),
+                                        text: const Text('Изменить')),
+
+                                  if (wrapEntity is Word &&
+                                      wrapEntity.styleId.isNotEmpty)
+                                    myPopupItem(
+                                      Menu.copyStyle,
+                                      icon: const Icon(Icons.copy),
+                                      text: Row(
+                                        children: [
+                                          const Text('Скопировать '),
+                                          WordWidget(
+                                            Word()
+                                              ..value = 'стиль'
+                                              ..styleId = wrapEntity.styleId,
+                                          )
+                                        ],
+                                      ),
+                                    ),
+
+                                  if (wrapEntity is Word &&
+                                      wrapEntity.styleId.isNotEmpty)
+                                    myPopupItem(
+                                      Menu.clearStyle,
+                                      icon: const Icon(Icons.clear),
+                                      text: Row(
+                                        children: [
+                                          const Text('Очистить '),
+                                          WordWidget(
+                                            Word()
+                                              ..value = 'стиль'
+                                              ..styleId = wrapEntity.styleId,
+                                          )
+                                        ],
+                                      ),
+                                    ),
+
+                                  if (wrapEntity is Header ||
+                                      (wrapEntity is Word &&
+                                          wrapEntity.styleId.isNotEmpty))
+                                    const PopupMenuDivider(),
+
+                                  // структурные законы
+                                  if (c.currentTool.value is StructuralLaw)
+                                    myPopupItem(Menu.addStructuralLawBefore,
+                                        icon: const Icon(Icons.add),
+                                        text: Row(
+                                          children: [
+                                            const Text(
+                                                'Значок слева (добавить)'),
+                                            StructuralLawWidget(
+                                              (c.currentTool.value
+                                                      as StructuralLaw)
+                                                  .id,
+                                              size: 20,
+                                            )
+                                          ],
+                                        )),
+                                  if (c.currentTool.value is StructuralLaw)
+                                    myPopupItem(Menu.addStructuralLawAfter,
+                                        icon: const Icon(Icons.add),
+                                        text: Row(
+                                          children: [
+                                            const Text(
+                                                'Значок справа (добавить)'),
+                                            StructuralLawWidget(
+                                              (c.currentTool.value
+                                                      as StructuralLaw)
+                                                  .id,
+                                              size: 20,
+                                            )
+                                          ],
+                                        )),
+
+                                  if (wrapEntity is Word &&
+                                      wrapEntity.structuralLawId.isNotEmpty)
+                                    myPopupItem(Menu.copyStructuralLaw,
+                                        icon: const Icon(Icons.copy),
+                                        text: Row(
+                                          children: [
+                                            const Text('Значок (копировать)'),
+                                            StructuralLawWidget(
+                                              wrapEntity.structuralLawId,
+                                              size: 20,
+                                            )
+                                          ],
+                                        )),
+                                  if (wrapEntity is StructuralLawPlace)
+                                    myPopupItem(Menu.copyStructuralLaw,
+                                        icon: const Icon(Icons.copy),
+                                        text: Row(
+                                          children: [
+                                            const Text('Значок (копировать)'),
+                                            StructuralLawWidget(
+                                              wrapEntity.structuralLawId,
+                                              size: 20,
+                                            )
+                                          ],
+                                        )),
+
+                                  if (wrapEntity is Word &&
+                                      wrapEntity.structuralLawId.isNotEmpty)
+                                    myPopupItem(Menu.clearStructuralLaw,
+                                        icon: const Icon(Icons.remove),
+                                        text: Row(
+                                          children: [
+                                            const Text('Значок (удалить)'),
+                                            StructuralLawWidget(
+                                              wrapEntity.structuralLawId,
+                                              size: 20,
+                                            )
+                                          ],
+                                        )),
+
+                                  if (wrapEntity is StructuralLawPlace)
+                                    myPopupItem(Menu.delete,
+                                        icon: const Icon(Icons.remove),
+                                        text: Row(
+                                          children: [
+                                            const Text('Значок (удалить)'),
+                                            StructuralLawWidget(
+                                              wrapEntity.structuralLawId,
+                                              size: 20,
+                                            )
+                                          ],
+                                        )),
+
+                                  if (wrapEntity is StructuralLawPlace ||
+                                      (wrapEntity is Word &&
+                                          wrapEntity
+                                              .structuralLawId.isNotEmpty) ||
+                                      c.currentTool.value is StructuralLaw)
+                                    const PopupMenuDivider(),
+
+                                  // заголовки
+                                  myPopupItem(Menu.addHeaderBefore,
+                                      icon: const Icon(Icons.add),
+                                      text: const Text(
+                                          'Заголовок слева (добавить)')),
+                                  myPopupItem(Menu.addHeaderAfter,
+                                      icon: const Icon(Icons.add),
+                                      text: const Text(
+                                          'Заголовок справа (добавить)')),
+
                                   const PopupMenuDivider(),
-                                  const PopupMenuItem<Menu>(
-                                    value: Menu.addStructuralLawBefore,
-                                    child: Text('Структурный закон ДО'),
-                                  ),
-                                  const PopupMenuItem<Menu>(
-                                    value: Menu.addStructuralLawAfter,
-                                    child: Text('Структурный закон ПОСЛЕ'),
-                                  ),
-                                  const PopupMenuItem<Menu>(
-                                    value: Menu.clearStructuralLaw,
-                                    child: Text('Очистить структурный закон'),
-                                  ),
-                                  const PopupMenuItem<Menu>(
-                                    value: Menu.copyStructuralLaw,
-                                    child:
-                                        Text('Скопировать структурный закон'),
-                                  ),
+
+                                  // перенос строки
+                                  if (tryGetListElement(text, i - 1)
+                                      is! LineBreak)
+                                    myPopupItem(
+                                      Menu.addLineBreakBefore,
+                                      icon: const Icon(Icons.add),
+                                      text: const Text(
+                                          'Перенос слева (добавить)'),
+                                    ),
+                                  if (tryGetListElement(text, i - 1)
+                                      is LineBreak)
+                                    myPopupItem(
+                                      Menu.deleteSpaceBefore,
+                                      icon: const Icon(Icons.remove),
+                                      text:
+                                          const Text('Перенос слева (удалить)'),
+                                    ),
+                                  if (tryGetListElement(text, i + 1)
+                                      is! LineBreak)
+                                    myPopupItem(
+                                      Menu.addLineBreakAfter,
+                                      icon: const Icon(Icons.add),
+                                      text: const Text(
+                                          'Перенос справа (добавить)'),
+                                    ),
+                                  if (tryGetListElement(text, i + 1)
+                                      is LineBreak)
+                                    myPopupItem(
+                                      Menu.deleteSpaceAfter,
+                                      icon: const Icon(Icons.remove),
+                                      text: const Text(
+                                          'Перенос справа (удалить)'),
+                                    ),
+
                                   const PopupMenuDivider(),
-                                  const PopupMenuItem<Menu>(
-                                    value: Menu.addHeaderBefore,
-                                    child: Text('Добавить заголовок ДО'),
-                                  ),
-                                  const PopupMenuItem<Menu>(
-                                    value: Menu.addHeaderAfter,
-                                    child: Text('Добавить заголовок ПОСЛЕ'),
-                                  ),
-                                  const PopupMenuDivider(),
-                                  const PopupMenuItem<Menu>(
-                                    value: Menu.addSpaceBefore,
-                                    child: Text('Добавить перенос ДО'),
-                                  ),
-                                  const PopupMenuItem<Menu>(
-                                    value: Menu.addSpaceAfter,
-                                    child: Text('Добавить перенос ПОСЛЕ'),
-                                  ),
-                                  const PopupMenuItem<Menu>(
-                                    value: Menu.deleteSpaceBefore,
-                                    child: Text('Удалить перенос ДО'),
-                                  ),
-                                  const PopupMenuItem<Menu>(
-                                    value: Menu.deleteSpaceAfter,
-                                    child: Text('Удалить перенос ПОСЛЕ'),
-                                  ),
-                                  const PopupMenuDivider(),
-                                  const PopupMenuItem<Menu>(
-                                    value: Menu.splitWords,
-                                    child: Text('Разделить слова'),
-                                  ),
-                                  const PopupMenuItem<Menu>(
-                                    value: Menu.delete,
-                                    child: Text('Удалить'),
-                                  ),
+
+                                  // прочее
+                                  if (wrapEntity is Word &&
+                                      wrapEntity.value.contains(' '))
+                                    myPopupItem(
+                                      Menu.splitWords,
+                                      icon: const Icon(Icons.layers_clear),
+                                      text: const Text('Разделить слова'),
+                                    ),
+
+                                  if (wrapEntity is! Word &&
+                                      wrapEntity is! VerseIndex &&
+                                      wrapEntity is! StructuralLawPlace)
+                                    myPopupItem(Menu.delete,
+                                        icon: const Icon(Icons.delete),
+                                        text: const Text('Удалить элемент')),
                                 ],
                                 onValue: (value) {
                                   if (value == Menu.edit) {
@@ -190,13 +327,13 @@ class FragmentPage extends StatelessWidget {
                                         .updateDataBaseFragments();
                                     Get.toNamed('/fragment/header_editor',
                                         arguments: {'header': newHeader});
-                                  } else if (value == Menu.addSpaceBefore) {
+                                  } else if (value == Menu.addLineBreakBefore) {
                                     c.fragment.update((val) {
                                       val?.text.insert(i, LineBreak());
                                     });
                                     mainPageController
                                         .updateDataBaseFragments();
-                                  } else if (value == Menu.addSpaceAfter) {
+                                  } else if (value == Menu.addLineBreakAfter) {
                                     c.fragment.update((val) {
                                       val?.text.insert(i + 1, LineBreak());
                                     });
@@ -250,13 +387,6 @@ class FragmentPage extends StatelessWidget {
                                       mainPageController
                                           .updateDataBaseFragments();
                                       c.fragment.update((val) {});
-                                    } else if (wrapEntity
-                                        is StructuralLawPlace) {
-                                      mainPageController
-                                          .updateDataBaseFragments();
-                                      c.fragment.update((val) {
-                                        val?.text.removeAt(i);
-                                      });
                                     }
                                   } else if (value == Menu.copyStructuralLaw) {
                                     if (wrapEntity is Word) {
@@ -613,4 +743,18 @@ class FragmentPage extends StatelessWidget {
       ),
     );
   }
+}
+
+PopupMenuItem<Menu> myPopupItem(Menu value,
+    {required Widget text, required Widget icon}) {
+  return PopupMenuItem<Menu>(
+    value: value,
+    child: Row(
+      children: [
+        icon,
+        const SizedBox(width: 5),
+        text,
+      ],
+    ),
+  );
 }
