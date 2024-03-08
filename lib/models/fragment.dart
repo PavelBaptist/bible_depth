@@ -11,6 +11,8 @@ class Fragment {
   List<WrapEntity> text = [];
   @HiveField(2)
   String? description = '';
+  @HiveField(3)
+  int? bookId;
 
   Fragment({
     required this.text,
@@ -25,7 +27,7 @@ class Fragment {
     required int verseEnd,
   }) {
     List<WrapEntity> listWrap = [];
-
+    bookId = book.id;
     for (var c = chapterStart - 1; c < chapterEnd; c++) {
       var vStart = c + 1 == chapterStart ? verseStart : 1;
       var vEnd = c + 1 == chapterEnd ? verseEnd : 99999999999;

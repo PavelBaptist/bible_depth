@@ -19,27 +19,34 @@ class Book {
     id = json['id'];
     bookName = json['bookName'];
     chapters =
-        (json['chapters'] as List).map((e) => Chapter.fromJson(e)).toList();
+        (json['chapters'] as List).map((e) => Chapter.fromJson(e, id)).toList();
   }
 }
 
 class Chapter {
   late int id;
+  late int bookId;
   late List<Verse> verses;
 
   Chapter({
     required this.id,
     required this.verses,
+    required this.bookId,
   });
 
-  Chapter.fromJson(Map<String, dynamic> json) {
+  Chapter.fromJson(Map<String, dynamic> json, this.bookId) {
     id = json['id'];
-    verses = (json['verses'] as List).map((e) => Verse.fromJson(e)).toList();
+    verses = (json['verses'] as List)
+        .map((e) => Verse.fromJson(e, id, bookId))
+        .toList();
   }
 }
 
 class Verse {
   late int id;
+  late int chapterId;
+  late int bookId;
+
   late String text;
 
   Verse({
@@ -47,7 +54,7 @@ class Verse {
     required this.text,
   });
 
-  Verse.fromJson(Map<String, dynamic> json) {
+  Verse.fromJson(Map<String, dynamic> json, this.chapterId, this.bookId) {
     id = json['id'];
     text = json['text'];
   }
