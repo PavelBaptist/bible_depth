@@ -98,7 +98,8 @@ class FragmentPage extends StatelessWidget {
                             verseId--;
                             if (verseId == 0) {
                               chapterId--;
-                              verseId = book.chapters[chapterId].verses.length;
+                              verseId =
+                                  book.chapters[chapterId - 1].verses.length;
                             }
 
                             var verse = book
