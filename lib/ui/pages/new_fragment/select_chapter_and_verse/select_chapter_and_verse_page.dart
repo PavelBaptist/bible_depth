@@ -2,6 +2,7 @@ import 'package:bible_depth/models/fragment.dart';
 import 'package:bible_depth/models/wrap_entity.dart';
 import 'package:bible_depth/ui/pages/main/controller.dart';
 import 'package:bible_depth/ui/pages/new_fragment/controller.dart';
+import 'package:bible_depth/ui/svg/svgs.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -12,9 +13,17 @@ class SelectChapterAndVersePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ThemeData style = Theme.of(context);
+
     return Scaffold(
       appBar: AppBar(
-        title: Text(c.selectedBook!.bookName),
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: const SvgIcon(SvgIcons.arrow_left),
+        ),
+        title: Text(c.selectedBook!.bookName.toUpperCase()),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: Obx(() {
@@ -22,11 +31,29 @@ class SelectChapterAndVersePage extends StatelessWidget {
           return Container();
         }
         return SizedBox(
-          width: 300,
-          height: 50,
+          width: 500,
+          height: 70,
           child: FloatingActionButton(
-            child: Text(
-                'Создать (${c.selectedBook!.bookName} ${c.selectedChapterStart}:${c.selectedVerseStart} - ${c.selectedChapterEnd}:${c.selectedVerseEnd})'),
+            shape: const BeveledRectangleBorder(),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                children: [
+                  Text(
+                    'СОЗДАТЬ',
+                    style: style.textTheme.titleMedium?.copyWith(
+                      color: style.colorScheme.inversePrimary,
+                    ),
+                  ),
+                  Text(
+                    '(${c.selectedBook!.bookName} ${c.selectedChapterStart}:${c.selectedVerseStart} - ${c.selectedChapterEnd}:${c.selectedVerseEnd})',
+                    style: style.textTheme.bodySmall?.copyWith(
+                      color: style.colorScheme.inversePrimary,
+                    ),
+                  ),
+                ],
+              ),
+            ),
             onPressed: () {
               Fragment newFragment = c.createFragment();
               mainPageController.fragmentList!.value.list
@@ -39,6 +66,7 @@ class SelectChapterAndVersePage extends StatelessWidget {
         );
       }),
       body: ListView(
+        padding: const EdgeInsets.symmetric(horizontal: 50),
         children: [
           Padding(
             padding: const EdgeInsets.all(16.0),
@@ -49,9 +77,20 @@ class SelectChapterAndVersePage extends StatelessWidget {
                   List<Widget> result = [];
 
                   for (var chapter in c.selectedBook!.chapters) {
-                    result.add(ListTile(
-                      title: Text('Глава ${chapter.id}'),
-                    ));
+                    result.add(
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Divider(
+                            color: Colors.grey.shade300,
+                          ),
+                          Text(
+                            'Глава ${chapter.id}',
+                            style: TextStyle(color: Colors.grey.shade500),
+                          ),
+                        ],
+                      ),
+                    );
                     for (var verse in chapter.verses) {
                       result.add(
                         InkWell(
@@ -90,11 +129,20 @@ class SelectChapterAndVersePage extends StatelessWidget {
                             height: 50,
                             decoration: BoxDecoration(
                               color: isSelctedVerse(verse.id, chapter.id)
-                                  ? Colors.deepPurple.shade100
+                                  ? style.colorScheme.primary
                                   : Colors.transparent,
                               borderRadius: BorderRadius.circular(15),
                             ),
-                            child: Center(child: Text('${verse.id}')),
+                            child: Center(
+                              child: Text(
+                                '${verse.id}',
+                                style: TextStyle(
+                                  color: isSelctedVerse(verse.id, chapter.id)
+                                      ? style.colorScheme.inversePrimary
+                                      : Colors.black,
+                                ),
+                              ),
+                            ),
                           ),
                         ),
                       );

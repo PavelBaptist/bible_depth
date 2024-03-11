@@ -31,7 +31,7 @@ class StructuralLawWidget extends StatelessWidget {
     Widget image;
     if (_structuralLaw.isAssetsSource) {
       image = Image.asset(
-        'assets/structural_law_icons/${_structuralLaw.image}',
+        'assets/icons/structural_law_icons/${_structuralLaw.image}',
       );
     } else {
       Uint8List imageBytes = base64Decode(_structuralLaw.image);

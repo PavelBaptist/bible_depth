@@ -12,19 +12,15 @@ class NewFragmentPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        automaticallyImplyLeading: false,
-        title: Row(
-          children: [
-            const SizedBox(width: 20),
-            IconButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              icon: SvgIcon(SvgIcons.arrow_left),
-            ),
-            const SizedBox(width: 6),
-            Text('ВЫБЕРИТЕ КНИГУ БИБЛИИ'),
-          ],
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: const SvgIcon(SvgIcons.arrow_left),
+        ),
+        title: const Padding(
+          padding: EdgeInsets.only(left: 7),
+          child: Text('ВЫБЕРИТЕ КНИГУ БИБЛИИ'),
         ),
       ),
       body: FutureBuilder(
