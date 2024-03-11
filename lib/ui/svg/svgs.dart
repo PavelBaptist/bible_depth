@@ -58,4 +58,10 @@ class SvgIcons {
   static const SvgData arrow_right_white = SvgData(
     'assets/icons/arrow_right_white.svg',
   );
+  static const SvgData close_light = SvgData(
+    'assets/icons/close_light.svg',
+  );
+  static const SvgData close_dark = SvgData(
+    'assets/icons/close_dark.svg',
+  );
 }

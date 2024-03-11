@@ -7,6 +7,7 @@ import 'package:bible_depth/models/word_style.dart';
 import 'package:bible_depth/models/wrap_entity.dart';
 import 'package:bible_depth/ui/pages/fragment/controller.dart';
 import 'package:bible_depth/ui/pages/fragment/widgets/block_widget.dart';
+import 'package:bible_depth/ui/pages/fragment/widgets/context_verse_widget.dart';
 import 'package:bible_depth/ui/pages/fragment/widgets/header_widget.dart';
 import 'package:bible_depth/ui/pages/fragment/widgets/results_widget.dart';
 import 'package:bible_depth/ui/pages/fragment/widgets/structural_law_widget.dart';
@@ -15,6 +16,7 @@ import 'package:bible_depth/ui/pages/fragment/widgets/tool_word_style_widget.dar
 import 'package:bible_depth/ui/pages/fragment/widgets/verse_index_widget.dart';
 import 'package:bible_depth/ui/pages/fragment/widgets/word_widget.dart';
 import 'package:bible_depth/ui/pages/main/controller.dart';
+import 'package:bible_depth/ui/svg/svgs.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -49,6 +51,8 @@ class FragmentPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ThemeData style = Theme.of(context);
+
     descriptionController.text = c.fragment.value.description ?? '';
     nameController.text = c.fragment.value.name;
     return Scaffold(
@@ -70,89 +74,93 @@ class FragmentPage extends StatelessWidget {
         children: [
           Expanded(
             child: ListView(
+              padding: const EdgeInsets.symmetric(horizontal: 50),
               children: [
-                Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Column(
-                    children: [
-                      TextField(
-                        controller: nameController,
-                        onChanged: (value) {
-                          c.fragment.value.name = value;
-                          mainPageController.updateDataBaseFragments();
-                        },
-                      ),
-                      const SizedBox(height: 16),
-                      InkWell(
-                        onTap: () async {
-                          Book book = (await Rst.instance)
-                              .books[c.fragment.value.bookId! - 1];
-                          Verse firstVerse = await c.getFirstVerseEntity();
-                          int chapterId = firstVerse.chapterId;
-                          int verseId = firstVerse.id;
-                          for (var i = 0; i < 10; i++) {
-                            if (chapterId == 1 && verseId == 1) {
-                              return;
-                            }
+                Column(
+                  children: [
+                    TextField(
+                      controller: nameController,
+                      onChanged: (value) {
+                        c.fragment.value.name = value;
+                        mainPageController.updateDataBaseFragments();
+                      },
+                    ),
+                    const SizedBox(height: 16),
+                    Obx(() => c.contextBefore.isEmpty
+                        ? const SizedBox()
+                        : Padding(
+                            padding: const EdgeInsets.only(top: 16),
+                            child: BlockWidget(
+                              header: 'Контекст',
+                              actions: [
+                                IconButton(
+                                    onPressed: () => c.contextBefore.clear(),
+                                    icon: const SvgIcon(SvgIcons.close_light))
+                              ],
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: () {
+                                  List<Widget> widgets = [];
 
-                            verseId--;
-                            if (verseId == 0) {
-                              chapterId--;
-                              verseId =
-                                  book.chapters[chapterId - 1].verses.length;
-                            }
+                                  for (var i = 0;
+                                      i < c.contextBefore.length;
+                                      i++) {
+                                    widgets.add(
+                                      ContextVerseWidget(
+                                        c.contextBefore[i],
+                                        fontSize: c.fontSize.value,
+                                      ),
+                                    );
+                                  }
 
-                            var verse = book
-                                .chapters[chapterId - 1].verses[verseId - 1];
-                            c.contextBefore.insert(0, verse);
-                          }
-                          c.fragment.update((val) {});
-                        },
-                        child: const Center(
-                          child: Text(
-                            'Посмотреть контекст (+ 10 стихов)',
-                            style: TextStyle(
-                              color: Colors.blue,
-                              decoration: TextDecoration.underline,
+                                  return widgets;
+                                }(),
+                              ),
                             ),
+                          )),
+                    const SizedBox(height: 16),
+                    InkWell(
+                      onTap: () async {
+                        Book book = (await Rst.instance)
+                            .books[c.fragment.value.bookId! - 1];
+                        Verse firstVerse = await c.getFirstVerseEntity();
+                        int chapterId = firstVerse.chapterId;
+                        int verseId = firstVerse.id;
+                        for (var i = 0; i < 10; i++) {
+                          if (chapterId == 1 && verseId == 1) {
+                            return;
+                          }
+
+                          verseId--;
+                          if (verseId == 0) {
+                            chapterId--;
+                            verseId =
+                                book.chapters[chapterId - 1].verses.length;
+                          }
+
+                          var verse =
+                              book.chapters[chapterId - 1].verses[verseId - 1];
+                          c.contextBefore.insert(0, verse);
+                        }
+                        c.fragment.update((val) {});
+                      },
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          'Посмотреть контекст (+ 10 стихов)',
+                          style: style.textTheme.bodySmall?.copyWith(
+                            color: style.colorScheme.secondary,
                           ),
                         ),
                       ),
-                      Obx(() => c.contextBefore.isEmpty
-                          ? const SizedBox()
-                          : Padding(
-                              padding: const EdgeInsets.only(top: 16),
-                              child: BlockWidget(
-                                header: 'Контекст',
-                                color: Colors.green.shade50,
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: () {
-                                    List<Widget> widgets = [];
-
-                                    for (var i = 0;
-                                        i < c.contextBefore.length;
-                                        i++) {
-                                      widgets.add(
-                                        Text(
-                                          '${c.contextBefore[i].chapterId}:${c.contextBefore[i].id} ${c.contextBefore[i].text}',
-                                          style: TextStyle(
-                                            fontSize: c.fontSize.value,
-                                          ),
-                                        ),
-                                      );
-                                    }
-
-                                    return widgets;
-                                  }(),
-                                ),
-                              ),
-                            )),
-                      const SizedBox(height: 16),
-                      Obx(
-                        () {
-                          return Wrap(
+                    ),
+                    const SizedBox(height: 26),
+                    Obx(
+                      () {
+                        return Align(
+                          alignment: Alignment.topLeft,
+                          child: Wrap(
                             spacing: 0,
                             runSpacing: c.fontSize.value,
                             children: () {
@@ -665,108 +673,103 @@ class FragmentPage extends StatelessWidget {
 
                               return result;
                             }(),
-                          );
-                        },
-                      ),
-                      Obx(
-                        () => c.contextAfter.isEmpty
-                            ? const SizedBox()
-                            : Padding(
-                                padding: const EdgeInsets.only(top: 16),
-                                child: BlockWidget(
-                                  header: 'Контекст',
-                                  color: Colors.green.shade50,
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: () {
-                                      List<Widget> widgets = [];
+                          ),
+                        );
+                      },
+                    ),
+                    Obx(
+                      () => c.contextAfter.isEmpty
+                          ? const SizedBox()
+                          : Padding(
+                              padding: const EdgeInsets.only(top: 16),
+                              child: BlockWidget(
+                                header: 'Контекст',
+                                actions: [
+                                  IconButton(
+                                      onPressed: () => c.contextAfter.clear(),
+                                      icon: const SvgIcon(SvgIcons.close_light))
+                                ],
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: () {
+                                    List<Widget> widgets = [];
 
-                                      for (var i = 0;
-                                          i < c.contextAfter.length;
-                                          i++) {
-                                        widgets.add(
-                                          Text(
-                                            '${c.contextAfter[i].chapterId}:${c.contextAfter[i].id} ${c.contextAfter[i].text}',
-                                            style: TextStyle(
-                                              fontSize: c.fontSize.value,
-                                            ),
-                                          ),
-                                        );
-                                      }
+                                    for (var i = 0;
+                                        i < c.contextAfter.length;
+                                        i++) {
+                                      widgets.add(
+                                        ContextVerseWidget(
+                                          c.contextAfter[i],
+                                          fontSize: c.fontSize.value,
+                                        ),
+                                      );
+                                    }
 
-                                      return widgets;
-                                    }(),
-                                  ),
+                                    return widgets;
+                                  }(),
                                 ),
                               ),
-                      ),
-                      const SizedBox(height: 16),
-                      InkWell(
-                        onTap: () async {
-                          Book book = (await Rst.instance)
-                              .books[c.fragment.value.bookId! - 1];
-                          Verse lastVerse = await c.getLastVerseEntity();
-                          int chapterId = lastVerse.chapterId;
-                          int verseId = lastVerse.id;
-                          int maxChapterId = book.chapters.length;
-                          int maxVerseId =
-                              book.chapters[maxChapterId - 1].verses.length;
-                          for (var i = 0; i < 10; i++) {
-                            if (chapterId == maxChapterId &&
-                                verseId == maxVerseId) {
-                              return;
-                            }
-
-                            verseId++;
-                            if (verseId ==
-                                book.chapters[chapterId - 1].verses.length) {
-                              chapterId++;
-                              verseId = 1;
-                            }
-
-                            var verse = book
-                                .chapters[chapterId - 1].verses[verseId - 1];
-                            c.contextAfter.add(verse);
-                          }
-                          c.fragment.update((val) {});
-                        },
-                        child: const Center(
-                          child: Text(
-                            'Посмотреть контекст (+ 10 стихов)',
-                            style: TextStyle(
-                              color: Colors.blue,
-                              decoration: TextDecoration.underline,
                             ),
+                    ),
+                    const SizedBox(height: 16),
+                    InkWell(
+                      onTap: () async {
+                        Book book = (await Rst.instance)
+                            .books[c.fragment.value.bookId! - 1];
+                        Verse lastVerse = await c.getLastVerseEntity();
+                        int chapterId = lastVerse.chapterId;
+                        int verseId = lastVerse.id;
+                        int maxChapterId = book.chapters.length;
+                        int maxVerseId =
+                            book.chapters[maxChapterId - 1].verses.length;
+                        for (var i = 0; i < 10; i++) {
+                          if (chapterId == maxChapterId &&
+                              verseId == maxVerseId) {
+                            return;
+                          }
+
+                          verseId++;
+                          if (verseId ==
+                              book.chapters[chapterId - 1].verses.length) {
+                            chapterId++;
+                            verseId = 1;
+                          }
+
+                          var verse =
+                              book.chapters[chapterId - 1].verses[verseId - 1];
+                          c.contextAfter.add(verse);
+                        }
+                        c.fragment.update((val) {});
+                      },
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          'Посмотреть контекст (+ 10 стихов)',
+                          style: style.textTheme.bodySmall?.copyWith(
+                            color: style.colorScheme.secondary,
                           ),
                         ),
                       ),
-                      const SizedBox(height: 16),
-                      const Divider(),
-                      const SizedBox(height: 16),
-                      BlockWidget(
-                        header: 'Автоматические итоги',
-                        color: Colors.blue.shade50,
-                        child: ResultsWidget(),
+                    ),
+                    const SizedBox(height: 16),
+                    BlockWidget(
+                      header: 'Автоматические итоги',
+                      child: ResultsWidget(),
+                    ),
+                    BlockWidget(
+                      header: 'Заметки',
+                      child: TextField(
+                        controller: descriptionController,
+                        maxLines: null,
+                        onChanged: (value) {
+                          c.fragment.value.description =
+                              descriptionController.text;
+                          mainPageController.updateDataBaseFragments();
+                        },
                       ),
-                      const SizedBox(height: 16),
-                      const Divider(),
-                      const SizedBox(height: 16),
-                      BlockWidget(
-                        header: 'Заметки',
-                        child: TextField(
-                          controller: descriptionController,
-                          maxLines: null,
-                          onChanged: (value) {
-                            c.fragment.value.description =
-                                descriptionController.text;
-                            mainPageController.updateDataBaseFragments();
-                          },
-                        ),
-                      )
-                    ],
-                  ),
+                    )
+                  ],
                 ),
               ],
             ),

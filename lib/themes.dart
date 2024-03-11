@@ -6,6 +6,7 @@ class Themes {
       primary: Color(0xFF7BB8AD),
       background: Color(0xFFFAFAFA),
       inversePrimary: Color(0xFFFFFFFF),
+      secondary: Color(0xFFA85E58),
     );
 
     TextTheme textTheme = const TextTheme(

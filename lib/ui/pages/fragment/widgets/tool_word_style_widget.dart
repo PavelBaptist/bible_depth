@@ -16,7 +16,7 @@ class ToolWordStyleWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Word word = Word();
-    word.value = 'стиль';
+    word.value = ' А ';
     word.styleId = wordStyle.id;
     return Obx(
       () => Container(
