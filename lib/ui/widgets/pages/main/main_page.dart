@@ -3,6 +3,7 @@ import 'package:bible_depth/models/fragment.dart';
 import 'package:bible_depth/ui/widgets/pages/main/controller.dart';
 import 'package:bible_depth/ui/widgets/svg/svgs.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
 
@@ -74,18 +75,22 @@ class _MyTileState extends State<MyTile> {
     return Slidable(
       endActionPane: ActionPane(
         motion: ScrollMotion(),
+        extentRatio: 0.1,
         children: [
-          SlidableAction(
-            onPressed: (context) {
-              showConfirmationDialog(context, onTapYes: () {
-                c.fragmentList?.value.list.remove(widget.fragment);
-                c.fragmentList?.update((val) {});
-              }, text: widget.fragment.name, titleText: 'Удалить?');
-            },
-            backgroundColor: Colors.red,
-            foregroundColor: Colors.white,
-            icon: Icons.delete,
-            label: 'Удалить',
+          Expanded(
+            child: Container(
+              child: Align(
+                child: IconButton(
+                  icon: const SvgIcon(SvgIcons.delete),
+                  onPressed: () {
+                    showConfirmationDialog(context, onTapYes: () {
+                      c.fragmentList?.value.list.remove(widget.fragment);
+                      c.fragmentList?.update((val) {});
+                    }, text: widget.fragment.name, titleText: 'Удалить?');
+                  },
+                ),
+              ),
+            ),
           ),
         ],
       ),

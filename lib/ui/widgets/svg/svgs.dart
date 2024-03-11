@@ -46,4 +46,9 @@ class SvgIcons {
     width: 30.64,
     height: 30.64,
   );
+  static const SvgData delete = SvgData(
+    'assets/icons/delete.svg',
+    width: 30.64,
+    height: 30.64,
+  );
 }
