@@ -5,6 +5,7 @@ import 'package:bible_depth/models/structural_law_list.dart';
 import 'package:bible_depth/models/word_style.dart';
 import 'package:bible_depth/models/word_style_list.dart';
 import 'package:bible_depth/models/wrap_entity.dart';
+import 'package:bible_depth/themes.dart';
 import 'package:bible_depth/ui/widgets/pages/fragment/fragment_page.dart';
 import 'package:bible_depth/ui/widgets/pages/fragment/header_editor/header_editor_page.dart';
 import 'package:bible_depth/ui/widgets/pages/fragment/structural_law_editor/structural_law_editor_page.dart';
@@ -81,7 +82,7 @@ class App extends StatelessWidget {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       initialRoute: '/main',
-      theme: ThemeData(useMaterial3: true),
+      theme: Themes.light(),
       getPages: [
         GetPage(
           name: '/main',
