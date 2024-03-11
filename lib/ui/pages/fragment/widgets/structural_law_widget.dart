@@ -3,7 +3,7 @@ import 'dart:typed_data';
 
 import 'package:bible_depth/models/structural_law.dart';
 import 'package:bible_depth/models/structural_law_list.dart';
-import 'package:bible_depth/ui/widgets/pages/main/controller.dart';
+import 'package:bible_depth/ui/pages/main/controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

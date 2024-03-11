@@ -1,7 +1,7 @@
 import 'package:bible_depth/models/wrap_entity.dart';
-import 'package:bible_depth/ui/widgets/pages/fragment/controller.dart';
-import 'package:bible_depth/ui/widgets/pages/fragment/widgets/header_widget.dart';
-import 'package:bible_depth/ui/widgets/pages/main/controller.dart';
+import 'package:bible_depth/ui/pages/fragment/controller.dart';
+import 'package:bible_depth/ui/pages/fragment/widgets/header_widget.dart';
+import 'package:bible_depth/ui/pages/main/controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

@@ -1,17 +1,17 @@
 import 'dart:convert';
 
-import 'package:bible_depth/models/word_style.dart';
-import 'package:bible_depth/models/wrap_entity.dart';
-import 'package:bible_depth/ui/widgets/pages/fragment/controller.dart';
-import 'package:bible_depth/ui/widgets/pages/fragment/widgets/word_widget.dart';
-import 'package:bible_depth/ui/widgets/pages/main/controller.dart';
+import 'package:bible_depth/helpers/strings.dart';
+import 'package:bible_depth/models/structural_law.dart';
+import 'package:bible_depth/ui/pages/fragment/controller.dart';
+import 'package:bible_depth/ui/pages/fragment/widgets/structural_law_widget.dart';
+import 'package:bible_depth/ui/pages/main/controller.dart';
 import 'package:finger_painter/finger_painter.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'dart:ui' as ui;
 
-class WordStyleEditorPage extends StatelessWidget {
-  WordStyleEditorPage({super.key});
+class StructuralLawEditorPage extends StatelessWidget {
+  StructuralLawEditorPage({super.key});
   final FragmentPageController c = Get.find();
   final MainPageController mainPageController = Get.find();
   final TextEditingController descriptionController = TextEditingController();
@@ -22,99 +22,43 @@ class WordStyleEditorPage extends StatelessWidget {
     ..setBlurSigma(0.0)
     ..setPenType(PenType.paintbrush2)
     ..setBlendMode(ui.BlendMode.srcOver);
-  Color paintColor = Colors.red;
+  Color paintColor = Colors.black;
   @override
   Widget build(BuildContext context) {
     descriptionController.text =
-        (c.currentTool.value as WordStyle).description ?? '';
+        (c.currentTool.value as StructuralLaw).description;
     return Scaffold(
       appBar: AppBar(),
       body: Obx(() {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            WordWidget(
-              Word()
-                ..value = 'образец'
-                ..styleId = (c.currentTool.value as WordStyle).id,
-              fontSize: 50,
+            StructuralLawWidget(
+              (c.currentTool.value as StructuralLaw).id,
+              size: 64,
             ),
             TextField(
               controller: descriptionController,
               onChanged: (String value) {
-                (c.currentTool.value as WordStyle).description = value;
+                (c.currentTool.value as StructuralLaw).description = value;
+
                 update();
               },
-            ),
-            Row(
-              children: [
-                Text('Жирный'),
-                Checkbox(
-                  value: (c.currentTool.value as WordStyle).isBold,
-                  onChanged: (value) {
-                    (c.currentTool.value as WordStyle).isBold = value;
-                    update();
-                  },
-                ),
-                const SizedBox(width: 25),
-                Text('Наклоненный'),
-                Checkbox(
-                  value: (c.currentTool.value as WordStyle).isItalic,
-                  onChanged: (value) {
-                    (c.currentTool.value as WordStyle).isItalic = value;
-                    update();
-                  },
-                ),
-                const SizedBox(width: 25),
-                Text('Обводка кругом'),
-                Checkbox(
-                  value: (c.currentTool.value as WordStyle).borderIsCircle,
-                  onChanged: (value) {
-                    (c.currentTool.value as WordStyle).borderIsCircle =
-                        value ?? false;
-                    update();
-                  },
-                ),
-              ],
-            ),
-            ColorPicker(
-              label: 'Цвет текста',
-              onTap: (color) {
-                (c.currentTool.value as WordStyle).fontColor = color;
-                update();
-              },
-              selectedLogic: (color) =>
-                  (c.currentTool.value as WordStyle).fontColor == color,
-            ),
-            ColorPicker(
-              label: 'Цвет фона',
-              onTap: (color) {
-                (c.currentTool.value as WordStyle).highlightColor = color;
-                update();
-              },
-              selectedLogic: (color) =>
-                  (c.currentTool.value as WordStyle).highlightColor == color,
-            ),
-            ColorPicker(
-              label: 'Цвет обводки',
-              onTap: (color) {
-                (c.currentTool.value as WordStyle).borderColor = color;
-                update();
-              },
-              selectedLogic: (color) =>
-                  (c.currentTool.value as WordStyle).borderColor == color,
             ),
             Painter(
               controller: painterController,
               backgroundColor: Colors.black.withAlpha(30),
+
               onDrawingEnded: (bytes) async {
                 if (bytes != null) {
                   String base64Data = base64Encode(bytes);
-                  (c.currentTool.value as WordStyle).image = base64Data;
+                  (c.currentTool.value as StructuralLaw).image = base64Data;
+                  (c.currentTool.value as StructuralLaw).isAssetsSource = false;
+
                   update();
                 }
               },
-              size: const Size(230, 80),
+              size: const Size(64, 64),
               // child: Image.asset('assets/map.png', fit: BoxFit.cover),
             ),
             ColorPicker(
@@ -128,21 +72,22 @@ class WordStyleEditorPage extends StatelessWidget {
             IconButton(
                 onPressed: () {
                   painterController.clearContent();
-                  (c.currentTool.value as WordStyle).image = null;
+                  if (isGuid((c.currentTool.value as StructuralLaw).id)) {
+                    (c.currentTool.value as StructuralLaw)
+                        .copyProps(StructuralLaw());
+                  } else {
+                    (c.currentTool.value as StructuralLaw)
+                        .copyProps(StructuralLaw.defaultSet.lastWhere(
+                      (element) =>
+                          element.id ==
+                          (c.currentTool.value as StructuralLaw).id,
+                    ));
+                  }
+
                   update();
                 },
                 icon: const Icon(Icons.clear)),
             const SizedBox(width: 25),
-            Text('Растягивать картинку'),
-            Checkbox(
-              value: (c.currentTool.value as WordStyle).stretchImage,
-              onChanged: (value) {
-                (c.currentTool.value as WordStyle).stretchImage =
-                    value ?? false;
-
-                update();
-              },
-            ),
           ],
         );
       }),
@@ -152,7 +97,7 @@ class WordStyleEditorPage extends StatelessWidget {
   void update() {
     c.fragment.update((val) {});
     c.currentTool.update((val) {});
-    mainPageController.updateDataBaseWordStyles();
+    mainPageController.updateDataBaseStructuralLaws();
   }
 }
 
