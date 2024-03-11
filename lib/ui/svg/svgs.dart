@@ -64,4 +64,13 @@ class SvgIcons {
   static const SvgData close_dark = SvgData(
     'assets/icons/close_dark.svg',
   );
+  static const SvgData add_grey = SvgData(
+    'assets/icons/add_grey.svg',
+  );
+  static const SvgData zoom_plus = SvgData(
+    'assets/icons/zoom_plus.svg',
+  );
+  static const SvgData zoom_minus = SvgData(
+    'assets/icons/zoom_minus.svg',
+  );
 }

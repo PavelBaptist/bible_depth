@@ -7,6 +7,7 @@ import 'package:bible_depth/models/word_style.dart';
 import 'package:bible_depth/models/wrap_entity.dart';
 import 'package:bible_depth/ui/pages/fragment/controller.dart';
 import 'package:bible_depth/ui/pages/fragment/widgets/block_widget.dart';
+import 'package:bible_depth/ui/pages/fragment/widgets/chapter_index_widget.dart';
 import 'package:bible_depth/ui/pages/fragment/widgets/context_verse_widget.dart';
 import 'package:bible_depth/ui/pages/fragment/widgets/header_widget.dart';
 import 'package:bible_depth/ui/pages/fragment/widgets/results_widget.dart';
@@ -57,15 +58,31 @@ class FragmentPage extends StatelessWidget {
     nameController.text = c.fragment.value.name;
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: const SvgIcon(SvgIcons.arrow_left),
+        ),
+        title: TextField(
+          controller: nameController,
+          decoration: InputDecoration(
+            border: InputBorder.none,
+          ),
+          onChanged: (value) {
+            c.fragment.value.name = value;
+            mainPageController.updateDataBaseFragments();
+          },
+        ),
         actions: [
           IconButton(
             onPressed: () => c.fontSize.value--,
-            icon: const Icon(Icons.zoom_out),
+            icon: const SvgIcon(SvgIcons.zoom_minus),
           ),
           const SizedBox(width: 5),
           IconButton(
             onPressed: () => c.fontSize.value++,
-            icon: const Icon(Icons.zoom_in),
+            icon: const SvgIcon(SvgIcons.zoom_plus),
           ),
           const SizedBox(width: 16),
         ],
@@ -78,14 +95,6 @@ class FragmentPage extends StatelessWidget {
               children: [
                 Column(
                   children: [
-                    TextField(
-                      controller: nameController,
-                      onChanged: (value) {
-                        c.fragment.value.name = value;
-                        mainPageController.updateDataBaseFragments();
-                      },
-                    ),
-                    const SizedBox(height: 16),
                     Obx(() => c.contextBefore.isEmpty
                         ? const SizedBox()
                         : Padding(
@@ -375,6 +384,7 @@ class FragmentPage extends StatelessWidget {
 
                                       if (wrapEntity is! Word &&
                                           wrapEntity is! VerseIndex &&
+                                          wrapEntity is! ChapterIndex &&
                                           wrapEntity is! StructuralLawPlace)
                                         myPopupItem(Menu.delete,
                                             icon: const Icon(Icons.delete),
@@ -538,7 +548,8 @@ class FragmentPage extends StatelessWidget {
                                         }
                                       } else if (value == Menu.delete) {
                                         if (wrapEntity is! Word &&
-                                            wrapEntity is! VerseIndex) {
+                                            wrapEntity is! VerseIndex &&
+                                            wrapEntity is! ChapterIndex) {
                                           c.fragment.update((val) {
                                             val?.text.removeAt(i);
                                           });
@@ -643,6 +654,11 @@ class FragmentPage extends StatelessWidget {
                                     wrapEntity,
                                     onLongPress: onLongPress,
                                   ));
+                                } else if (wrapEntity is ChapterIndex) {
+                                  result.add(ChapterIndexWidget(
+                                    wrapEntity,
+                                    onLongPress: onLongPress,
+                                  ));
                                 } else if (wrapEntity is LineBreak) {
                                   result.add(Row());
                                 } else if (wrapEntity is Header) {
@@ -677,42 +693,7 @@ class FragmentPage extends StatelessWidget {
                         );
                       },
                     ),
-                    Obx(
-                      () => c.contextAfter.isEmpty
-                          ? const SizedBox()
-                          : Padding(
-                              padding: const EdgeInsets.only(top: 16),
-                              child: BlockWidget(
-                                header: 'Контекст',
-                                actions: [
-                                  IconButton(
-                                      onPressed: () => c.contextAfter.clear(),
-                                      icon: const SvgIcon(SvgIcons.close_light))
-                                ],
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: () {
-                                    List<Widget> widgets = [];
-
-                                    for (var i = 0;
-                                        i < c.contextAfter.length;
-                                        i++) {
-                                      widgets.add(
-                                        ContextVerseWidget(
-                                          c.contextAfter[i],
-                                          fontSize: c.fontSize.value,
-                                        ),
-                                      );
-                                    }
-
-                                    return widgets;
-                                  }(),
-                                ),
-                              ),
-                            ),
-                    ),
-                    const SizedBox(height: 16),
+                    const SizedBox(height: 26),
                     InkWell(
                       onTap: () async {
                         Book book = (await Rst.instance)
@@ -753,21 +734,58 @@ class FragmentPage extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 16),
+                    Obx(
+                      () => c.contextAfter.isEmpty
+                          ? const SizedBox()
+                          : Padding(
+                              padding: const EdgeInsets.only(top: 16),
+                              child: BlockWidget(
+                                header: 'Контекст',
+                                actions: [
+                                  IconButton(
+                                      onPressed: () => c.contextAfter.clear(),
+                                      icon: const SvgIcon(SvgIcons.close_light))
+                                ],
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: () {
+                                    List<Widget> widgets = [];
+
+                                    for (var i = 0;
+                                        i < c.contextAfter.length;
+                                        i++) {
+                                      widgets.add(
+                                        ContextVerseWidget(
+                                          c.contextAfter[i],
+                                          fontSize: c.fontSize.value,
+                                        ),
+                                      );
+                                    }
+
+                                    return widgets;
+                                  }(),
+                                ),
+                              ),
+                            ),
+                    ),
+                    const SizedBox(height: 16),
                     BlockWidget(
                       header: 'Автоматические итоги',
                       child: ResultsWidget(),
                     ),
                     BlockWidget(
                       header: 'Заметки',
-                      child: TextField(
-                        controller: descriptionController,
-                        maxLines: null,
-                        onChanged: (value) {
-                          c.fragment.value.description =
-                              descriptionController.text;
-                          mainPageController.updateDataBaseFragments();
-                        },
-                      ),
+                      child: Obx(() => TextField(
+                            controller: descriptionController,
+                            maxLines: null,
+                            style: TextStyle(fontSize: c.fontSize.value),
+                            onChanged: (value) {
+                              c.fragment.value.description =
+                                  descriptionController.text;
+                              mainPageController.updateDataBaseFragments();
+                            },
+                          )),
                     )
                   ],
                 ),
@@ -776,7 +794,7 @@ class FragmentPage extends StatelessWidget {
           ),
           Container(
             width: double.infinity,
-            height: 180.0,
+            height: 210.0,
             decoration: BoxDecoration(
               boxShadow: [
                 BoxShadow(
@@ -788,82 +806,91 @@ class FragmentPage extends StatelessWidget {
               color: Colors.grey[100],
             ),
             child: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Row(
-                    children: [
-                      const SizedBox(width: 15),
-                      ElevatedButton(
-                        onPressed: () {
-                          mainPageController.wordStyleList!.value.list
-                              .insert(0, WordStyle());
-                          mainPageController.updateDataBaseWordStyles();
-                          mainPageController.wordStyleList?.update((val) {});
-                        },
-                        child: const Icon(Icons.add),
-                      ),
-                      Expanded(
-                        child: SizedBox(
-                          height: 40,
-                          child: Obx(() => ListView.builder(
-                                scrollDirection: Axis.horizontal,
-                                itemCount: mainPageController
-                                    .wordStyleList!.value.list.length,
-                                itemBuilder: (context, index) {
-                                  return Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 10),
-                                    child: ToolWordStyleWidget(
-                                      wordStyle: mainPageController
-                                          .wordStyleList!.value.list[index],
-                                    ),
-                                  );
-                                },
-                              )),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 50),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Row(
+                      children: [
+                        IconButton(
+                          onPressed: () {
+                            mainPageController.wordStyleList!.value.list
+                                .insert(0, WordStyle());
+                            mainPageController.updateDataBaseWordStyles();
+                            mainPageController.wordStyleList?.update((val) {});
+                          },
+                          icon: SvgIcon(SvgIcons.add_grey),
                         ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 10),
-                  Row(
-                    children: [
-                      const SizedBox(width: 15),
-                      ElevatedButton(
-                        onPressed: () {
-                          mainPageController.structuralLawList!.value.list
-                              .insert(0, StructuralLaw());
-                          mainPageController.updateDataBaseStructuralLaws();
-                          mainPageController.structuralLawList
-                              ?.update((val) {});
-                        },
-                        child: const Icon(Icons.add),
-                      ),
-                      Expanded(
-                        child: SizedBox(
-                          height: 40,
-                          child: Obx(() => ListView.builder(
-                                scrollDirection: Axis.horizontal,
-                                itemCount: mainPageController
-                                    .structuralLawList!.value.list.length,
-                                itemBuilder: (context, index) {
-                                  return Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 10),
-                                    child: ToolStructuralLawWidget(
-                                      structuralLaw: mainPageController
-                                          .structuralLawList!.value.list[index],
-                                    ),
-                                  );
-                                },
-                              )),
+                        Expanded(
+                          child: SizedBox(
+                            height: 40,
+                            child: Obx(() => ListView.builder(
+                                  scrollDirection: Axis.horizontal,
+                                  itemCount: mainPageController
+                                      .wordStyleList!.value.list.length,
+                                  itemBuilder: (context, index) {
+                                    return Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 10),
+                                      child: ToolWordStyleWidget(
+                                        wordStyle: mainPageController
+                                            .wordStyleList!.value.list[index],
+                                      ),
+                                    );
+                                  },
+                                )),
+                          ),
                         ),
+                      ],
+                    ),
+                    const SizedBox(height: 10),
+                    Row(
+                      children: [
+                        IconButton(
+                          onPressed: () {
+                            mainPageController.structuralLawList!.value.list
+                                .insert(0, StructuralLaw());
+                            mainPageController.updateDataBaseStructuralLaws();
+                            mainPageController.structuralLawList
+                                ?.update((val) {});
+                          },
+                          icon: SvgIcon(SvgIcons.add_grey),
+                        ),
+                        Expanded(
+                          child: SizedBox(
+                            height: 40,
+                            child: Obx(() => ListView.builder(
+                                  scrollDirection: Axis.horizontal,
+                                  itemCount: mainPageController
+                                      .structuralLawList!.value.list.length,
+                                  itemBuilder: (context, index) {
+                                    return Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 10),
+                                      child: ToolStructuralLawWidget(
+                                        structuralLaw: mainPageController
+                                            .structuralLawList!
+                                            .value
+                                            .list[index],
+                                      ),
+                                    );
+                                  },
+                                )),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 3),
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        '* для изменения стиля или значка удерживайте на нем',
+                        style: style.textTheme.bodySmall,
                       ),
-                    ],
-                  ),
-                  const SizedBox(height: 3),
-                  Text('*для изменения стиля или значка удерживайте на нем'),
-                ],
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

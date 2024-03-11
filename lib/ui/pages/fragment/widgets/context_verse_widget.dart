@@ -9,7 +9,9 @@ class ContextVerseWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text(
-      '${verse.chapterId}:${verse.id} ${verse.text}',
+      verse.id == 1
+          ? '\nГлава ${verse.chapterId}\n${verse.id} ${verse.text}'
+          : '${verse.id} ${verse.text}',
       style: TextStyle(
         fontSize: fontSize,
       ),

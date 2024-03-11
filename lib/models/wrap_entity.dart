@@ -61,3 +61,11 @@ class Header extends WrapEntity {
 
   Header();
 }
+
+@HiveType(typeId: 106)
+class ChapterIndex extends WrapEntity {
+  @HiveField(0)
+  String value = '';
+
+  ChapterIndex();
+}

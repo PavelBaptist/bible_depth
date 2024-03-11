@@ -33,6 +33,7 @@ class Fragment {
       var vEnd = c + 1 == chapterEnd ? verseEnd : 99999999999;
 
       var chapter = book.chapters[c];
+      listWrap.add(ChapterIndex()..value = '${chapter.id}');
       for (var v = vStart - 1; (v < chapter.verses.length) && (v < vEnd); v++) {
         var verse = chapter.verses[v];
 

@@ -14,6 +14,8 @@ class ResultsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ThemeData style = Theme.of(context);
+
     return Obx(
       () => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -24,10 +26,10 @@ class ResultsWidget extends StatelessWidget {
           // итоги повторяющихся слов
 
           results.add(
-            const Text(
-              'Итого повторяющихся слов:',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
+            Text(
+              'Повторяющиеся слова:',
+              style: style.textTheme.titleSmall?.copyWith(
+                color: Colors.black,
               ),
             ),
           );
@@ -79,10 +81,10 @@ class ResultsWidget extends StatelessWidget {
           results.add(const SizedBox(height: 16));
 
           results.add(
-            const Text(
-              'Итого повторяющихся структурных законов:',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
+            Text(
+              'Повторяющиеся структурные законы:',
+              style: style.textTheme.titleSmall?.copyWith(
+                color: Colors.black,
               ),
             ),
           );

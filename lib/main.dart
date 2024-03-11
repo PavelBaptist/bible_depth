@@ -31,6 +31,7 @@ void main(List<String> args) async {
     ..registerAdapter(VerseIndexAdapter())
     ..registerAdapter(WordStyleAdapter())
     ..registerAdapter(HeaderAdapter())
+    ..registerAdapter(ChapterIndexAdapter())
     ..registerAdapter(WordStyleListAdapter())
     ..registerAdapter(StructuralLawAdapter())
     ..registerAdapter(StructuralLawListAdapter())
