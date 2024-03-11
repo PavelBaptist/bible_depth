@@ -48,7 +48,14 @@ class SvgIcons {
   );
   static const SvgData delete = SvgData(
     'assets/icons/delete.svg',
-    width: 30.64,
-    height: 30.64,
+  );
+  static const SvgData arrow_left = SvgData(
+    'assets/icons/arrow_left.svg',
+  );
+  static const SvgData arrow_right_grey = SvgData(
+    'assets/icons/arrow_right_grey.svg',
+  );
+  static const SvgData arrow_right_white = SvgData(
+    'assets/icons/arrow_right_white.svg',
   );
 }

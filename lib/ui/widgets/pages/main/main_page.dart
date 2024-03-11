@@ -73,6 +73,7 @@ class _MyTileState extends State<MyTile> {
   Widget build(BuildContext context) {
     final ThemeData style = Theme.of(context);
     return Slidable(
+      key: Key(widget.fragment.hashCode.toString()),
       endActionPane: ActionPane(
         motion: ScrollMotion(),
         extentRatio: 0.1,
@@ -85,6 +86,7 @@ class _MyTileState extends State<MyTile> {
                   onPressed: () {
                     showConfirmationDialog(context, onTapYes: () {
                       c.fragmentList?.value.list.remove(widget.fragment);
+                      c.updateDataBaseFragments();
                       c.fragmentList?.update((val) {});
                     }, text: widget.fragment.name, titleText: 'Удалить?');
                   },
@@ -124,10 +126,10 @@ class _MyTileState extends State<MyTile> {
                       ),
                 ),
               ),
-              Icon(
-                Icons.arrow_forward_ios_outlined,
-                color:
-                    selected ? style.colorScheme.inversePrimary : Colors.black,
+              SvgIcon(
+                selected
+                    ? SvgIcons.arrow_right_white
+                    : SvgIcons.arrow_right_grey,
               ),
               const SizedBox(width: 33),
             ],
