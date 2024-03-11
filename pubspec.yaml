@@ -50,6 +50,7 @@ dependencies:
   html: ^0.15.4
   windows1251: ^2.0.0
   flutter_svg: ^2.0.10+1
+  flutter_slidable: ^3.0.1
   
   
 dev_dependencies:

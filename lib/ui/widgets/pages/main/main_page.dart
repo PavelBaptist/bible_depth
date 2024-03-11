@@ -1,7 +1,9 @@
+import 'package:bible_depth/helpers/dialogs.dart';
 import 'package:bible_depth/models/fragment.dart';
 import 'package:bible_depth/ui/widgets/pages/main/controller.dart';
 import 'package:bible_depth/ui/widgets/svg/svgs.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
 
 class MainPage extends StatelessWidget {
@@ -69,47 +71,62 @@ class _MyTileState extends State<MyTile> {
   @override
   Widget build(BuildContext context) {
     final ThemeData style = Theme.of(context);
-    return InkWell(
-      onHover: (value) {
-        selected = value;
-        setState(() {});
-      },
-      focusColor: Colors.red,
-      highlightColor: Colors.amber,
-      hoverColor: Colors.green,
-      splashColor: Colors.blue,
-      overlayColor: MaterialStatePropertyAll(Colors.deepPurple),
-      canRequestFocus: true,
-      onTap: () async {
-        c.selectedFragment = widget.fragment;
-        await Get.toNamed('/fragment');
-        c.fragmentList!.update((val) {});
-      },
-      child: Container(
-        color: selected
-            ? style.colorScheme.primary
-            : style.colorScheme.inversePrimary,
-        height: 85,
-        child: Row(
-          //mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const SizedBox(width: 30),
-            Expanded(
-              child: Text(
-                widget.fragment.name,
-                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      color: selected
-                          ? style.colorScheme.inversePrimary
-                          : Colors.black,
-                    ),
+    return Slidable(
+      endActionPane: ActionPane(
+        motion: ScrollMotion(),
+        children: [
+          SlidableAction(
+            onPressed: (context) {
+              showConfirmationDialog(context, onTapYes: () {
+                c.fragmentList?.value.list.remove(widget.fragment);
+                c.fragmentList?.update((val) {});
+              }, text: widget.fragment.name, titleText: 'Удалить?');
+            },
+            backgroundColor: Colors.red,
+            foregroundColor: Colors.white,
+            icon: Icons.delete,
+            label: 'Удалить',
+          ),
+        ],
+      ),
+      child: InkWell(
+        onHover: (value) {
+          selected = value;
+          setState(() {});
+        },
+        canRequestFocus: true,
+        onTap: () async {
+          c.selectedFragment = widget.fragment;
+          await Get.toNamed('/fragment');
+          c.fragmentList!.update((val) {});
+        },
+        child: Container(
+          color: selected
+              ? style.colorScheme.primary
+              : style.colorScheme.inversePrimary,
+          height: 85,
+          child: Row(
+            //mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const SizedBox(width: 30),
+              Expanded(
+                child: Text(
+                  widget.fragment.name,
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        color: selected
+                            ? style.colorScheme.inversePrimary
+                            : Colors.black,
+                      ),
+                ),
               ),
-            ),
-            Icon(
-              Icons.arrow_forward_ios_outlined,
-              color: selected ? style.colorScheme.inversePrimary : Colors.black,
-            ),
-            const SizedBox(width: 33),
-          ],
+              Icon(
+                Icons.arrow_forward_ios_outlined,
+                color:
+                    selected ? style.colorScheme.inversePrimary : Colors.black,
+              ),
+              const SizedBox(width: 33),
+            ],
+          ),
         ),
       ),
     );
