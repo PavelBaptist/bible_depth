@@ -24,9 +24,9 @@ abstract class VersionHandler {
     // проверяем текущую версию базы данных и применяем необходимые обновления
     int currentBuildVersion = 0;
 
-    currentBuildVersion = 3;
+    currentBuildVersion = 4;
     if (_settings!.currentBuildNumber < currentBuildVersion) {
-      await _updateHandlerBuildVersion3();
+      await _updateHandlerBuildVersion4();
       _updateBuildVersion(settingsBox, currentBuildVersion);
     }
 
@@ -58,7 +58,7 @@ abstract class VersionHandler {
   }
 
   // update build version 3
-  static _updateHandlerBuildVersion3() async {
+  static _updateHandlerBuildVersion4() async {
     final Box<dynamic> box = await Hive.openBox('bible_depth');
 
     WordStyleList? wordStyleList = box.get('word_styles');
