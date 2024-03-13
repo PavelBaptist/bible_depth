@@ -15,6 +15,8 @@ class MainPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ThemeData style = Theme.of(context);
+
     return Scaffold(
       appBar: AppBar(
         title: const Padding(
@@ -91,7 +93,8 @@ class MainPage extends StatelessWidget {
                       padding: const EdgeInsets.all(8.0),
                       child: Center(
                         child: Text(
-                          'build version: ${snapshot.data} | build version DB: ${VersionHandler.getVersionFromDB()}',
+                          'version: ${snapshot.data} | version from db: ${VersionHandler.getVersionFromDB()}',
+                          style: style.textTheme.bodySmall,
                         ),
                       ),
                     );
