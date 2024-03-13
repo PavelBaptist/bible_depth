@@ -84,14 +84,14 @@ class MainPage extends StatelessWidget {
 
             result.add(
               FutureBuilder(
-                future: VersionHandler.getBuildVersionFromPubspec(),
+                future: VersionHandler.getVersionFromPubspec(),
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
                     return Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Center(
                         child: Text(
-                          'build version: ${snapshot.data} | build version DB: ${VersionHandler.getBuildVersionFromDB()}',
+                          'build version: ${snapshot.data} | build version DB: ${VersionHandler.getVersionFromDB()}',
                         ),
                       ),
                     );

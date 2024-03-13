@@ -13,52 +13,71 @@ abstract class VersionHandler {
 
   static Future<void> handleDatabaseUpdates() async {
     final Box<dynamic> settingsBox = await Hive.openBox('settings');
-    int buildVersionFromPubspec = await getBuildVersionFromPubspec();
+    String versionFromPubspec = await getVersionFromPubspec();
     _settings = settingsBox.get('settings');
 
     // если приложение запущено впервые
-    if (_settings!.currentBuildNumber == 0 && buildVersionFromPubspec > 13) {
-      _updateBuildVersion(settingsBox, buildVersionFromPubspec);
+    if (weight(_settings!.currentVersion!) == 0 &&
+        weight(versionFromPubspec) > weight('1.0.2')) {
+      _updateVersion(settingsBox, versionFromPubspec);
     }
 
     // проверяем текущую версию базы данных и применяем необходимые обновления
-    int currentBuildVersion = 0;
+    String version = '0.0.0';
 
-    currentBuildVersion = 4;
-    if (_settings!.currentBuildNumber < currentBuildVersion) {
-      await _updateHandlerBuildVersion4();
-      _updateBuildVersion(settingsBox, currentBuildVersion);
+    version = '1.0.2';
+    if (weight(_settings!.currentVersion!) < weight(version)) {
+      await _updateHandlerBuildVersion_1_0_2();
+      _updateVersion(settingsBox, version);
     }
 
     // другие обновления могут быть добавлены по аналогии с вышеприведенным кодом
     // просто добавьте блоки if для каждого обновления
 
-    if (_settings!.currentBuildNumber != buildVersionFromPubspec) {
-      _updateBuildVersion(settingsBox, buildVersionFromPubspec);
+    if (_settings!.currentVersion != versionFromPubspec) {
+      _updateVersion(settingsBox, versionFromPubspec);
     }
-
-    await settingsBox.put('settings', _settings);
 
     await settingsBox.close();
   }
 
-  static _updateBuildVersion(Box<dynamic> settingsBox, int buildVersion) async {
-    _settings!.currentBuildNumber = buildVersion;
+  static _updateVersion(Box<dynamic> settingsBox, String version) async {
+    _settings!.currentVersion = version;
     await settingsBox.put('settings', _settings);
-    print('Приложение обновлено до $buildVersion версии сборки');
+    print('Приложение обновлено до $version');
   }
 
-  static Future<int> getBuildVersionFromPubspec() async {
+  static Future<String> getVersionFromPubspec() async {
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
-    return int.tryParse(packageInfo.buildNumber) ?? 0;
+    return packageInfo.version;
   }
 
-  static getBuildVersionFromDB() {
-    return _settings!.currentBuildNumber;
+  static String getVersionFromDB() {
+    return _settings!.currentVersion!;
+  }
+
+  static int weight(String version) {
+    if (version.isEmpty) {
+      return 0;
+    }
+    List<String> versionParts = version.split('+');
+    String versionNumber = versionParts[0];
+
+    List<int> weights = versionNumber.split('.').map(int.parse).toList();
+
+    int weight = 0;
+    int multiplier = 1;
+
+    for (int i = weights.length - 1; i >= 0; i--) {
+      weight += weights[i] * multiplier;
+      multiplier *= 1000;
+    }
+
+    return weight;
   }
 
   // update build version 3
-  static _updateHandlerBuildVersion4() async {
+  static _updateHandlerBuildVersion_1_0_2() async {
     final Box<dynamic> box = await Hive.openBox('bible_depth');
 
     WordStyleList? wordStyleList = box.get('word_styles');

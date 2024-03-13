@@ -5,4 +5,6 @@ part 'settings.g.dart';
 class Settings {
   @HiveField(0)
   int currentBuildNumber = 0;
+  @HiveField(1)
+  String? currentVersion = '';
 }

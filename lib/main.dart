@@ -43,8 +43,8 @@ void main(List<String> args) async {
 
   var settingsBox = await Hive.openBox('settings');
 
-  settingsBox.delete('settings');
-  if (settingsBox.get('settings') == null) {
+  if (settingsBox.get('settings') == null ||
+      (settingsBox.get('settings') as Settings).currentVersion == null) {
     await settingsBox.put('settings', Settings());
   }
 
