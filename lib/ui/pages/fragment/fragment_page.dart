@@ -707,7 +707,7 @@ class FragmentPage extends StatelessWidget {
                           }
 
                           verseId++;
-                          if (verseId ==
+                          if (verseId >=
                               book.chapters[chapterId - 1].verses.length) {
                             chapterId++;
                             verseId = 1;
