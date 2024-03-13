@@ -17,7 +17,7 @@ abstract class VersionHandler {
     _settings = settingsBox.get('settings');
 
     // если приложение запущено впервые
-    if (_settings!.currentBuildNumber == 0 && buildVersionFromPubspec > 3) {
+    if (_settings!.currentBuildNumber == 0 && buildVersionFromPubspec > 13) {
       _updateBuildVersion(settingsBox, buildVersionFromPubspec);
     }
 
