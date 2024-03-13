@@ -1,3 +1,4 @@
+import 'package:bible_depth/core/version_handler.dart';
 import 'package:bible_depth/helpers/dialogs.dart';
 import 'package:bible_depth/models/fragment.dart';
 import 'package:bible_depth/ui/pages/main/controller.dart';
@@ -80,6 +81,28 @@ class MainPage extends StatelessWidget {
                 ],
               ));
             });
+
+            result.add(
+              FutureBuilder(
+                future: VersionHandler.getBuildVersionFromPubspec(),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    return Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Center(
+                        child: Text(
+                          'build version: ${snapshot.data} | build version DB: ${VersionHandler.getBuildVersionFromDB()}',
+                        ),
+                      ),
+                    );
+                  } else if (snapshot.hasError) {
+                    return Text(snapshot.error.toString());
+                  } else {
+                    return CircularProgressIndicator();
+                  }
+                },
+              ),
+            );
             return result;
           }(),
         );

@@ -13,7 +13,7 @@ abstract class VersionHandler {
 
   static Future<void> handleDatabaseUpdates() async {
     final Box<dynamic> settingsBox = await Hive.openBox('settings');
-    int buildVersionFromPubspec = await _getBuildVersionFromPubspec();
+    int buildVersionFromPubspec = await getBuildVersionFromPubspec();
     _settings = settingsBox.get('settings');
 
     // если приложение запущено впервые
@@ -48,9 +48,13 @@ abstract class VersionHandler {
     print('Приложение обновлено до $buildVersion версии сборки');
   }
 
-  static Future<int> _getBuildVersionFromPubspec() async {
+  static Future<int> getBuildVersionFromPubspec() async {
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
     return int.tryParse(packageInfo.buildNumber) ?? 0;
+  }
+
+  static getBuildVersionFromDB() {
+    return _settings!.currentBuildNumber;
   }
 
   // update build version 3
