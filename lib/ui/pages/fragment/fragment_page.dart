@@ -491,33 +491,29 @@ class FragmentPage extends StatelessWidget {
                                       } else if (value ==
                                           Menu.copyStructuralLaw) {
                                         if (wrapEntity is Word) {
-                                          c.currentTool.value =
-                                              mainPageController
-                                                  .structuralLawList?.value
-                                                  .getWordStyleById(wrapEntity
-                                                      .structuralLawId);
+                                          c.currentTool.value = c
+                                              .fragment.value.structuralLawList!
+                                              .getWordStyleById(
+                                                  wrapEntity.structuralLawId);
                                         } else if (wrapEntity
                                             is StructuralLawPlace) {
-                                          c.currentTool.value =
-                                              mainPageController
-                                                  .structuralLawList?.value
-                                                  .getWordStyleById(wrapEntity
-                                                      .structuralLawId);
+                                          c.currentTool.value = c
+                                              .fragment.value.structuralLawList!
+                                              .getWordStyleById(
+                                                  wrapEntity.structuralLawId);
                                         }
                                       } else if (value == Menu.copyStyle) {
                                         if (wrapEntity is Word) {
-                                          c.currentTool.value =
-                                              mainPageController
-                                                  .wordStyleList?.value
-                                                  .getWordStyleById(
-                                                      wrapEntity.styleId);
+                                          c.currentTool.value = c
+                                              .fragment.value.wordStyleList!
+                                              .getWordStyleById(
+                                                  wrapEntity.styleId);
                                         } else if (wrapEntity
                                             is StructuralLawPlace) {
-                                          c.currentTool.value =
-                                              mainPageController
-                                                  .structuralLawList?.value
-                                                  .getWordStyleById(wrapEntity
-                                                      .structuralLawId);
+                                          c.currentTool.value = c
+                                              .fragment.value.structuralLawList!
+                                              .getWordStyleById(
+                                                  wrapEntity.structuralLawId);
                                         }
                                       } else if (value == Menu.clearStyle) {
                                         if (wrapEntity is Word) {
@@ -815,10 +811,10 @@ class FragmentPage extends StatelessWidget {
                       children: [
                         IconButton(
                           onPressed: () {
-                            mainPageController.wordStyleList!.value.list
+                            c.fragment.value.wordStyleList!.list
                                 .insert(0, WordStyle());
-                            mainPageController.updateDataBaseWordStyles();
-                            mainPageController.wordStyleList?.update((val) {});
+                            mainPageController.updateDataBaseFragments();
+                            c.fragment.update((val) {});
                           },
                           icon: SvgIcon(SvgIcons.add_grey),
                         ),
@@ -827,15 +823,15 @@ class FragmentPage extends StatelessWidget {
                             height: 40,
                             child: Obx(() => ListView.builder(
                                   scrollDirection: Axis.horizontal,
-                                  itemCount: mainPageController
-                                      .wordStyleList!.value.list.length,
+                                  itemCount: c.fragment.value.wordStyleList!
+                                      .list.length,
                                   itemBuilder: (context, index) {
                                     return Padding(
                                       padding: const EdgeInsets.symmetric(
                                           horizontal: 10),
                                       child: ToolWordStyleWidget(
-                                        wordStyle: mainPageController
-                                            .wordStyleList!.value.list[index],
+                                        wordStyle: c.fragment.value
+                                            .wordStyleList!.list[index],
                                       ),
                                     );
                                   },
@@ -849,30 +845,27 @@ class FragmentPage extends StatelessWidget {
                       children: [
                         IconButton(
                           onPressed: () {
-                            mainPageController.structuralLawList!.value.list
+                            c.fragment.value.structuralLawList!.list
                                 .insert(0, StructuralLaw());
-                            mainPageController.updateDataBaseStructuralLaws();
-                            mainPageController.structuralLawList
-                                ?.update((val) {});
+                            mainPageController.updateDataBaseFragments();
+                            c.fragment.update((val) {});
                           },
-                          icon: SvgIcon(SvgIcons.add_grey),
+                          icon: const SvgIcon(SvgIcons.add_grey),
                         ),
                         Expanded(
                           child: SizedBox(
                             height: 40,
                             child: Obx(() => ListView.builder(
                                   scrollDirection: Axis.horizontal,
-                                  itemCount: mainPageController
-                                      .structuralLawList!.value.list.length,
+                                  itemCount: c.fragment.value.structuralLawList!
+                                      .list.length,
                                   itemBuilder: (context, index) {
                                     return Padding(
                                       padding: const EdgeInsets.symmetric(
                                           horizontal: 10),
                                       child: ToolStructuralLawWidget(
-                                        structuralLaw: mainPageController
-                                            .structuralLawList!
-                                            .value
-                                            .list[index],
+                                        structuralLaw: c.fragment.value
+                                            .structuralLawList!.list[index],
                                       ),
                                     );
                                   },

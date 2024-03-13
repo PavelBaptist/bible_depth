@@ -152,7 +152,7 @@ class WordStyleEditorPage extends StatelessWidget {
   void update() {
     c.fragment.update((val) {});
     c.currentTool.update((val) {});
-    mainPageController.updateDataBaseWordStyles();
+    mainPageController.updateDataBaseFragments();
   }
 }
 

@@ -21,13 +21,15 @@ class FragmentAdapter extends TypeAdapter<Fragment> {
       name: fields[0] as String,
     )
       ..description = fields[2] as String?
-      ..bookId = fields[3] as int?;
+      ..bookId = fields[3] as int?
+      ..structuralLawList = fields[4] as StructuralLawList?
+      ..wordStyleList = fields[5] as WordStyleList?;
   }
 
   @override
   void write(BinaryWriter writer, Fragment obj) {
     writer
-      ..writeByte(4)
+      ..writeByte(6)
       ..writeByte(0)
       ..write(obj.name)
       ..writeByte(1)
@@ -35,7 +37,11 @@ class FragmentAdapter extends TypeAdapter<Fragment> {
       ..writeByte(2)
       ..write(obj.description)
       ..writeByte(3)
-      ..write(obj.bookId);
+      ..write(obj.bookId)
+      ..writeByte(4)
+      ..write(obj.structuralLawList)
+      ..writeByte(5)
+      ..write(obj.wordStyleList);
   }
 
   @override

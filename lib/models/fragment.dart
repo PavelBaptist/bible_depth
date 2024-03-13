@@ -1,4 +1,8 @@
 import 'package:bible_depth/data/bible/bible.dart';
+import 'package:bible_depth/models/structural_law.dart';
+import 'package:bible_depth/models/structural_law_list.dart';
+import 'package:bible_depth/models/word_style.dart';
+import 'package:bible_depth/models/word_style_list.dart';
 import 'package:bible_depth/models/wrap_entity.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 part 'fragment.g.dart';
@@ -13,11 +17,18 @@ class Fragment {
   String? description = '';
   @HiveField(3)
   int? bookId;
+  @HiveField(4)
+  StructuralLawList? structuralLawList;
+  @HiveField(5)
+  WordStyleList? wordStyleList;
 
   Fragment({
     required this.text,
     required this.name,
-  });
+  }) {
+    structuralLawList ??= StructuralLawList()..list = StructuralLaw.defaultSet;
+    wordStyleList ??= WordStyleList()..list = WordStyle.defaultSet;
+  }
 
   Fragment.fromBible({
     required Book book,
@@ -48,5 +59,8 @@ class Fragment {
 
     text = listWrap;
     name = '${book.bookName} $chapterStart:$verseStart-$chapterEnd:$verseEnd';
+
+    structuralLawList ??= StructuralLawList()..list = StructuralLaw.defaultSet;
+    wordStyleList ??= WordStyleList()..list = WordStyle.defaultSet;
   }
 }

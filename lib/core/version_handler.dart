@@ -1,49 +1,78 @@
-// import 'package:hive_flutter/hive_flutter.dart';
-// import 'package:package_info/package_info.dart';
+import 'dart:ffi';
 
-// class VersionHandler {
-//   static const String _versionKey = 'database_version';
+import 'package:bible_depth/models/fragment_list.dart';
+import 'package:bible_depth/models/settings.dart';
+import 'package:bible_depth/models/structural_law_list.dart';
+import 'package:bible_depth/models/word_style.dart';
+import 'package:bible_depth/models/word_style_list.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:package_info/package_info.dart';
 
-//   static Future<void> handleDatabaseUpdates() async {
-//     final Box<dynamic> box = await Hive.openBox('bible_depth');
-//     String versionDb = await getCurrentVersion(box);
-//     String version = '';
+abstract class VersionHandler {
+  static Settings? _settings;
 
-//     // Проверяем текущую версию базы данных и применяем необходимые обновления
-//     version = '1.0.0+1';
-//     if (versionToInt(versionDb) < versionToInt(version)) {
-//       print('Выполнены обработчики на версию $version');
-//     }
+  static Future<void> handleDatabaseUpdates() async {
+    final Box<dynamic> settingsBox = await Hive.openBox('settings');
+    int buildVersionFromPubspec = await _getBuildVersionFromPubspec();
+    _settings = settingsBox.get('settings');
 
-//     version = '1.0.0+2';
-//     if (versionToInt(versionDb) < versionToInt(version)) {
-//       print('Выполнены обработчики на версию $version');
-//     }
-//     await box.put(_versionKey, getVersionFromPubspec());
+    // если приложение запущено впервые
+    if (_settings!.currentBuildNumber == 0 && buildVersionFromPubspec > 3) {
+      _updateBuildVersion(settingsBox, buildVersionFromPubspec);
+    }
 
-//     // Другие обновления могут быть добавлены по аналогии с вышеприведенным кодом
-//     // Просто добавьте блоки if для каждого обновления
+    // проверяем текущую версию базы данных и применяем необходимые обновления
+    int currentBuildVersion = 0;
 
-//     await box.close();
-//   }
+    currentBuildVersion = 3;
+    if (_settings!.currentBuildNumber < currentBuildVersion) {
+      await _updateHandlerBuildVersion3();
+      _updateBuildVersion(settingsBox, currentBuildVersion);
+    }
 
-//   static Future<String> getCurrentVersion(Box<dynamic> box) async {
-//     // Получаем текущую версию базы данных
-//     String currentVersion =
-//         box.get(_versionKey, defaultValue: await getVersionFromPubspec());
-//     return currentVersion;
-//   }
+    // другие обновления могут быть добавлены по аналогии с вышеприведенным кодом
+    // просто добавьте блоки if для каждого обновления
 
-//   static int versionToInt(String version) {
-//     List<String> parts = version.split('+')[0].split('.');
-//     int major = int.parse(parts[0]);
-//     int minor = int.parse(parts[1]);
-//     int patch = int.parse(parts[2]);
-//     return major * 10000 + minor * 100 + patch;
-//   }
+    if (_settings!.currentBuildNumber != buildVersionFromPubspec) {
+      _updateBuildVersion(settingsBox, buildVersionFromPubspec);
+    }
 
-//   static Future<String> getVersionFromPubspec() async {
-//     PackageInfo packageInfo = await PackageInfo.fromPlatform();
-//     return packageInfo.version;
-//   }
-// }
+    await settingsBox.put('settings', _settings);
+
+    await settingsBox.close();
+  }
+
+  static _updateBuildVersion(Box<dynamic> settingsBox, int buildVersion) async {
+    _settings!.currentBuildNumber = buildVersion;
+    await settingsBox.put('settings', _settings);
+    print('Приложение обновлено до $buildVersion версии сборки');
+  }
+
+  static Future<int> _getBuildVersionFromPubspec() async {
+    PackageInfo packageInfo = await PackageInfo.fromPlatform();
+    return int.tryParse(packageInfo.buildNumber) ?? 0;
+  }
+
+  // update build version 3
+  static _updateHandlerBuildVersion3() async {
+    final Box<dynamic> box = await Hive.openBox('bible_depth');
+
+    WordStyleList? wordStyleList = box.get('word_styles');
+    StructuralLawList? structuralLawList = box.get('structural_laws');
+    FragmentList? fragmentList = box.get('fragments');
+
+    if (wordStyleList != null &&
+        structuralLawList != null &&
+        fragmentList != null) {
+      for (var fragment in fragmentList.list) {
+        fragment.wordStyleList = wordStyleList;
+        fragment.structuralLawList = structuralLawList;
+      }
+      await box.put('fragments', fragmentList);
+
+      await box.delete('word_styles');
+      await box.delete('structural_laws');
+    }
+    await box.close();
+  }
+}

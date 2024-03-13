@@ -14,80 +14,76 @@ class MainPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          title: const Padding(
-            padding: EdgeInsets.only(left: 65),
-            child: Text('МОИ РАЗБОРЫ'),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Padding(
+          padding: EdgeInsets.only(left: 65),
+          child: Text('МОИ РАЗБОРЫ'),
+        ),
+        centerTitle: false,
+        actions: [
+          IconButton(
+            onPressed: () => Get.toNamed('paint_test'),
+            icon: const SvgIcon(SvgIcons.settings),
           ),
-          centerTitle: false,
-          actions: [
-            IconButton(
-              onPressed: () => Get.toNamed('paint_test'),
-              icon: SvgIcon(SvgIcons.settings),
-            ),
-            const SizedBox(width: 50),
-          ],
-        ),
-        floatingActionButton: FloatingActionButton(
-          child: const Icon(Icons.add),
-          onPressed: () => Get.toNamed('new_fragment'),
-        ),
-        body: Obx(() {
-          return ListView(
-            padding: const EdgeInsets.symmetric(horizontal: 50),
-            children: () {
-              List<Widget> result = [
-                const SizedBox(height: 30),
-              ];
-              c.fragmentList?.value.list.forEach((fragment) {
-                result.add(Column(
-                  children: [
-                    MyTile(
-                      key: Key(fragment.hashCode.toString()),
-                      title: fragment.name,
-                      onTap: () async {
-                        c.selectedFragment = fragment;
-                        await Get.toNamed('/fragment');
-                        c.fragmentList!.update((val) {});
-                      },
-                      endActionPane: ActionPane(
-                        motion: ScrollMotion(),
-                        extentRatio: 0.1,
-                        children: [
-                          Expanded(
-                            child: Container(
-                              child: Align(
-                                child: IconButton(
-                                  icon: const SvgIcon(SvgIcons.delete),
-                                  onPressed: () {
-                                    showConfirmationDialog(context,
-                                        onTapYes: () {
-                                      c.fragmentList?.value.list
-                                          .remove(fragment);
-                                      c.updateDataBaseFragments();
-                                      c.fragmentList?.update((val) {});
-                                    },
-                                        text: fragment.name,
-                                        titleText: 'Удалить?');
+          const SizedBox(width: 50),
+        ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: const Icon(Icons.add),
+        onPressed: () => Get.toNamed('new_fragment'),
+      ),
+      body: Obx(() {
+        return ListView(
+          padding: const EdgeInsets.symmetric(horizontal: 50),
+          children: () {
+            List<Widget> result = [
+              const SizedBox(height: 30),
+            ];
+            c.fragmentList?.value.list.forEach((fragment) {
+              result.add(Column(
+                children: [
+                  MyTile(
+                    key: Key(fragment.hashCode.toString()),
+                    title: fragment.name,
+                    onTap: () async {
+                      c.selectedFragment = fragment;
+                      await Get.toNamed('/fragment');
+                      c.fragmentList!.update((val) {});
+                    },
+                    endActionPane: ActionPane(
+                      motion: const ScrollMotion(),
+                      extentRatio: 0.1,
+                      children: [
+                        Expanded(
+                          child: Container(
+                            child: Align(
+                              child: IconButton(
+                                icon: const SvgIcon(SvgIcons.delete),
+                                onPressed: () {
+                                  showConfirmationDialog(context, onTapYes: () {
+                                    c.fragmentList?.value.list.remove(fragment);
+                                    c.updateDataBaseFragments();
+                                    c.fragmentList?.update((val) {});
                                   },
-                                ),
+                                      text: fragment.name,
+                                      titleText: 'Удалить?');
+                                },
                               ),
                             ),
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
-                    const SizedBox(height: 5.74),
-                  ],
-                ));
-              });
-              return result;
-            }(),
-          );
-        }),
-      ),
+                  ),
+                  const SizedBox(height: 5.74),
+                ],
+              ));
+            });
+            return result;
+          }(),
+        );
+      }),
     );
   }
 }

@@ -6,8 +6,8 @@ import 'package:bible_depth/models/structural_law_list.dart';
 import 'package:bible_depth/models/word_style.dart';
 import 'package:bible_depth/models/word_style_list.dart';
 import 'package:bible_depth/models/wrap_entity.dart';
+import 'package:bible_depth/ui/pages/fragment/controller.dart';
 import 'package:bible_depth/ui/pages/fragment/widgets/structural_law_widget.dart';
-import 'package:bible_depth/ui/pages/main/controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -26,12 +26,12 @@ class WordWidget extends StatelessWidget {
     this.onLongPress,
     this.fontSize = 14,
   }) {
-    MainPageController mpc = Get.find<MainPageController>();
+    FragmentPageController fpc = Get.find<FragmentPageController>();
 
-    WordStyleList wsl = mpc.wordStyleList!.value;
+    WordStyleList wsl = fpc.fragment.value.wordStyleList!;
     style = wsl.getWordStyleById(word.styleId);
 
-    StructuralLawList sll = mpc.structuralLawList!.value;
+    StructuralLawList sll = fpc.fragment.value.structuralLawList!;
     structuralLaw = sll.getWordStyleById(word.structuralLawId);
   }
 

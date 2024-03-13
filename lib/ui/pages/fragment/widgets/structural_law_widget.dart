@@ -3,7 +3,7 @@ import 'dart:typed_data';
 
 import 'package:bible_depth/models/structural_law.dart';
 import 'package:bible_depth/models/structural_law_list.dart';
-import 'package:bible_depth/ui/pages/main/controller.dart';
+import 'package:bible_depth/ui/pages/fragment/controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -20,9 +20,9 @@ class StructuralLawWidget extends StatelessWidget {
     this.onLongPress,
     this.size = 14,
   }) {
-    MainPageController mpc = Get.find<MainPageController>();
+    FragmentPageController fpc = Get.find<FragmentPageController>();
 
-    StructuralLawList sll = mpc.structuralLawList!.value;
+    StructuralLawList sll = fpc.fragment.value.structuralLawList!;
     _structuralLaw = sll.getWordStyleById(structuralLawId) ?? StructuralLaw();
   }
 

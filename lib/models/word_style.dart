@@ -48,4 +48,19 @@ class WordStyle extends Tool {
   String? _highlightColor;
   Color? get highlightColor => hexToColor(_highlightColor);
   set highlightColor(Color? color) => _highlightColor = colorToHex(color);
+
+  static final List<WordStyle> defaultSet = [
+    WordStyle()
+      ..fontColor = Colors.white
+      ..highlightColor = Colors.blue,
+    WordStyle()
+      ..fontColor = Colors.white
+      ..highlightColor = Colors.green,
+    WordStyle()
+      ..fontColor = Colors.white
+      ..highlightColor = Colors.black,
+    WordStyle()
+      ..isBold = true
+      ..borderColor = Colors.red,
+  ];
 }

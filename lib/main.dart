@@ -1,5 +1,7 @@
+import 'package:bible_depth/core/version_handler.dart';
 import 'package:bible_depth/models/fragment.dart';
 import 'package:bible_depth/models/fragment_list.dart';
+import 'package:bible_depth/models/settings.dart';
 import 'package:bible_depth/models/structural_law.dart';
 import 'package:bible_depth/models/structural_law_list.dart';
 import 'package:bible_depth/models/word_style.dart';
@@ -25,6 +27,7 @@ void main(List<String> args) async {
   print((await getApplicationDocumentsDirectory()).path);
   await Hive.initFlutter((await getApplicationDocumentsDirectory()).path);
   Hive
+    ..registerAdapter(SettingsAdapter())
     ..registerAdapter(FragmentListAdapter())
     ..registerAdapter(FragmentAdapter())
     ..registerAdapter(WordAdapter())
@@ -38,41 +41,21 @@ void main(List<String> args) async {
     ..registerAdapter(StructuralLawPlaceAdapter())
     ..registerAdapter(LineBreakAdapter());
 
+  var settingsBox = await Hive.openBox('settings');
+
+  if (settingsBox.get('settings') == null) {
+    await settingsBox.put('settings', Settings());
+  }
+
+  await VersionHandler.handleDatabaseUpdates();
+
   var box = await Hive.openBox('bible_depth');
 
   if (box.get('fragments') == null) {
     await box.put('fragments', FragmentList());
   }
 
-  if (box.get('word_styles') == null) {
-    await box.put(
-        'word_styles',
-        WordStyleList()
-          ..list = [
-            WordStyle()
-              ..fontColor = Colors.white
-              ..highlightColor = Colors.blue,
-            WordStyle()
-              ..fontColor = Colors.white
-              ..highlightColor = Colors.green,
-            WordStyle()
-              ..fontColor = Colors.white
-              ..highlightColor = Colors.black,
-            WordStyle()
-              ..isBold = true
-              ..borderColor = Colors.red,
-          ]);
-  }
-
-  if (box.get('structural_laws') == null) {
-    await box.put('structural_laws',
-        StructuralLawList()..list = StructuralLaw.defaultSet);
-  }
-
-  // bible_depth % flutter run -d 'IPad (2)' --release;
   runApp(const App());
-
-//  await VersionHandler.handleDatabaseUpdates();
 }
 
 class App extends StatelessWidget {
