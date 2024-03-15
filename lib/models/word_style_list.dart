@@ -16,4 +16,12 @@ class WordStyleList {
     }
     return list.firstWhereOrNull((style) => style.id == id);
   }
+
+  WordStyleList copyWith() {
+    final copyWordStyleList = WordStyleList();
+    for (var wordStyleList in list) {
+      copyWordStyleList.list.add(wordStyleList.copyWith());
+    }
+    return copyWordStyleList;
+  }
 }

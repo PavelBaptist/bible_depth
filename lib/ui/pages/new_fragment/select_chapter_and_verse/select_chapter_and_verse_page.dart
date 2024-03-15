@@ -21,7 +21,7 @@ class SelectChapterAndVersePage extends StatelessWidget {
           onPressed: () {
             Navigator.pop(context);
           },
-          icon: const SvgIcon(SvgIcons.arrow_left),
+          icon: const SvgIcon(SvgIcons.arrowLeft),
         ),
         title: Text(c.selectedBook!.bookName.toUpperCase()),
       ),

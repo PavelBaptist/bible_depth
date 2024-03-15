@@ -22,10 +22,7 @@ class Fragment {
   @HiveField(5)
   WordStyleList? wordStyleList;
 
-  Fragment({
-    required this.text,
-    required this.name,
-  }) {
+  Fragment() {
     structuralLawList ??= StructuralLawList()..list = StructuralLaw.defaultSet;
     wordStyleList ??= WordStyleList()..list = WordStyle.defaultSet;
   }
@@ -62,5 +59,21 @@ class Fragment {
 
     structuralLawList ??= StructuralLawList()..list = StructuralLaw.defaultSet;
     wordStyleList ??= WordStyleList()..list = WordStyle.defaultSet;
+  }
+
+  Fragment copyWith() {
+    final newFragment = Fragment();
+    newFragment.name = name;
+
+    for (var el in text) {
+      newFragment.text.add(el.copyWith());
+    }
+
+    newFragment.description = description;
+    newFragment.bookId = bookId;
+    newFragment.structuralLawList = structuralLawList?.copyWith();
+    newFragment.wordStyleList = wordStyleList?.copyWith();
+
+    return newFragment;
   }
 }

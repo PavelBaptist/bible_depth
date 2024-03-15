@@ -15,4 +15,12 @@ class StructuralLawList {
     }
     return list.firstWhereOrNull((element) => element.id == id);
   }
+
+  StructuralLawList copyWith() {
+    final copyStructuralLawList = StructuralLawList();
+    for (var structuralLaw in list) {
+      copyStructuralLawList.list.add(structuralLaw.copyWith());
+    }
+    return copyStructuralLawList;
+  }
 }

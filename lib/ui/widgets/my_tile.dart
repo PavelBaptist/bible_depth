@@ -48,9 +48,7 @@ class _MyTileState extends State<MyTile> {
                 ),
               ),
               SvgIcon(
-                selected
-                    ? SvgIcons.arrow_right_white
-                    : SvgIcons.arrow_right_grey,
+                selected ? SvgIcons.arrowRightWhite : SvgIcons.arrowRightGrey,
               ),
               const SizedBox(width: 33),
             ],

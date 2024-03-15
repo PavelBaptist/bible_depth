@@ -30,7 +30,7 @@ class HeaderEditorPage extends StatelessWidget {
               header.value = textController.text.trim();
               header.level = level;
 
-              mainPageController.updateDataBaseFragments();
+              fragmentPageController.updateFragment();
               fragmentPageController.fragment.update((val) {});
 
               Navigator.pop(context);

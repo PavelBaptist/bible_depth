@@ -16,7 +16,7 @@ class NewFragmentPage extends StatelessWidget {
           onPressed: () {
             Navigator.pop(context);
           },
-          icon: const SvgIcon(SvgIcons.arrow_left),
+          icon: const SvgIcon(SvgIcons.arrowLeft),
         ),
         title: const Padding(
           padding: EdgeInsets.only(left: 7),

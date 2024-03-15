@@ -16,10 +16,9 @@ class FragmentAdapter extends TypeAdapter<Fragment> {
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return Fragment(
-      text: (fields[1] as List).cast<WrapEntity>(),
-      name: fields[0] as String,
-    )
+    return Fragment()
+      ..name = fields[0] as String
+      ..text = (fields[1] as List).cast<WrapEntity>()
       ..description = fields[2] as String?
       ..bookId = fields[3] as int?
       ..structuralLawList = fields[4] as StructuralLawList?

@@ -37,4 +37,12 @@ class StructuralLaw extends Tool {
       ..id = 'comparison'
       ..image = 'comparison.png',
   ];
+
+  StructuralLaw copyWith() {
+    return StructuralLaw()
+      ..id = id
+      ..isAssetsSource = isAssetsSource
+      ..image = image
+      ..description = description;
+  }
 }

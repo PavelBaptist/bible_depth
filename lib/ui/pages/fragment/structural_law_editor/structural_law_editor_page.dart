@@ -95,7 +95,7 @@ class StructuralLawEditorPage extends StatelessWidget {
   }
 
   void update() {
-    mainPageController.updateDataBaseFragments();
+    c.updateFragment();
     c.fragment.update((val) {});
     c.currentTool.update((val) {});
   }

@@ -49,28 +49,40 @@ class SvgIcons {
   static const SvgData delete = SvgData(
     'assets/icons/delete.svg',
   );
-  static const SvgData arrow_left = SvgData(
+  static const SvgData arrowLeft = SvgData(
     'assets/icons/arrow_left.svg',
   );
-  static const SvgData arrow_right_grey = SvgData(
+  static const SvgData arrowRightGrey = SvgData(
     'assets/icons/arrow_right_grey.svg',
   );
-  static const SvgData arrow_right_white = SvgData(
+  static const SvgData arrowRightWhite = SvgData(
     'assets/icons/arrow_right_white.svg',
   );
-  static const SvgData close_light = SvgData(
+  static const SvgData closeLight = SvgData(
     'assets/icons/close_light.svg',
   );
-  static const SvgData close_dark = SvgData(
+  static const SvgData closeDark = SvgData(
     'assets/icons/close_dark.svg',
   );
-  static const SvgData add_grey = SvgData(
+  static const SvgData addGrey = SvgData(
     'assets/icons/add_grey.svg',
   );
-  static const SvgData zoom_plus = SvgData(
+  static const SvgData zoomPlus = SvgData(
     'assets/icons/zoom_plus.svg',
   );
-  static const SvgData zoom_minus = SvgData(
+  static const SvgData zoomMinus = SvgData(
     'assets/icons/zoom_minus.svg',
+  );
+  static const SvgData undo = SvgData(
+    'assets/icons/undo.svg',
+  );
+  static const SvgData undoDisabled = SvgData(
+    'assets/icons/undo_disabled.svg',
+  );
+  static const SvgData redo = SvgData(
+    'assets/icons/redo.svg',
+  );
+  static const SvgData redoDisabled = SvgData(
+    'assets/icons/redo_disabled.svg',
   );
 }

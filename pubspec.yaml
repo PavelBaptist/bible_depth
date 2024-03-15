@@ -52,6 +52,7 @@ dependencies:
   flutter_svg: ^2.0.10+1
   flutter_slidable: ^3.0.1
   package_info: ^2.0.2
+  meta: ^1.9.1
   
   
 dev_dependencies:

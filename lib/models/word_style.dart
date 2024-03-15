@@ -63,4 +63,18 @@ class WordStyle extends Tool {
       ..isBold = true
       ..borderColor = Colors.red,
   ];
+
+  WordStyle copyWith() {
+    return WordStyle()
+      ..description = description
+      ..id = id
+      ..fontColor = fontColor
+      ..isBold = isBold
+      ..isItalic = isItalic
+      ..borderColor = borderColor
+      ..borderIsCircle = borderIsCircle
+      ..image = image
+      ..stretchImage = stretchImage
+      ..highlightColor = highlightColor;
+  }
 }

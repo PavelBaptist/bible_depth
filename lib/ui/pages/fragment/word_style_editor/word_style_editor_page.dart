@@ -150,9 +150,9 @@ class WordStyleEditorPage extends StatelessWidget {
   }
 
   void update() {
+    c.updateFragment();
     c.fragment.update((val) {});
     c.currentTool.update((val) {});
-    mainPageController.updateDataBaseFragments();
   }
 }
 

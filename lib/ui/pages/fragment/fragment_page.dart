@@ -48,6 +48,7 @@ class FragmentPage extends StatelessWidget {
   TextEditingController nameController = TextEditingController();
   FragmentPage({super.key}) {
     c.fragment.value = mainPageController.selectedFragment!;
+    c.historyUndo.add(c.fragment.value.copyWith());
   }
 
   @override
@@ -62,7 +63,7 @@ class FragmentPage extends StatelessWidget {
           onPressed: () {
             Navigator.pop(context);
           },
-          icon: const SvgIcon(SvgIcons.arrow_left),
+          icon: const SvgIcon(SvgIcons.arrowLeft),
         ),
         title: TextField(
           controller: nameController,
@@ -71,18 +72,18 @@ class FragmentPage extends StatelessWidget {
           ),
           onChanged: (value) {
             c.fragment.value.name = value;
-            mainPageController.updateDataBaseFragments();
+            c.updateFragment();
           },
         ),
         actions: [
           IconButton(
             onPressed: () => c.fontSize.value--,
-            icon: const SvgIcon(SvgIcons.zoom_minus),
+            icon: const SvgIcon(SvgIcons.zoomMinus),
           ),
           const SizedBox(width: 5),
           IconButton(
             onPressed: () => c.fontSize.value++,
-            icon: const SvgIcon(SvgIcons.zoom_plus),
+            icon: const SvgIcon(SvgIcons.zoomPlus),
           ),
           const SizedBox(width: 16),
         ],
@@ -104,7 +105,7 @@ class FragmentPage extends StatelessWidget {
                               actions: [
                                 IconButton(
                                     onPressed: () => c.contextBefore.clear(),
-                                    icon: const SvgIcon(SvgIcons.close_light))
+                                    icon: const SvgIcon(SvgIcons.closeLight))
                               ],
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
@@ -406,8 +407,7 @@ class FragmentPage extends StatelessWidget {
                                         c.fragment.update((val) {
                                           val?.text.insert(i, newHeader);
                                         });
-                                        mainPageController
-                                            .updateDataBaseFragments();
+                                        c.updateFragment();
                                         Get.toNamed('/fragment/header_editor',
                                             arguments: {'header': newHeader});
                                       } else if (value == Menu.addHeaderAfter) {
@@ -416,8 +416,7 @@ class FragmentPage extends StatelessWidget {
                                         c.fragment.update((val) {
                                           val?.text.insert(i + 1, newHeader);
                                         });
-                                        mainPageController
-                                            .updateDataBaseFragments();
+                                        c.updateFragment();
                                         Get.toNamed('/fragment/header_editor',
                                             arguments: {'header': newHeader});
                                       } else if (value ==
@@ -425,15 +424,13 @@ class FragmentPage extends StatelessWidget {
                                         c.fragment.update((val) {
                                           val?.text.insert(i, LineBreak());
                                         });
-                                        mainPageController
-                                            .updateDataBaseFragments();
+                                        c.updateFragment();
                                       } else if (value ==
                                           Menu.addLineBreakAfter) {
                                         c.fragment.update((val) {
                                           val?.text.insert(i + 1, LineBreak());
                                         });
-                                        mainPageController
-                                            .updateDataBaseFragments();
+                                        c.updateFragment();
                                       } else if (value ==
                                           Menu.deleteSpaceBefore) {
                                         if (c.fragment.value.text[i - 1]
@@ -441,8 +438,7 @@ class FragmentPage extends StatelessWidget {
                                           c.fragment.update((val) {
                                             val?.text.removeAt(i - 1);
                                           });
-                                          mainPageController
-                                              .updateDataBaseFragments();
+                                          c.updateFragment();
                                         }
                                       } else if (value ==
                                           Menu.deleteSpaceAfter) {
@@ -451,8 +447,7 @@ class FragmentPage extends StatelessWidget {
                                           c.fragment.update((val) {
                                             val?.text.removeAt(i + 1);
                                           });
-                                          mainPageController
-                                              .updateDataBaseFragments();
+                                          c.updateFragment();
                                         }
                                       } else if (value ==
                                           Menu.addStructuralLawBefore) {
@@ -465,8 +460,7 @@ class FragmentPage extends StatelessWidget {
                                                         .value as StructuralLaw)
                                                     .id);
                                         });
-                                        mainPageController
-                                            .updateDataBaseFragments();
+                                        c.updateFragment();
                                       } else if (value ==
                                           Menu.addStructuralLawAfter) {
                                         c.fragment.update((val) {
@@ -478,14 +472,12 @@ class FragmentPage extends StatelessWidget {
                                                         .value as StructuralLaw)
                                                     .id);
                                         });
-                                        mainPageController
-                                            .updateDataBaseFragments();
+                                        c.updateFragment();
                                       } else if (value ==
                                           Menu.clearStructuralLaw) {
                                         if (wrapEntity is Word) {
                                           wrapEntity.structuralLawId = '';
-                                          mainPageController
-                                              .updateDataBaseFragments();
+                                          c.updateFragment();
                                           c.fragment.update((val) {});
                                         }
                                       } else if (value ==
@@ -518,8 +510,7 @@ class FragmentPage extends StatelessWidget {
                                       } else if (value == Menu.clearStyle) {
                                         if (wrapEntity is Word) {
                                           wrapEntity.styleId = '';
-                                          mainPageController
-                                              .updateDataBaseFragments();
+                                          c.updateFragment();
                                           c.fragment.update((val) {});
                                         }
                                       } else if (value == Menu.splitWords) {
@@ -538,8 +529,7 @@ class FragmentPage extends StatelessWidget {
                                           text.removeAt(i);
                                           text.insertAll(i, wordsWidgets);
 
-                                          mainPageController
-                                              .updateDataBaseFragments();
+                                          c.updateFragment();
                                           c.fragment.update((val) {});
                                         }
                                       } else if (value == Menu.delete) {
@@ -549,8 +539,7 @@ class FragmentPage extends StatelessWidget {
                                           c.fragment.update((val) {
                                             val?.text.removeAt(i);
                                           });
-                                          mainPageController
-                                              .updateDataBaseFragments();
+                                          c.updateFragment();
                                         }
                                       }
                                     },
@@ -599,7 +588,7 @@ class FragmentPage extends StatelessWidget {
                                                   ' ${wrapEntity.value} ${wordAfter.value}';
                                               text.removeAt(i + 1);
                                               text.removeAt(i);
-
+                                              c.updateFragment();
                                               c.fragment.update((val) {});
                                             },
                                           );
@@ -615,7 +604,7 @@ class FragmentPage extends StatelessWidget {
                                                 wordBefore.value +=
                                                     ' ${wrapEntity.value}';
                                                 text.removeAt(i);
-
+                                                c.updateFragment();
                                                 c.fragment.update((val) {});
                                               },
                                             );
@@ -632,14 +621,14 @@ class FragmentPage extends StatelessWidget {
                                                     '${wrapEntity.value} ${wordAfter.value}';
 
                                                 text.removeAt(i);
+                                                c.updateFragment();
                                                 c.fragment.update((val) {});
                                               },
                                             );
                                           }
                                         }
                                       }
-                                      mainPageController
-                                          .updateDataBaseFragments();
+                                      c.updateFragment();
                                       c.fragment.update((val) {});
                                     },
                                     onLongPress: onLongPress,
@@ -676,6 +665,7 @@ class FragmentPage extends StatelessWidget {
                                                   .value as StructuralLaw)
                                               .id;
                                         });
+                                        c.updateFragment();
                                       }
                                     },
                                     onLongPress: onLongPress,
@@ -740,7 +730,7 @@ class FragmentPage extends StatelessWidget {
                                 actions: [
                                   IconButton(
                                       onPressed: () => c.contextAfter.clear(),
-                                      icon: const SvgIcon(SvgIcons.close_light))
+                                      icon: const SvgIcon(SvgIcons.closeLight))
                                 ],
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
@@ -779,7 +769,7 @@ class FragmentPage extends StatelessWidget {
                             onChanged: (value) {
                               c.fragment.value.description =
                                   descriptionController.text;
-                              mainPageController.updateDataBaseFragments();
+                              c.updateFragment();
                             },
                           )),
                     )
@@ -807,16 +797,32 @@ class FragmentPage extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
+                    Obx(() => Row(
+                          children: [
+                            IconButton(
+                              icon: c.historyUndo.length <= 1
+                                  ? const SvgIcon(SvgIcons.undoDisabled)
+                                  : const SvgIcon(SvgIcons.undo),
+                              onPressed: () => c.stepUndo(),
+                            ),
+                            IconButton(
+                              icon: c.historyRedo.isEmpty
+                                  ? const SvgIcon(SvgIcons.redoDisabled)
+                                  : const SvgIcon(SvgIcons.redo),
+                              onPressed: () => c.stepRedo(),
+                            ),
+                          ],
+                        )),
                     Row(
                       children: [
                         IconButton(
                           onPressed: () {
                             c.fragment.value.wordStyleList!.list
                                 .insert(0, WordStyle());
-                            mainPageController.updateDataBaseFragments();
+                            c.updateFragment();
                             c.fragment.update((val) {});
                           },
-                          icon: SvgIcon(SvgIcons.add_grey),
+                          icon: SvgIcon(SvgIcons.addGrey),
                         ),
                         Expanded(
                           child: SizedBox(
@@ -847,10 +853,10 @@ class FragmentPage extends StatelessWidget {
                           onPressed: () {
                             c.fragment.value.structuralLawList!.list
                                 .insert(0, StructuralLaw());
-                            mainPageController.updateDataBaseFragments();
+                            c.updateFragment();
                             c.fragment.update((val) {});
                           },
-                          icon: const SvgIcon(SvgIcons.add_grey),
+                          icon: const SvgIcon(SvgIcons.addGrey),
                         ),
                         Expanded(
                           child: SizedBox(
