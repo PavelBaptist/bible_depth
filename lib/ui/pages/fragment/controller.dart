@@ -54,12 +54,12 @@ class FragmentPageController extends GetxController {
   _setLastHistoryToFragment() {
     var copyFragment = historyUndo.last.copyWith();
     fragment.value.bookId = copyFragment.bookId;
-    fragment.value.description = copyFragment.description;
-    // 12fragment.value.name = copyFragment.name;
+    // fragment.value.description = copyFragment.description;
+    // fragment.value.name = copyFragment.name;
     fragment.value.structuralLawList =
         copyFragment.structuralLawList?.copyWith();
     fragment.value.wordStyleList = copyFragment.wordStyleList?.copyWith();
-    // fragment.value.text = copyFragment.text;
+    fragment.value.text = copyFragment.text;
     _mainPageController.updateDataBaseFragments();
     fragment.update((val) {});
   }
