@@ -1,7 +1,17 @@
+import 'package:bible_depth/data/bible/rst.dart';
+
 abstract class Bible {
   String get translationId;
   String get name;
   List<Book> get books;
+
+  static Future<Bible> getBibleFromTranslationId(String? translationId) async {
+    switch (translationId) {
+      case 'RST':
+        return await Rst.instance;
+    }
+    return await Rst.instance;
+  }
 }
 
 class Book {

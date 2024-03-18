@@ -119,7 +119,6 @@ class FragmentPage extends StatelessWidget {
                                     widgets.add(
                                       ContextVerseWidget(
                                         c.contextBefore[i],
-                                        fontSize: c.fontSize.value,
                                       ),
                                     );
                                   }
@@ -134,7 +133,7 @@ class FragmentPage extends StatelessWidget {
                       onTap: () async {
                         Book book = (await Rst.instance)
                             .books[c.fragment.value.bookId! - 1];
-                        Verse firstVerse = await c.getFirstVerseEntity();
+                        Verse firstVerse = await c.getFirstContextVerseEntity();
                         int chapterId = firstVerse.chapterId;
                         int verseId = firstVerse.id;
                         for (var i = 0; i < 10; i++) {
@@ -684,7 +683,7 @@ class FragmentPage extends StatelessWidget {
                       onTap: () async {
                         Book book = (await Rst.instance)
                             .books[c.fragment.value.bookId! - 1];
-                        Verse lastVerse = await c.getLastVerseEntity();
+                        Verse lastVerse = await c.getLastContextVerseEntity();
                         int chapterId = lastVerse.chapterId;
                         int verseId = lastVerse.id;
                         int maxChapterId = book.chapters.length;
@@ -744,7 +743,6 @@ class FragmentPage extends StatelessWidget {
                                       widgets.add(
                                         ContextVerseWidget(
                                           c.contextAfter[i],
-                                          fontSize: c.fontSize.value,
                                         ),
                                       );
                                     }
