@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:bible_depth/models/fragment_list.dart';
 import 'package:bible_depth/models/settings.dart';
 import 'package:bible_depth/models/structural_law_list.dart';
