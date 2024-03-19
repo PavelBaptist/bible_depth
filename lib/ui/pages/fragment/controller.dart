@@ -13,6 +13,7 @@ class FragmentPageController extends GetxController {
   Rx<double> fontSize = 14.0.obs;
   Rx<Fragment> fragment = Fragment().obs;
   RxList<Verse> contextBefore = RxList<Verse>();
+  RxList<Verse> contextAfter = RxList<Verse>();
   RxList<Fragment> historyRedo = RxList<Fragment>();
   RxList<Fragment> historyUndo = RxList<Fragment>();
   final _mainPageController = Get.find<MainPageController>();
@@ -64,35 +65,33 @@ class FragmentPageController extends GetxController {
     fragment.update((val) {});
   }
 
-  Future<Verse> getFirstVerseEntity() async {
+  Future<Verse> getFirstContextVerseEntity() async {
     if (contextBefore.isEmpty) {
-      VerseIndex verseIndex = fragment.value.text
-          .firstWhere((wrapEntity) => wrapEntity is VerseIndex) as VerseIndex;
-      int chapterId = int.parse(verseIndex.value.split(':')[0]);
-      int verseId = int.parse(verseIndex.value.split(':')[1]);
-      return (await Rst.instance)
-          .books[fragment.value.bookId! - 1]
-          .chapters[chapterId - 1]
-          .verses[verseId - 1];
+      return fragment.value.getFirstVerseEntity();
     } else {
       return contextBefore[0];
     }
   }
 
-  RxList<Verse> contextAfter = RxList<Verse>();
-
-  Future<Verse> getLastVerseEntity() async {
+  Future<Verse> getLastContextVerseEntity() async {
     if (contextAfter.isEmpty) {
-      VerseIndex verseIndex = fragment.value.text
-          .lastWhere((wrapEntity) => wrapEntity is VerseIndex) as VerseIndex;
-      int chapterId = int.parse(verseIndex.value.split(':')[0]);
-      int verseId = int.parse(verseIndex.value.split(':')[1]);
-      return (await Rst.instance)
-          .books[fragment.value.bookId! - 1]
-          .chapters[chapterId - 1]
-          .verses[verseId - 1];
+      return fragment.value.getLastVerseEntity();
     } else {
       return contextAfter[contextAfter.length - 1];
     }
+  }
+
+  addContext(int chapterId, int verseId) async {
+    Verse lastVerse = await fragment.value.getLastVerseEntity();
+    if (chapterId > lastVerse.chapterId ||
+        (chapterId == lastVerse.chapterId && verseId > lastVerse.id)) {
+      contextAfter.clear();
+    } else {
+      contextBefore.clear();
+    }
+    fragment.value.addContext(chapterId, verseId);
+
+    updateFragment();
+    fragment.update((val) {});
   }
 }
