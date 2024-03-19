@@ -33,25 +33,28 @@ class _MyTileState extends State<MyTile> {
               ? style.colorScheme.primary
               : style.colorScheme.inversePrimary,
           height: 85,
-          child: Row(
-            //mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const SizedBox(width: 30),
-              Expanded(
-                child: Text(
-                  widget.title,
-                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        color: selected
-                            ? style.colorScheme.inversePrimary
-                            : Colors.black,
-                      ),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 10),
+            child: Row(
+              //mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const SizedBox(width: 30),
+                Expanded(
+                  child: Text(
+                    widget.title,
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                          color: selected
+                              ? style.colorScheme.inversePrimary
+                              : Colors.black,
+                        ),
+                  ),
                 ),
-              ),
-              SvgIcon(
-                selected ? SvgIcons.arrowRightWhite : SvgIcons.arrowRightGrey,
-              ),
-              const SizedBox(width: 33),
-            ],
+                SvgIcon(
+                  selected ? SvgIcons.arrowRightWhite : SvgIcons.arrowRightGrey,
+                ),
+                const SizedBox(width: 33),
+              ],
+            ),
           ),
         ),
       ),

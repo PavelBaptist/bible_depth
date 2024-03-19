@@ -24,17 +24,8 @@ class ResultsWidget extends StatelessWidget {
           List<Widget> results = [];
 
           // итоги повторяющихся слов
-
-          results.add(
-            Text(
-              'Повторяющиеся слова:',
-              style: style.textTheme.titleSmall?.copyWith(
-                color: Colors.black,
-              ),
-            ),
-          );
-
           Map<String, List<Widget>> wordsGroup = {};
+
           for (var wrapEntity in c.fragment.value.text) {
             if (wrapEntity is! Word ||
                 wrapEntity.styleId == '' ||
@@ -46,6 +37,17 @@ class ResultsWidget extends StatelessWidget {
               wordsGroup[wrapEntity.styleId] = <Widget>[];
             }
             wordsGroup[wrapEntity.styleId]!.add(WordWidget(wrapEntity));
+          }
+
+          if (wordsGroup.isNotEmpty) {
+            results.add(
+              Text(
+                'Повторяющиеся слова:',
+                style: style.textTheme.titleSmall?.copyWith(
+                  color: Colors.black,
+                ),
+              ),
+            );
           }
 
           List<List<Widget>> list = [];
@@ -77,19 +79,8 @@ class ResultsWidget extends StatelessWidget {
           }
 
           // итоги структурных законов
-
-          results.add(const SizedBox(height: 16));
-
-          results.add(
-            Text(
-              'Повторяющиеся структурные законы:',
-              style: style.textTheme.titleSmall?.copyWith(
-                color: Colors.black,
-              ),
-            ),
-          );
-
           Map<String, List<Widget>> structuredLawsGroup = {};
+
           for (var wrapEntity in c.fragment.value.text) {
             String structuralLawId = '';
             if (wrapEntity is Word && wrapEntity.structuralLawId != '') {
@@ -106,6 +97,18 @@ class ResultsWidget extends StatelessWidget {
             }
             structuredLawsGroup[structuralLawId]!
                 .add(StructuralLawWidget(structuralLawId));
+          }
+          results.add(const SizedBox(height: 16));
+
+          if (structuredLawsGroup.isNotEmpty) {
+            results.add(
+              Text(
+                'Повторяющиеся структурные законы:',
+                style: style.textTheme.titleSmall?.copyWith(
+                  color: Colors.black,
+                ),
+              ),
+            );
           }
 
           List<List<Widget>> listStructuredLaws = [];
