@@ -119,7 +119,6 @@ class FragmentPage extends StatelessWidget {
                                     widgets.add(
                                       ContextVerseWidget(
                                         c.contextBefore[i],
-                                        fontSize: c.fontSize.value,
                                       ),
                                     );
                                   }
@@ -134,7 +133,7 @@ class FragmentPage extends StatelessWidget {
                       onTap: () async {
                         Book book = (await Rst.instance)
                             .books[c.fragment.value.bookId! - 1];
-                        Verse firstVerse = await c.getFirstVerseEntity();
+                        Verse firstVerse = await c.getFirstContextVerseEntity();
                         int chapterId = firstVerse.chapterId;
                         int verseId = firstVerse.id;
                         for (var i = 0; i < 10; i++) {
@@ -511,27 +510,11 @@ class FragmentPage extends StatelessWidget {
                                         if (wrapEntity is Word) {
                                           wrapEntity.styleId = '';
                                           c.updateFragment();
+                                          splitWords(wrapEntity, text, i);
                                           c.fragment.update((val) {});
                                         }
                                       } else if (value == Menu.splitWords) {
-                                        if (wrapEntity is Word) {
-                                          var words =
-                                              wrapEntity.value.split(' ');
-                                          var wordsWidgets = <WrapEntity>[];
-                                          for (var word in words) {
-                                            wordsWidgets.add(
-                                              Word()
-                                                ..value = word
-                                                ..styleId = wrapEntity.styleId,
-                                            );
-                                          }
-
-                                          text.removeAt(i);
-                                          text.insertAll(i, wordsWidgets);
-
-                                          c.updateFragment();
-                                          c.fragment.update((val) {});
-                                        }
+                                        splitWords(wrapEntity, text, i);
                                       } else if (value == Menu.delete) {
                                         if (wrapEntity is! Word &&
                                             wrapEntity is! VerseIndex &&
@@ -684,7 +667,7 @@ class FragmentPage extends StatelessWidget {
                       onTap: () async {
                         Book book = (await Rst.instance)
                             .books[c.fragment.value.bookId! - 1];
-                        Verse lastVerse = await c.getLastVerseEntity();
+                        Verse lastVerse = await c.getLastContextVerseEntity();
                         int chapterId = lastVerse.chapterId;
                         int verseId = lastVerse.id;
                         int maxChapterId = book.chapters.length;
@@ -744,7 +727,6 @@ class FragmentPage extends StatelessWidget {
                                       widgets.add(
                                         ContextVerseWidget(
                                           c.contextAfter[i],
-                                          fontSize: c.fontSize.value,
                                         ),
                                       );
                                     }
@@ -896,6 +878,26 @@ class FragmentPage extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  void splitWords(WrapEntity wrapEntity, List<WrapEntity> text, int i) {
+    if (wrapEntity is Word) {
+      var words = wrapEntity.value.split(' ');
+      var wordsWidgets = <WrapEntity>[];
+      for (var word in words) {
+        wordsWidgets.add(
+          Word()
+            ..value = word
+            ..styleId = wrapEntity.styleId,
+        );
+      }
+
+      text.removeAt(i);
+      text.insertAll(i, wordsWidgets);
+
+      c.updateFragment();
+      c.fragment.update((val) {});
+    }
   }
 }
 
