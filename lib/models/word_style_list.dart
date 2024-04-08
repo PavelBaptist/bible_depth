@@ -24,4 +24,10 @@ class WordStyleList {
     }
     return copyWordStyleList;
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'list': list.map((wordStyle) => wordStyle.toJson()).toList(),
+    };
+  }
 }

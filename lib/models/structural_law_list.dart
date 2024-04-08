@@ -23,4 +23,10 @@ class StructuralLawList {
     }
     return copyStructuralLawList;
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'list': list.map((structuralLaw) => structuralLaw.toJson()).toList(),
+    };
+  }
 }

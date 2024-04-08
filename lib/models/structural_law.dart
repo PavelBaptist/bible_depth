@@ -45,4 +45,13 @@ class StructuralLaw extends Tool {
       ..image = image
       ..description = description;
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'isAssetsSource': isAssetsSource,
+      'image': image,
+      'description': description,
+    };
+  }
 }

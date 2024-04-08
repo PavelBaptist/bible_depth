@@ -170,4 +170,16 @@ class Fragment {
 
     return newFragment;
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'name': name,
+      'text': text.map((wrapEntity) => wrapEntity.toJson()).toList(),
+      'description': description,
+      'bookId': bookId,
+      'structuralLawList': structuralLawList?.toJson(),
+      'wordStyleList': wordStyleList?.toJson(),
+      'translationId': translationId,
+    };
+  }
 }

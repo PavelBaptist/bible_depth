@@ -77,4 +77,19 @@ class WordStyle extends Tool {
       ..stretchImage = stretchImage
       ..highlightColor = highlightColor;
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'description': description,
+      'id': id,
+      'fontColor': fontColor,
+      'isBold': isBold,
+      'isItalic': isItalic,
+      'borderColor': borderColor,
+      'borderIsCircle': borderIsCircle,
+      'image': image,
+      'stretchImage': stretchImage,
+      'highlightColor': highlightColor,
+    };
+  }
 }

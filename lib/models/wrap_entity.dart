@@ -7,6 +7,9 @@ part 'wrap_entity.g.dart';
 abstract class WrapEntity {
   @mustBeOverridden
   WrapEntity copyWith();
+
+  @mustBeOverridden
+  Map<String, dynamic> toJson();
 }
 
 @HiveType(typeId: 100)
@@ -35,6 +38,15 @@ class Word extends WrapEntity {
       ..styleId = styleId
       ..structuralLawId = structuralLawId;
   }
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      'value': value,
+      'styleId': styleId,
+      'structuralLawId': structuralLawId,
+    };
+  }
 }
 
 @HiveType(typeId: 101)
@@ -48,6 +60,13 @@ class VerseIndex extends WrapEntity {
   VerseIndex copyWith() {
     return VerseIndex()..value = value;
   }
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      'value': value,
+    };
+  }
 }
 
 @HiveType(typeId: 103)
@@ -59,6 +78,13 @@ class LineBreak extends WrapEntity {
   @override
   LineBreak copyWith() {
     return LineBreak()..value = value;
+  }
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      'value': value,
+    };
   }
 }
 
@@ -78,6 +104,14 @@ class StructuralLawPlace extends WrapEntity {
       ..value = value
       ..structuralLawId = structuralLawId;
   }
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      'value': value,
+      'structuralLawId': structuralLawId,
+    };
+  }
 }
 
 @HiveType(typeId: 105)
@@ -96,6 +130,14 @@ class Header extends WrapEntity {
       ..value = value
       ..level = level;
   }
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      'value': value,
+      'level': level,
+    };
+  }
 }
 
 @HiveType(typeId: 106)
@@ -108,5 +150,12 @@ class ChapterIndex extends WrapEntity {
   @override
   ChapterIndex copyWith() {
     return ChapterIndex()..value = value;
+  }
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      'value': value,
+    };
   }
 }

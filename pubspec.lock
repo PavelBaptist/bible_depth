@@ -627,6 +627,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.2.3"
+  share:
+    dependency: "direct main"
+    description:
+      name: share
+      sha256: "97e6403f564ed1051a01534c2fc919cb6e40ea55e60a18ec23cee6e0ce19f4be"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.4"
   shelf:
     dependency: transitive
     description:
@@ -736,6 +744,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.1"
+  translit:
+    dependency: "direct main"
+    description:
+      name: translit
+      sha256: "47c7da51b05a14acbe37bb3bd60755ad1c046940531d24e255af6a7c41adc930"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.1"
   typed_data:
     dependency: transitive
     description:
