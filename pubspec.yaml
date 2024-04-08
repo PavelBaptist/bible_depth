@@ -55,6 +55,7 @@ dependencies:
   meta: ^1.9.1
   share: ^2.0.4
   translit: ^2.0.1
+  receive_sharing_intent: ^1.6.8
   
   
 dev_dependencies:
