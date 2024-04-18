@@ -56,7 +56,7 @@ dependencies:
   share: ^2.0.4
   translit: ^2.0.1
   receive_sharing_intent: ^1.6.8
-  flutter_launcher_icons: ^0.13.1
+ # flutter_launcher_icons: ^0.13.1
   
   
 dev_dependencies:
