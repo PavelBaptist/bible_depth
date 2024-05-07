@@ -25,9 +25,9 @@ class MainPage extends StatelessWidget {
 
   PreferredSizeWidget _buildAppBar() {
     return AppBar(
-      title: const Padding(
-        padding: EdgeInsets.only(left: 65),
-        child: Text('МОИ РАЗБОРЫ'),
+      title: Padding(
+        padding: const EdgeInsets.only(left: 65),
+        child: Text('my_fragments'.tr),
       ),
       centerTitle: false,
       actions: [

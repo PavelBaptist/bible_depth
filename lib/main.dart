@@ -18,14 +18,17 @@ import 'package:bible_depth/ui/pages/main/main_page.dart';
 import 'package:bible_depth/ui/pages/new_fragment/new_fragment_page.dart';
 import 'package:bible_depth/ui/pages/new_fragment/select_chapter_and_verse/select_chapter_and_verse_page.dart';
 import 'package:bible_depth/ui/pages/paint_test/paint_test.dart';
+import 'package:bible_depth/ui/resources/app_translation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:receive_sharing_intent/receive_sharing_intent.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 void main(List<String> args) async {
+  Intl.defaultLocale = 'ru';
   StreamSubscription _intentSub;
 
   _intentSub = ReceiveSharingIntent.instance.getMediaStream().listen((value) {
@@ -83,6 +86,8 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
+      translations: AppTranslation(),
+      locale: AppTranslation.locale,
       debugShowCheckedModeBanner: false,
       initialRoute: '/main',
       theme: Themes.light(),
