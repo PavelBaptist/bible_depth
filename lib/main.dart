@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:bible_depth/core/version_handler.dart';
 import 'package:bible_depth/models/fragment.dart';
 import 'package:bible_depth/models/fragment_list.dart';
@@ -20,8 +22,24 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:receive_sharing_intent/receive_sharing_intent.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 void main(List<String> args) async {
+  StreamSubscription _intentSub;
+
+  _intentSub = ReceiveSharingIntent.instance.getMediaStream().listen((value) {
+    launchUrlString('https://google.ru');
+  }, onError: (err) {
+    print("getIntentDataStream error: $err");
+  });
+
+  // Get the media sharing coming from outside the app while the app is closed.
+  ReceiveSharingIntent.instance.getInitialMedia().then((value) {
+    launchUrlString('https://yandex.ru');
+    ReceiveSharingIntent.instance.reset();
+  });
+
   WidgetsFlutterBinding.ensureInitialized();
 
   print((await getApplicationDocumentsDirectory()).path);

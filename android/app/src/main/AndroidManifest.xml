@@ -23,16 +23,28 @@
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
+ 
+             <!--TODO:  Add this filter, if you want support opening files into your app-->
+             <intent-filter>
+               <action android:name="android.intent.action.VIEW" />
+               <category android:name="android.intent.category.DEFAULT" />
+               <data
+                    android:mimeType="*/*"
+                    android:scheme="content" 
+                    android:pathPattern=".*\\.bibledepth"/>
+             </intent-filter>
+
         </activity>
 
-        <intent-filter>
+        <!-- <intent-filter>
             <action android:name="android.intent.action.VIEW" />
             <category android:name="android.intent.category.DEFAULT" />
             <data android:mimeType="*/*" />
             <data android:scheme="file" />
             <data android:host="*" />
             <data android:pathPattern=".*\\.bibledepth" />
-        </intent-filter>
+        </intent-filter> -->
 
         <!-- Don't delete the meta-data below.
              This is used by the Flutter tool to generate GeneratedPluginRegistrant.java -->
