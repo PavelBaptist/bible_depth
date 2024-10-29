@@ -3,6 +3,7 @@ import 'package:bible_depth/helpers/dialogs.dart';
 import 'package:bible_depth/ui/pages/fragment/controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 class ContextVerseWidget extends StatelessWidget {
@@ -17,7 +18,7 @@ class ContextVerseWidget extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         IconButton(
-          iconSize: c.fontSize.value,
+          iconSize: c.fontSize.value.sp,
           onPressed: () {
             showConfirmationDialog(context,
                 onTapYes: () => c.addContext(verse.chapterId, verse.id),
@@ -36,7 +37,7 @@ class ContextVerseWidget extends StatelessWidget {
                 ? '\nГлава ${verse.chapterId}\n${verse.id} ${verse.text}'
                 : '${verse.id} ${verse.text}',
             style: TextStyle(
-              fontSize: c.fontSize.value,
+              fontSize: c.fontSize.value.sp,
             ),
           ),
         ),

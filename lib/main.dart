@@ -18,6 +18,7 @@ import 'package:bible_depth/ui/pages/new_fragment/new_fragment_page.dart';
 import 'package:bible_depth/ui/pages/new_fragment/select_chapter_and_verse/select_chapter_and_verse_page.dart';
 import 'package:bible_depth/ui/pages/paint_test/paint_test.dart';
 import 'package:bible_depth/ui/resources/app_translation.dart';
+import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -78,7 +79,8 @@ void main(List<String> args) async {
     await box.put('fragments', FragmentList());
   }
 
-  runApp(const App());
+  // runApp(const App());
+  runApp(DevicePreview(enabled: true, builder: (context) => const App()));
 }
 
 class App extends StatelessWidget {
