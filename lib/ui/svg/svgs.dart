@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'svg.dart';
 
@@ -41,10 +42,10 @@ class SvgIcon extends StatelessWidget {
 
 /// [SvgData]s of the SVG icons available.
 class SvgIcons {
-  static const SvgData settings = SvgData(
+  static SvgData settings = SvgData(
     'assets/icons/settings.svg',
-    width: 30.64,
-    height: 30.64,
+    width: 30.64.sp,
+    height: 30.64.sp,
   );
   static const SvgData delete = SvgData(
     'assets/icons/delete.svg',
@@ -67,11 +68,15 @@ class SvgIcons {
   static const SvgData addGrey = SvgData(
     'assets/icons/add_grey.svg',
   );
-  static const SvgData zoomPlus = SvgData(
+  static SvgData zoomPlus = SvgData(
     'assets/icons/zoom_plus.svg',
+    height: 24.sp,
+    width: 24.sp,
   );
-  static const SvgData zoomMinus = SvgData(
+  static SvgData zoomMinus = SvgData(
     'assets/icons/zoom_minus.svg',
+    height: 24.sp,
+    width: 24.sp,
   );
   static const SvgData undo = SvgData(
     'assets/icons/undo.svg',

@@ -4,6 +4,7 @@ import 'dart:ui' as ui;
 import 'package:finger_painter/finger_painter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:path_provider/path_provider.dart';
 
 Future<void> saveUint8ListAsPng(Uint8List data, String fileName) async {
@@ -59,18 +60,18 @@ class _PaintTestState extends State<PaintTest> {
                 saveUint8ListAsPng(
                     painterController.getImageBytes()!, 'test.png');
               },
-              child: Text('test')),
-          const SizedBox(height: 30),
+              child: const Text('test')),
+          SizedBox(height: 30.h),
           Stack(
             children: [
               Center(
                 child: SizedBox(
-                  width: 160,
-                  height: 60,
+                  width: 160.w,
+                  height: 60.h,
                   child: Center(
                     child: Text(
                       'образец',
-                      style: TextStyle(fontSize: 30),
+                      style: TextStyle(fontSize: 30.sp),
                     ),
                   ),
                 ),
@@ -84,13 +85,13 @@ class _PaintTestState extends State<PaintTest> {
                         '${painterController.getPoints()?.length} drawn points');
                     setState(() {});
                   },
-                  size: const Size(160, 60),
+                  size: Size(160.w, 60.h),
                   // child: Image.asset('assets/map.png', fit: BoxFit.cover),
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 30),
+          SizedBox(height: 30.h),
           Expanded(
             child: SingleChildScrollView(
                 child: Controls(
@@ -126,20 +127,26 @@ class _ControlsState extends State<Controls> {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Stack(
-              children: [
-                Text('русской синодальной библии',
-                    style: TextStyle(fontSize: 30)),
-                if (widget.imgBytesList != null)
-                  Image.memory(
-                    widget.imgBytesList!,
-                    gaplessPlayback: true,
-                    fit: BoxFit.scaleDown,
+            Expanded(
+              child: Stack(
+                children: [
+                  Text(
+                    'русской синодальной библии',
+                    style: TextStyle(
+                      fontSize: 30.sp,
+                    ),
                   ),
-              ],
+                  if (widget.imgBytesList != null)
+                    Image.memory(
+                      widget.imgBytesList!,
+                      gaplessPlayback: true,
+                      fit: BoxFit.scaleDown,
+                    ),
+                ],
+              ),
             ),
 
-            const SizedBox(width: 30),
+            SizedBox(width: 30.w),
 
             // Pen types
             Column(
@@ -167,7 +174,7 @@ class _ControlsState extends State<Controls> {
           ],
         ),
 
-        const SizedBox(height: 30),
+        SizedBox(height: 30.h),
 
         // Colors, background & delete
         Row(
@@ -205,7 +212,7 @@ class _ControlsState extends State<Controls> {
           ],
         ),
 
-        const SizedBox(height: 30),
+        SizedBox(height: 30.h),
 
         /// min stroke width
         Row(
@@ -277,7 +284,7 @@ class _ControlsState extends State<Controls> {
           ],
         ),
 
-        const SizedBox(height: 30),
+        SizedBox(height: 30.h),
 
         // blends modes
         Wrap(
@@ -301,7 +308,7 @@ class _ControlsState extends State<Controls> {
                   }),
           ],
         ),
-        const SizedBox(height: 30),
+        SizedBox(height: 30.h),
       ],
     );
   }

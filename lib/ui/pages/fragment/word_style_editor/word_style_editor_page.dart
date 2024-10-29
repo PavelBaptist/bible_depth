@@ -7,6 +7,7 @@ import 'package:bible_depth/ui/pages/fragment/widgets/word_widget.dart';
 import 'package:bible_depth/ui/pages/main/controller.dart';
 import 'package:finger_painter/finger_painter.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'dart:ui' as ui;
 
@@ -25,8 +26,8 @@ class WordStyleEditorPage extends StatelessWidget {
   Color paintColor = Colors.red;
   @override
   Widget build(BuildContext context) {
-    descriptionController.text =
-        (c.currentTool.value as WordStyle).description ?? '';
+    final style = context.textTheme;
+    descriptionController.text = (c.currentTool.value as WordStyle).description;
     return Scaffold(
       appBar: AppBar(),
       body: Obx(() {
@@ -37,7 +38,7 @@ class WordStyleEditorPage extends StatelessWidget {
               Word()
                 ..value = 'образец'
                 ..styleId = (c.currentTool.value as WordStyle).id,
-              fontSize: 50,
+              fontSize: 50.sp,
             ),
             TextField(
               controller: descriptionController,
@@ -46,36 +47,48 @@ class WordStyleEditorPage extends StatelessWidget {
                 update();
               },
             ),
-            Row(
-              children: [
-                Text('Жирный'),
-                Checkbox(
-                  value: (c.currentTool.value as WordStyle).isBold,
-                  onChanged: (value) {
-                    (c.currentTool.value as WordStyle).isBold = value;
-                    update();
-                  },
-                ),
-                const SizedBox(width: 25),
-                Text('Наклоненный'),
-                Checkbox(
-                  value: (c.currentTool.value as WordStyle).isItalic,
-                  onChanged: (value) {
-                    (c.currentTool.value as WordStyle).isItalic = value;
-                    update();
-                  },
-                ),
-                const SizedBox(width: 25),
-                Text('Обводка кругом'),
-                Checkbox(
-                  value: (c.currentTool.value as WordStyle).borderIsCircle,
-                  onChanged: (value) {
-                    (c.currentTool.value as WordStyle).borderIsCircle =
-                        value ?? false;
-                    update();
-                  },
-                ),
-              ],
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children: [
+                  Text(
+                    'Жирный',
+                    style: style.bodyMedium,
+                  ),
+                  Checkbox(
+                    value: (c.currentTool.value as WordStyle).isBold,
+                    onChanged: (value) {
+                      (c.currentTool.value as WordStyle).isBold = value;
+                      update();
+                    },
+                  ),
+                  SizedBox(width: 25.w),
+                  Text(
+                    'Наклоненный',
+                    style: style.bodyMedium,
+                  ),
+                  Checkbox(
+                    value: (c.currentTool.value as WordStyle).isItalic,
+                    onChanged: (value) {
+                      (c.currentTool.value as WordStyle).isItalic = value;
+                      update();
+                    },
+                  ),
+                  SizedBox(width: 25.w),
+                  Text(
+                    'Обводка кругом',
+                    style: style.bodyMedium,
+                  ),
+                  Checkbox(
+                    value: (c.currentTool.value as WordStyle).borderIsCircle,
+                    onChanged: (value) {
+                      (c.currentTool.value as WordStyle).borderIsCircle =
+                          value ?? false;
+                      update();
+                    },
+                  ),
+                ],
+              ),
             ),
             ColorPicker(
               label: 'Цвет текста',
@@ -132,8 +145,11 @@ class WordStyleEditorPage extends StatelessWidget {
                   update();
                 },
                 icon: const Icon(Icons.clear)),
-            const SizedBox(width: 25),
-            Text('Растягивать картинку'),
+            SizedBox(width: 25.sp),
+            Text(
+              'Растягивать картинку',
+              style: style.bodyMedium,
+            ),
             Checkbox(
               value: (c.currentTool.value as WordStyle).stretchImage,
               onChanged: (value) {
@@ -200,8 +216,7 @@ class ColorPicker extends StatelessWidget {
       children: [
         Text(label),
         SizedBox(
-          height: 38,
-          //width: 300,
+          height: 38.sp,
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
             itemCount: colors.length,
@@ -209,9 +224,9 @@ class ColorPicker extends StatelessWidget {
               return InkWell(
                 onTap: () => onTap(colors[index]),
                 child: Container(
-                  margin: const EdgeInsets.all(4),
-                  width: 30,
-                  height: 30,
+                  margin: EdgeInsets.all(4.sp),
+                  width: 30.sp,
+                  height: 30.sp,
                   decoration: BoxDecoration(
                     color: colors[index],
                     border: Border.all(

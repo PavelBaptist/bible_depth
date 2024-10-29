@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class BlockWidget extends StatelessWidget {
   String header;
@@ -20,10 +21,10 @@ class BlockWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Container(
-          height: 63.85,
+          height: 63.85.h,
           color: style.colorScheme.primary,
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 30),
+            padding: EdgeInsets.symmetric(horizontal: 30.w),
             child: Row(
               children: [
                 Expanded(
@@ -39,9 +40,9 @@ class BlockWidget extends StatelessWidget {
             ),
           ),
         ),
-        const SizedBox(height: 13),
+        SizedBox(height: 13.h),
         child,
-        const SizedBox(height: 16),
+        SizedBox(height: 16.h),
       ],
     );
   }

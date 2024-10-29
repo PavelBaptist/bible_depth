@@ -19,9 +19,8 @@ import 'package:bible_depth/ui/pages/fragment/widgets/word_widget.dart';
 import 'package:bible_depth/ui/pages/main/controller.dart';
 import 'package:bible_depth/ui/svg/svgs.dart';
 import 'package:flutter/material.dart';
-
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 
 enum Menu {
   edit,
@@ -67,7 +66,7 @@ class FragmentPage extends StatelessWidget {
         ),
         title: TextField(
           controller: nameController,
-          decoration: InputDecoration(
+          decoration: const InputDecoration(
             border: InputBorder.none,
           ),
           onChanged: (value) {
@@ -78,28 +77,32 @@ class FragmentPage extends StatelessWidget {
         actions: [
           IconButton(
             onPressed: () => c.fontSize.value--,
-            icon: const SvgIcon(SvgIcons.zoomMinus),
+            icon: SvgIcon(
+              SvgIcons.zoomMinus,
+            ),
           ),
-          const SizedBox(width: 5),
+          SizedBox(width: 5.w),
           IconButton(
             onPressed: () => c.fontSize.value++,
-            icon: const SvgIcon(SvgIcons.zoomPlus),
+            icon: SvgIcon(
+              SvgIcons.zoomPlus,
+            ),
           ),
-          const SizedBox(width: 16),
+          SizedBox(width: 16.w),
         ],
       ),
       body: Column(
         children: [
           Expanded(
             child: ListView(
-              padding: const EdgeInsets.symmetric(horizontal: 50),
+              padding: EdgeInsets.symmetric(horizontal: 40.w),
               children: [
                 Column(
                   children: [
                     Obx(() => c.contextBefore.isEmpty
                         ? const SizedBox()
                         : Padding(
-                            padding: const EdgeInsets.only(top: 16),
+                            padding: EdgeInsets.only(top: 16.h),
                             child: BlockWidget(
                               header: 'Контекст',
                               actions: [
@@ -128,7 +131,7 @@ class FragmentPage extends StatelessWidget {
                               ),
                             ),
                           )),
-                    const SizedBox(height: 16),
+                    SizedBox(height: 16.h),
                     InkWell(
                       onTap: () async {
                         Book book = (await Rst.instance)
@@ -164,14 +167,14 @@ class FragmentPage extends StatelessWidget {
                         ),
                       ),
                     ),
-                    const SizedBox(height: 26),
+                    SizedBox(height: 26.h),
                     Obx(
                       () {
                         return Align(
                           alignment: Alignment.topLeft,
                           child: Wrap(
                             spacing: 0,
-                            runSpacing: c.fontSize.value,
+                            runSpacing: c.fontSize.value.h,
                             children: () {
                               List<Widget> result = [];
                               List<WrapEntity> text = c.fragment.value.text;
@@ -203,6 +206,7 @@ class FragmentPage extends StatelessWidget {
                                                   ..value = 'стиль'
                                                   ..styleId =
                                                       wrapEntity.styleId,
+                                                fontSize: 14.sp,
                                               )
                                             ],
                                           ),
@@ -221,6 +225,7 @@ class FragmentPage extends StatelessWidget {
                                                   ..value = 'стиль'
                                                   ..styleId =
                                                       wrapEntity.styleId,
+                                                fontSize: 14.sp,
                                               )
                                             ],
                                           ),
@@ -615,7 +620,7 @@ class FragmentPage extends StatelessWidget {
                                       c.fragment.update((val) {});
                                     },
                                     onLongPress: onLongPress,
-                                    fontSize: c.fontSize.value,
+                                    fontSize: c.fontSize.value.sp,
                                   ));
                                 } else if (wrapEntity is VerseIndex) {
                                   result.add(VerseIndexWidget(
@@ -628,17 +633,17 @@ class FragmentPage extends StatelessWidget {
                                     onLongPress: onLongPress,
                                   ));
                                 } else if (wrapEntity is LineBreak) {
-                                  result.add(Row());
+                                  result.add(const Row());
                                 } else if (wrapEntity is Header) {
                                   result.add(HeaderWidget(
                                     wrapEntity,
                                     onLongPress: onLongPress,
-                                    fontSize: c.fontSize.value,
+                                    fontSize: c.fontSize.value.sp,
                                   ));
                                 } else if (wrapEntity is StructuralLawPlace) {
                                   result.add(StructuralLawWidget(
                                     wrapEntity.structuralLawId,
-                                    size: c.fontSize.value,
+                                    size: c.fontSize.value.sp,
                                     onTap: () {
                                       if (c.currentTool.value
                                           is StructuralLaw) {
@@ -662,7 +667,7 @@ class FragmentPage extends StatelessWidget {
                         );
                       },
                     ),
-                    const SizedBox(height: 26),
+                    SizedBox(height: 26.h),
                     InkWell(
                       onTap: () async {
                         Book book = (await Rst.instance)
@@ -702,12 +707,12 @@ class FragmentPage extends StatelessWidget {
                         ),
                       ),
                     ),
-                    const SizedBox(height: 16),
+                    SizedBox(height: 16.h),
                     Obx(
                       () => c.contextAfter.isEmpty
                           ? const SizedBox()
                           : Padding(
-                              padding: const EdgeInsets.only(top: 16),
+                              padding: EdgeInsets.only(top: 16.h),
                               child: BlockWidget(
                                 header: 'Контекст',
                                 actions: [
@@ -737,7 +742,7 @@ class FragmentPage extends StatelessWidget {
                               ),
                             ),
                     ),
-                    const SizedBox(height: 16),
+                    SizedBox(height: 16.h),
                     BlockWidget(
                       header: 'Автоматические итоги',
                       child: ResultsWidget(),
@@ -747,7 +752,7 @@ class FragmentPage extends StatelessWidget {
                       child: Obx(() => TextField(
                             controller: descriptionController,
                             maxLines: null,
-                            style: TextStyle(fontSize: c.fontSize.value),
+                            style: TextStyle(fontSize: c.fontSize.value.sp),
                             onChanged: (value) {
                               c.fragment.value.description =
                                   descriptionController.text;
@@ -762,7 +767,6 @@ class FragmentPage extends StatelessWidget {
           ),
           Container(
             width: double.infinity,
-            height: 210.0,
             decoration: BoxDecoration(
               boxShadow: [
                 BoxShadow(
@@ -773,104 +777,108 @@ class FragmentPage extends StatelessWidget {
               ],
               color: Colors.grey[100],
             ),
-            child: Center(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 50),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Obx(() => Row(
-                          children: [
-                            IconButton(
-                              icon: c.historyUndo.length <= 1
-                                  ? const SvgIcon(SvgIcons.undoDisabled)
-                                  : const SvgIcon(SvgIcons.undo),
-                              onPressed: () => c.stepUndo(),
-                            ),
-                            IconButton(
-                              icon: c.historyRedo.isEmpty
-                                  ? const SvgIcon(SvgIcons.redoDisabled)
-                                  : const SvgIcon(SvgIcons.redo),
-                              onPressed: () => c.stepRedo(),
-                            ),
-                          ],
-                        )),
-                    Row(
-                      children: [
-                        IconButton(
-                          onPressed: () {
-                            c.fragment.value.wordStyleList!.list
-                                .insert(0, WordStyle());
-                            c.updateFragment();
-                            c.fragment.update((val) {});
-                          },
-                          icon: SvgIcon(SvgIcons.addGrey),
-                        ),
-                        Expanded(
-                          child: SizedBox(
-                            height: 40,
-                            child: Obx(() => ListView.builder(
-                                  scrollDirection: Axis.horizontal,
-                                  itemCount: c.fragment.value.wordStyleList!
-                                      .list.length,
-                                  itemBuilder: (context, index) {
-                                    return Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 10),
-                                      child: ToolWordStyleWidget(
-                                        wordStyle: c.fragment.value
-                                            .wordStyleList!.list[index],
-                                      ),
-                                    );
-                                  },
-                                )),
+            child: SafeArea(
+              child: Center(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 40.w),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Obx(() => Row(
+                            children: [
+                              IconButton(
+                                icon: c.historyUndo.length <= 1
+                                    ? const SvgIcon(SvgIcons.undoDisabled)
+                                    : const SvgIcon(SvgIcons.undo),
+                                onPressed: () => c.stepUndo(),
+                              ),
+                              IconButton(
+                                icon: c.historyRedo.isEmpty
+                                    ? const SvgIcon(SvgIcons.redoDisabled)
+                                    : const SvgIcon(SvgIcons.redo),
+                                onPressed: () => c.stepRedo(),
+                              ),
+                            ],
+                          )),
+                      Row(
+                        children: [
+                          IconButton(
+                            onPressed: () {
+                              c.fragment.value.wordStyleList!.list
+                                  .insert(0, WordStyle());
+                              c.updateFragment();
+                              c.fragment.update((val) {});
+                            },
+                            icon: SvgIcon(SvgIcons.addGrey),
                           ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 10),
-                    Row(
-                      children: [
-                        IconButton(
-                          onPressed: () {
-                            c.fragment.value.structuralLawList!.list
-                                .insert(0, StructuralLaw());
-                            c.updateFragment();
-                            c.fragment.update((val) {});
-                          },
-                          icon: const SvgIcon(SvgIcons.addGrey),
-                        ),
-                        Expanded(
-                          child: SizedBox(
-                            height: 40,
-                            child: Obx(() => ListView.builder(
-                                  scrollDirection: Axis.horizontal,
-                                  itemCount: c.fragment.value.structuralLawList!
-                                      .list.length,
-                                  itemBuilder: (context, index) {
-                                    return Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 10),
-                                      child: ToolStructuralLawWidget(
-                                        structuralLaw: c.fragment.value
-                                            .structuralLawList!.list[index],
-                                      ),
-                                    );
-                                  },
-                                )),
+                          Expanded(
+                            child: SizedBox(
+                              height: 40.h,
+                              child: Obx(() => ListView.builder(
+                                    scrollDirection: Axis.horizontal,
+                                    itemCount: c.fragment.value.wordStyleList!
+                                        .list.length,
+                                    itemBuilder: (context, index) {
+                                      return Padding(
+                                        padding: EdgeInsets.symmetric(
+                                          horizontal: 10.w,
+                                        ),
+                                        child: ToolWordStyleWidget(
+                                          wordStyle: c.fragment.value
+                                              .wordStyleList!.list[index],
+                                        ),
+                                      );
+                                    },
+                                  )),
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 3),
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        '* для изменения стиля или значка удерживайте на нем',
-                        style: style.textTheme.bodySmall,
+                        ],
                       ),
-                    ),
-                  ],
+                      SizedBox(height: 10.h),
+                      Row(
+                        children: [
+                          IconButton(
+                            onPressed: () {
+                              c.fragment.value.structuralLawList!.list
+                                  .insert(0, StructuralLaw());
+                              c.updateFragment();
+                              c.fragment.update((val) {});
+                            },
+                            icon: const SvgIcon(SvgIcons.addGrey),
+                          ),
+                          Expanded(
+                            child: SizedBox(
+                              height: 40.h,
+                              child: Obx(() => ListView.builder(
+                                    scrollDirection: Axis.horizontal,
+                                    itemCount: c.fragment.value
+                                        .structuralLawList!.list.length,
+                                    itemBuilder: (context, index) {
+                                      return Padding(
+                                        padding: EdgeInsets.symmetric(
+                                          horizontal: 10.w,
+                                        ),
+                                        child: ToolStructuralLawWidget(
+                                          structuralLaw: c.fragment.value
+                                              .structuralLawList!.list[index],
+                                        ),
+                                      );
+                                    },
+                                  )),
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 3.h),
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          '* для изменения стиля или значка удерживайте на нем',
+                          style: style.textTheme.bodySmall,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -908,7 +916,7 @@ PopupMenuItem<Menu> myPopupItem(Menu value,
     child: Row(
       children: [
         icon,
-        const SizedBox(width: 5),
+        SizedBox(width: 5.w),
         text,
       ],
     ),

@@ -7,6 +7,7 @@ import 'package:bible_depth/ui/pages/fragment/widgets/structural_law_widget.dart
 import 'package:bible_depth/ui/pages/main/controller.dart';
 import 'package:finger_painter/finger_painter.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'dart:ui' as ui;
 
@@ -35,7 +36,7 @@ class StructuralLawEditorPage extends StatelessWidget {
           children: [
             StructuralLawWidget(
               (c.currentTool.value as StructuralLaw).id,
-              size: 64,
+              size: 64.sp,
             ),
             TextField(
               controller: descriptionController,
@@ -48,7 +49,6 @@ class StructuralLawEditorPage extends StatelessWidget {
             Painter(
               controller: painterController,
               backgroundColor: Colors.black.withAlpha(30),
-
               onDrawingEnded: (bytes) async {
                 if (bytes != null) {
                   String base64Data = base64Encode(bytes);
@@ -58,8 +58,7 @@ class StructuralLawEditorPage extends StatelessWidget {
                   update();
                 }
               },
-              size: const Size(64, 64),
-              // child: Image.asset('assets/map.png', fit: BoxFit.cover),
+              size: Size(64.sp, 64.sp),
             ),
             ColorPicker(
               label: 'Цвет чернил',
@@ -87,7 +86,7 @@ class StructuralLawEditorPage extends StatelessWidget {
                   update();
                 },
                 icon: const Icon(Icons.clear)),
-            const SizedBox(width: 25),
+            SizedBox(width: 25.w),
           ],
         );
       }),
@@ -145,8 +144,7 @@ class ColorPicker extends StatelessWidget {
       children: [
         Text(label),
         SizedBox(
-          height: 38,
-          //width: 300,
+          height: 38.h,
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
             itemCount: colors.length,
@@ -154,9 +152,9 @@ class ColorPicker extends StatelessWidget {
               return InkWell(
                 onTap: () => onTap(colors[index]),
                 child: Container(
-                  margin: const EdgeInsets.all(4),
-                  width: 30,
-                  height: 30,
+                  margin: EdgeInsets.all(4.sp),
+                  width: 30.sp,
+                  height: 30.sp,
                   decoration: BoxDecoration(
                     color: colors[index],
                     border: Border.all(

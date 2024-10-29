@@ -2,6 +2,7 @@ import 'package:bible_depth/ui/pages/new_fragment/controller.dart';
 import 'package:bible_depth/ui/svg/svgs.dart';
 import 'package:bible_depth/ui/widgets/my_tile.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 class NewFragmentPage extends StatelessWidget {
@@ -10,6 +11,7 @@ class NewFragmentPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ThemeData style = Theme.of(Get.context!);
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -18,9 +20,9 @@ class NewFragmentPage extends StatelessWidget {
           },
           icon: const SvgIcon(SvgIcons.arrowLeft),
         ),
-        title: const Padding(
-          padding: EdgeInsets.only(left: 7),
-          child: Text('ВЫБЕРИТЕ КНИГУ БИБЛИИ'),
+        title: Padding(
+          padding: EdgeInsets.only(left: 7.w),
+          child: const Text('ВЫБЕРИТЕ КНИГУ БИБЛИИ'),
         ),
       ),
       body: FutureBuilder(
@@ -28,7 +30,7 @@ class NewFragmentPage extends StatelessWidget {
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
             return ListView(
-              padding: const EdgeInsets.symmetric(horizontal: 50),
+              padding: EdgeInsets.symmetric(horizontal: 40.w),
               children: () {
                 List<Widget> result = [];
                 for (var element in c.bible!.value.books) {
@@ -36,14 +38,20 @@ class NewFragmentPage extends StatelessWidget {
                     Column(
                       children: [
                         if (element.id == 1)
-                          const Padding(
-                            padding: EdgeInsets.all(8.0),
-                            child: Text('В E T Х И Й    З А В Е Т'),
+                          Padding(
+                            padding: EdgeInsets.all(8.sp),
+                            child: Text(
+                              'В E T Х И Й    З А В Е Т',
+                              style: style.textTheme.bodyMedium,
+                            ),
                           ),
                         if (element.id == 40)
-                          const Padding(
-                            padding: EdgeInsets.all(8.0),
-                            child: Text('Н О В Ы Й    З А В Е Т'),
+                          Padding(
+                            padding: EdgeInsets.all(8.sp),
+                            child: Text(
+                              'Н О В Ы Й    З А В Е Т',
+                              style: style.textTheme.bodyMedium,
+                            ),
                           ),
                         MyTile(
                           title: element.bookName,
@@ -53,7 +61,7 @@ class NewFragmentPage extends StatelessWidget {
                                 '/new_fragment/select_chapter_and_verse');
                           },
                         ),
-                        const SizedBox(height: 5.74),
+                        SizedBox(height: 5.74.h),
                       ],
                     ),
                   );

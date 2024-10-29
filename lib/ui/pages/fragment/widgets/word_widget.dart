@@ -9,6 +9,7 @@ import 'package:bible_depth/models/wrap_entity.dart';
 import 'package:bible_depth/ui/pages/fragment/controller.dart';
 import 'package:bible_depth/ui/pages/fragment/widgets/structural_law_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 class WordWidget extends StatelessWidget {
@@ -114,10 +115,10 @@ class WordWidget extends StatelessWidget {
               ),
             if (imageBytes != null)
               Positioned(
-                top: widthImage == null ? 0 : fontSize / 2.6,
+                top: widthImage == null ? 0 : fontSize.sp / 2.6,
                 child: SizedBox(
-                  width: widthImage,
-                  height: heightImage,
+                  width: widthImage?.w,
+                  height: heightImage?.h,
                   child: Image.memory(
                     imageBytes,
                     width: widthImage == null ? fontSize * 4 : null,

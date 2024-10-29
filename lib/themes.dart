@@ -1,3 +1,4 @@
+import 'package:bible_depth/ui/resources/app_fonts.dart';
 import 'package:flutter/material.dart';
 
 class Themes {
@@ -9,48 +10,18 @@ class Themes {
       secondary: Color(0xFFA85E58),
     );
 
-    TextTheme textTheme = const TextTheme(
-      titleLarge: TextStyle(
-        color: Colors.black,
-        fontSize: 24,
-        fontFamily: 'Montserrat',
-        fontWeight: FontWeight.w500,
-      ),
-      titleMedium: TextStyle(
-        color: Colors.black,
-        fontSize: 20,
-        fontFamily: 'Montserrat',
-        fontWeight: FontWeight.w500,
-      ),
-      titleSmall: TextStyle(
-        color: Colors.black,
-        fontSize: 16,
-        fontFamily: 'Montserrat',
-        fontWeight: FontWeight.w500,
-      ),
-      bodyLarge: TextStyle(
-        color: Colors.black,
-        fontSize: 26,
-        fontFamily: 'Montserrat',
-        fontWeight: FontWeight.w400,
-      ),
-      bodyMedium: TextStyle(
-        color: Colors.black,
-        fontSize: 22,
-        fontFamily: 'Montserrat',
-        fontWeight: FontWeight.w400,
-      ),
-      bodySmall: TextStyle(
-        color: Colors.black,
-        fontSize: 16,
-        fontFamily: 'Montserrat',
-        fontWeight: FontWeight.w400,
-      ),
+    TextTheme textTheme = TextTheme(
+      titleLarge: AppFonts.montserratMedium24,
+      titleMedium: AppFonts.montserratMedium20,
+      titleSmall: AppFonts.montserratMedium16,
+      bodyLarge: AppFonts.montserratRegula26,
+      bodyMedium: AppFonts.montserratRegula22,
+      bodySmall: AppFonts.montserratRegula16,
     );
 
     AppBarTheme appBarTheme = AppBarTheme(
       centerTitle: false,
-      titleTextStyle: textTheme.titleLarge,
+      titleTextStyle: textTheme.titleMedium,
       backgroundColor: colorScheme.background,
     );
 

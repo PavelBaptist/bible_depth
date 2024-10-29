@@ -1,6 +1,7 @@
 import 'package:bible_depth/models/wrap_entity.dart';
 import 'package:bible_depth/ui/pages/fragment/controller.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 class ChapterIndexWidget extends StatelessWidget {
@@ -16,8 +17,6 @@ class ChapterIndexWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ThemeData style = Theme.of(context);
-
     return Column(
       children: [
         GestureDetector(
@@ -31,7 +30,7 @@ class ChapterIndexWidget extends StatelessWidget {
               Text(
                 'Глава ${chapterIndex.value}',
                 style: TextStyle(
-                  fontSize: c.fontSize.value * 1.2,
+                  fontSize: c.fontSize.value.sp * 1.2,
                   color: Colors.black,
                   fontWeight: FontWeight.w500,
                 ),

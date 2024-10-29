@@ -19,6 +19,7 @@ import 'package:bible_depth/ui/pages/new_fragment/select_chapter_and_verse/selec
 import 'package:bible_depth/ui/pages/paint_test/paint_test.dart';
 import 'package:bible_depth/ui/resources/app_translation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:intl/intl.dart';
@@ -85,46 +86,49 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
-      translations: AppTranslation(),
-      locale: AppTranslation.locale,
-      debugShowCheckedModeBanner: false,
-      initialRoute: '/main',
-      theme: Themes.light(),
-      getPages: [
-        GetPage(
-          name: '/main',
-          page: () => MainPage(),
-        ),
-        GetPage(
-          name: '/fragment',
-          page: () => FragmentPage(),
-        ),
-        GetPage(
-          name: '/fragment/word_style_editor',
-          page: () => WordStyleEditorPage(),
-        ),
-        GetPage(
-          name: '/fragment/structural_law_editor',
-          page: () => StructuralLawEditorPage(),
-        ),
-        GetPage(
-          name: '/fragment/header_editor',
-          page: () => HeaderEditorPage(),
-        ),
-        GetPage(
-          name: '/new_fragment',
-          page: () => NewFragmentPage(),
-        ),
-        GetPage(
-          name: '/new_fragment/select_chapter_and_verse',
-          page: () => SelectChapterAndVersePage(),
-        ),
-        GetPage(
-          name: '/paint_test',
-          page: () => const PaintTest(),
-        ),
-      ],
+    return ScreenUtilInit(
+      designSize: const Size(414, 924),
+      builder: (context, child) => GetMaterialApp(
+        translations: AppTranslation(),
+        locale: AppTranslation.locale,
+        debugShowCheckedModeBanner: false,
+        initialRoute: '/main',
+        theme: Themes.light(),
+        getPages: [
+          GetPage(
+            name: '/main',
+            page: () => MainPage(),
+          ),
+          GetPage(
+            name: '/fragment',
+            page: () => FragmentPage(),
+          ),
+          GetPage(
+            name: '/fragment/word_style_editor',
+            page: () => WordStyleEditorPage(),
+          ),
+          GetPage(
+            name: '/fragment/structural_law_editor',
+            page: () => StructuralLawEditorPage(),
+          ),
+          GetPage(
+            name: '/fragment/header_editor',
+            page: () => HeaderEditorPage(),
+          ),
+          GetPage(
+            name: '/new_fragment',
+            page: () => NewFragmentPage(),
+          ),
+          GetPage(
+            name: '/new_fragment/select_chapter_and_verse',
+            page: () => SelectChapterAndVersePage(),
+          ),
+          GetPage(
+            name: '/paint_test',
+            page: () => const PaintTest(),
+          ),
+        ],
+      ),
     );
   }
 }

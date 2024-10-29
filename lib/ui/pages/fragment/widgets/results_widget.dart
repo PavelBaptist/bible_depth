@@ -4,6 +4,7 @@ import 'package:bible_depth/ui/pages/fragment/widgets/structural_law_widget.dart
 import 'package:bible_depth/ui/pages/fragment/widgets/word_widget.dart';
 import 'package:bible_depth/ui/pages/main/controller.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 class ResultsWidget extends StatelessWidget {
@@ -36,7 +37,12 @@ class ResultsWidget extends StatelessWidget {
             if (wordsGroup[wrapEntity.styleId] == null) {
               wordsGroup[wrapEntity.styleId] = <Widget>[];
             }
-            wordsGroup[wrapEntity.styleId]!.add(WordWidget(wrapEntity));
+            wordsGroup[wrapEntity.styleId]!.add(
+              WordWidget(
+                wrapEntity,
+                fontSize: 14.sp,
+              ),
+            );
           }
 
           if (wordsGroup.isNotEmpty) {
@@ -68,10 +74,10 @@ class ResultsWidget extends StatelessWidget {
             value.insert(0, Text(value.length.toString() + ' повтор.: '));
             results.add(
               Padding(
-                padding: const EdgeInsets.only(top: 10),
+                padding: EdgeInsets.only(top: 10.h),
                 child: Wrap(
-                  spacing: c.fontSize.value / 4,
-                  runSpacing: c.fontSize.value / 4,
+                  spacing: c.fontSize.value.sp / 4,
+                  runSpacing: c.fontSize.value.sp / 4,
                   children: value,
                 ),
               ),
@@ -98,7 +104,7 @@ class ResultsWidget extends StatelessWidget {
             structuredLawsGroup[structuralLawId]!
                 .add(StructuralLawWidget(structuralLawId));
           }
-          results.add(const SizedBox(height: 16));
+          results.add(SizedBox(height: 16.h));
 
           if (structuredLawsGroup.isNotEmpty) {
             results.add(
@@ -129,7 +135,7 @@ class ResultsWidget extends StatelessWidget {
             value.insert(0, Text(value.length.toString() + ' повтор.: '));
             results.add(
               Padding(
-                padding: const EdgeInsets.only(top: 10),
+                padding: EdgeInsets.only(top: 10.h),
                 child: Wrap(
                   spacing: c.fontSize.value / 4,
                   runSpacing: c.fontSize.value / 4,

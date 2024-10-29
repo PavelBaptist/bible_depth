@@ -4,6 +4,7 @@ import 'package:bible_depth/ui/pages/main/controller.dart';
 import 'package:bible_depth/ui/svg/svgs.dart';
 import 'package:bible_depth/ui/widgets/my_tile.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
 
@@ -26,16 +27,16 @@ class MainPage extends StatelessWidget {
   PreferredSizeWidget _buildAppBar() {
     return AppBar(
       title: Padding(
-        padding: const EdgeInsets.only(left: 65),
+        padding: EdgeInsets.only(left: 65.w),
         child: Text('my_fragments'.tr),
       ),
       centerTitle: false,
       actions: [
         IconButton(
           onPressed: () => Get.toNamed('paint_test'),
-          icon: const SvgIcon(SvgIcons.settings),
+          icon: SvgIcon(SvgIcons.settings),
         ),
-        const SizedBox(width: 50),
+        SizedBox(width: 50.w),
       ],
     );
   }
@@ -54,7 +55,7 @@ class MainPage extends StatelessWidget {
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           return Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: EdgeInsets.all(8.0.sp),
             child: Center(
               child: Text(
                 'version: ${snapshot.data} | version from db: ${VersionHandler.getVersionFromDB()}',
@@ -107,7 +108,7 @@ class MainPage extends StatelessWidget {
           onTap: () => _onTap(fragment),
           endActionPane: _buildTileAction(fragment),
         ),
-        const SizedBox(height: 5.74),
+        SizedBox(height: 5.74.h),
       ],
     );
   }
@@ -117,9 +118,9 @@ class MainPage extends StatelessWidget {
       () {
         final fragments = c.fragmentList?.value.list ?? [];
         return ListView(
-          padding: const EdgeInsets.symmetric(horizontal: 50),
+          padding: EdgeInsets.symmetric(horizontal: 40.w),
           children: [
-            const SizedBox(height: 30),
+            SizedBox(height: 30.h),
             ...List<Widget>.generate(
               fragments.length,
               _buildTile,

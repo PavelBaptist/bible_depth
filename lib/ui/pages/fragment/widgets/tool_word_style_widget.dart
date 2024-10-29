@@ -4,6 +4,7 @@ import 'package:bible_depth/ui/pages/fragment/controller.dart';
 import 'package:bible_depth/ui/pages/fragment/widgets/word_widget.dart';
 import 'package:bible_depth/ui/pages/main/controller.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 class ToolWordStyleWidget extends StatelessWidget {
@@ -34,7 +35,7 @@ class ToolWordStyleWidget extends StatelessWidget {
             : null,
         child: WordWidget(
           word,
-          fontSize: 25,
+          fontSize: 25.h,
           onTap: () {
             c.currentTool.value = wordStyle;
             c.currentTool.update((val) {});
