@@ -50,25 +50,27 @@ class MainPage extends StatelessWidget {
 
   Widget _buildDebugInfo() {
     ThemeData style = Theme.of(Get.context!);
-    return FutureBuilder(
-      future: VersionHandler.getVersionFromPubspec(),
-      builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          return Padding(
-            padding: EdgeInsets.all(8.0.sp),
-            child: Center(
-              child: Text(
-                'version: ${snapshot.data} | version from db: ${VersionHandler.getVersionFromDB()}',
-                style: style.textTheme.bodySmall,
+    return SafeArea(
+      child: FutureBuilder(
+        future: VersionHandler.getVersionFromPubspec(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return Padding(
+              padding: EdgeInsets.all(8.0.sp),
+              child: Center(
+                child: Text(
+                  'version: ${snapshot.data} | version from db: ${VersionHandler.getVersionFromDB()}',
+                  style: style.textTheme.bodySmall,
+                ),
               ),
-            ),
-          );
-        } else if (snapshot.hasError) {
-          return Text(snapshot.error.toString());
-        } else {
-          return const CircularProgressIndicator();
-        }
-      },
+            );
+          } else if (snapshot.hasError) {
+            return Text(snapshot.error.toString());
+          } else {
+            return const CircularProgressIndicator();
+          }
+        },
+      ),
     );
   }
 
@@ -118,7 +120,9 @@ class MainPage extends StatelessWidget {
       () {
         final fragments = c.fragmentList?.value.list ?? [];
         return ListView(
-          padding: EdgeInsets.symmetric(horizontal: 40.w),
+          padding: EdgeInsets.symmetric(
+            horizontal: 40.w,
+          ),
           children: [
             SizedBox(height: 30.h),
             ...List<Widget>.generate(

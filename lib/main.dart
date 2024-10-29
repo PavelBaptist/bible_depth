@@ -79,8 +79,8 @@ void main(List<String> args) async {
     await box.put('fragments', FragmentList());
   }
 
-  // runApp(const App());
-  runApp(DevicePreview(enabled: true, builder: (context) => const App()));
+  runApp(const App());
+  // runApp(DevicePreview(enabled: true, builder: (context) => const App()));
 }
 
 class App extends StatelessWidget {
