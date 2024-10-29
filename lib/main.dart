@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:bible_depth/core/version_handler.dart';
 import 'package:bible_depth/models/fragment.dart';
 import 'package:bible_depth/models/fragment_list.dart';
@@ -28,6 +27,7 @@ import 'package:receive_sharing_intent/receive_sharing_intent.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 void main(List<String> args) async {
+  WidgetsFlutterBinding.ensureInitialized();
   Intl.defaultLocale = 'ru';
   StreamSubscription _intentSub;
 
