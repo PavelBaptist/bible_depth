@@ -1,9 +1,6 @@
-import 'dart:ffi';
-
 import 'package:bible_depth/models/fragment_list.dart';
 import 'package:bible_depth/models/settings.dart';
 import 'package:bible_depth/models/structural_law_list.dart';
-import 'package:bible_depth/models/word_style.dart';
 import 'package:bible_depth/models/word_style_list.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:package_info/package_info.dart';

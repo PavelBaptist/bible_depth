@@ -1,5 +1,3 @@
-import 'package:bible_depth/helpers/colors.dart';
-import 'package:bible_depth/models/word_style.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:meta/meta.dart';
 part 'wrap_entity.g.dart';

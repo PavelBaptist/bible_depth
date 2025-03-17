@@ -35,19 +35,19 @@ class PaintTest extends StatefulWidget {
 
 class _PaintTestState extends State<PaintTest> {
   Image? image;
-  late PainterController painterController;
+  // late PainterController painterController;
 
-  @override
-  void initState() {
-    super.initState();
-    painterController = PainterController()
-      ..setStrokeColor(Colors.black)
-      ..setMinStrokeWidth(3)
-      ..setMaxStrokeWidth(15)
-      ..setBlurSigma(0.0)
-      ..setPenType(PenType.paintbrush2)
-      ..setBlendMode(ui.BlendMode.srcOver);
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   painterController = PainterController()
+  //     ..setStrokeColor(Colors.black)
+  //     ..setMinStrokeWidth(3)
+  //     ..setMaxStrokeWidth(15)
+  //     ..setBlurSigma(0.0)
+  //     ..setPenType(PenType.paintbrush2)
+  //     ..setBlendMode(ui.BlendMode.srcOver);
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -57,8 +57,8 @@ class _PaintTestState extends State<PaintTest> {
         children: [
           ElevatedButton(
               onPressed: () {
-                saveUint8ListAsPng(
-                    painterController.getImageBytes()!, 'test.png');
+                // saveUint8ListAsPng(
+                //     painterController.getImageBytes()!, 'test.png');
               },
               child: const Text('test')),
           SizedBox(height: 30.h),
@@ -76,29 +76,29 @@ class _PaintTestState extends State<PaintTest> {
                   ),
                 ),
               ),
-              Center(
-                child: Painter(
-                  controller: painterController,
-                  backgroundColor: Colors.black.withAlpha(30),
-                  onDrawingEnded: (bytes) async {
-                    print(
-                        '${painterController.getPoints()?.length} drawn points');
-                    setState(() {});
-                  },
-                  size: Size(160.w, 60.h),
-                  // child: Image.asset('assets/map.png', fit: BoxFit.cover),
-                ),
-              ),
+              // Center(
+              //   child: Painter(
+              //     controller: painterController,
+              //     backgroundColor: Colors.black.withAlpha(30),
+              //     onDrawingEnded: (bytes) async {
+              //       print(
+              //           '${painterController.getPoints()?.length} drawn points');
+              //       setState(() {});
+              //     },
+              //     size: Size(160.w, 60.h),
+              //     // child: Image.asset('assets/map.png', fit: BoxFit.cover),
+              //   ),
+              // ),
             ],
           ),
           SizedBox(height: 30.h),
-          Expanded(
-            child: SingleChildScrollView(
-                child: Controls(
-              pc: painterController,
-              imgBytesList: painterController.getImageBytes(),
-            )),
-          ),
+          // Expanded(
+          //   child: SingleChildScrollView(
+          //       child: Controls(
+          //     pc: painterController,
+          //     imgBytesList: painterController.getImageBytes(),
+          //   )),
+          // ),
         ],
       ),
     );
