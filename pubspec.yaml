@@ -95,7 +95,8 @@ flutter:
   assets:
     - assets/bible/rst.json
     - assets/icons/structural_law_icons/
-    - assets/icons/
+    - assets/images/image.png
+    - assets/icons/logo.svg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

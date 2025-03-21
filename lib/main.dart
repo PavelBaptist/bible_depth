@@ -34,14 +34,14 @@ void main(List<String> args) async {
   StreamSubscription _intentSub;
 
   _intentSub = ReceiveSharingIntent.instance.getMediaStream().listen((value) {
-    launchUrlString('https://google.ru');
+    // launchUrlString('https://google.ru');
   }, onError: (err) {
     print("getIntentDataStream error: $err");
   });
 
   // Get the media sharing coming from outside the app while the app is closed.
   ReceiveSharingIntent.instance.getInitialMedia().then((value) {
-    launchUrlString('https://yandex.ru');
+    // launchUrlString('https://yandex.ru');
     ReceiveSharingIntent.instance.reset();
   });
 
@@ -94,7 +94,8 @@ class App extends StatelessWidget {
         translations: AppTranslation(),
         locale: AppTranslation.locale,
         debugShowCheckedModeBanner: false,
-        initialRoute: '/main',
+        initialRoute: '/spash',
+        
         theme: Themes.light(),
         getPages: [
           GetPage(
