@@ -11,10 +11,14 @@ dependencies:
     sdk: flutter
   injectable: any
   encrypted_shared_preferences: ^3.0.1
+  objectbox: ^4.1.0
   shared_preferences: ^2.2.2
   dio: ^5.1.2
-  get_it: 7.6.0
+  get_it: 7.6.2
   json_annotation: ^4.9.0
+  freezed_annotation: ^2.4.1
+  freezed: ^2.4.7
+  dartz: ^0.10.1
   domain:
     path: ../domain/
   shared:
@@ -28,7 +32,4 @@ dev_dependencies:
   build_runner: ^2.4.2
   injectable_generator: any
   objectbox_generator: ^4.0.3
-  dartz: ^0.10.1
   fpdart: ^1.1.0
-  freezed_annotation: ^2.4.1
-  freezed: ^2.4.7

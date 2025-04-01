@@ -1,0 +1,142 @@
+{
+  "_note1": "KEEP THIS FILE! Check it into a version control system (VCS) like git.",
+  "_note2": "ObjectBox manages crucial IDs for your object model. See docs for details.",
+  "_note3": "If you have VCS merge conflicts, you must resolve them according to ObjectBox docs.",
+  "entities": [
+    {
+      "id": "1:8011048593561155606",
+      "lastPropertyId": "2:18929626888440079",
+      "name": "FolderLocal",
+      "properties": [
+        {
+          "id": "1:5929135141955702599",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:18929626888440079",
+          "name": "name",
+          "type": 9
+        }
+      ],
+      "relations": [
+        {
+          "id": "1:6968967606021430674",
+          "name": "fragments",
+          "targetId": "2:3960909509973879731"
+        }
+      ]
+    },
+    {
+      "id": "2:3960909509973879731",
+      "lastPropertyId": "5:7548585482656102127",
+      "name": "FragmentLocal",
+      "properties": [
+        {
+          "id": "1:7166941501949261613",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:2218065215704425944",
+          "name": "name",
+          "type": 9
+        },
+        {
+          "id": "3:4637618593733295496",
+          "name": "description",
+          "type": 9
+        },
+        {
+          "id": "4:1037542684261231704",
+          "name": "bookId",
+          "type": 6
+        },
+        {
+          "id": "5:7548585482656102127",
+          "name": "bookName",
+          "type": 9
+        }
+      ],
+      "relations": [
+        {
+          "id": "2:903052182966308622",
+          "name": "text",
+          "targetId": "3:1454267786881740801"
+        }
+      ]
+    },
+    {
+      "id": "3:1454267786881740801",
+      "lastPropertyId": "5:8391278738909900399",
+      "name": "VerseLocal",
+      "properties": [
+        {
+          "id": "1:4964970067270604321",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:6275203807537770890",
+          "name": "bookId",
+          "type": 6
+        },
+        {
+          "id": "3:8641133270969219601",
+          "name": "chapterId",
+          "type": 6
+        },
+        {
+          "id": "4:9102258010613119613",
+          "name": "text",
+          "type": 9
+        },
+        {
+          "id": "5:8391278738909900399",
+          "name": "number",
+          "type": 6
+        }
+      ],
+      "relations": [
+        {
+          "id": "3:4276822390928392685",
+          "name": "words",
+          "targetId": "4:2968965411853438485"
+        }
+      ]
+    },
+    {
+      "id": "4:2968965411853438485",
+      "lastPropertyId": "2:2827609652975143762",
+      "name": "WordLocal",
+      "properties": [
+        {
+          "id": "1:8035096912124096853",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:2827609652975143762",
+          "name": "value",
+          "type": 9
+        }
+      ],
+      "relations": []
+    }
+  ],
+  "lastEntityId": "4:2968965411853438485",
+  "lastIndexId": "0:0",
+  "lastRelationId": "3:4276822390928392685",
+  "lastSequenceId": "0:0",
+  "modelVersion": 5,
+  "modelVersionParserMinimum": 5,
+  "retiredEntityUids": [],
+  "retiredIndexUids": [],
+  "retiredPropertyUids": [],
+  "retiredRelationUids": [],
+  "version": 1
+}
