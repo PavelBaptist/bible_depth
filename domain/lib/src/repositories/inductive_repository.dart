@@ -2,5 +2,6 @@ import 'package:dartz/dartz.dart';
 import 'package:domain/domain.dart';
 
 abstract class InductiveRepository {
-  Future<Either<Failure, String>> getMyAnalysis();
+  Either<Failure, Stream<List<Folder>>> fetchAllFolders();
+  Either<Failure, bool> putFolders(Folder folder);
 }

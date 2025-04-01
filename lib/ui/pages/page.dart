@@ -1,23 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-void main() {
-  runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: HomeScreen(),
-    );
-  }
-}
-
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+class SplashScreen extends StatelessWidget {
+  const SplashScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +21,7 @@ class HomeScreen extends StatelessWidget {
             children: [
               Container(
                 alignment: Alignment.center,
-                child:  Row(
+                child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     SvgPicture.asset("assets/icons/logo.svg"),
@@ -54,13 +39,14 @@ class HomeScreen extends StatelessWidget {
                 alignment: Alignment.bottomCenter,
                 child: SafeArea(
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 24).copyWith(bottom: 40.0),
+                    padding: const EdgeInsets.symmetric(horizontal: 24)
+                        .copyWith(bottom: 40.0),
                     child: TextButton(
                       onPressed: () {},
                       style: TextButton.styleFrom(
                         backgroundColor: Colors.transparent,
-                        padding:
-                            const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 30, vertical: 15),
                         side: const BorderSide(color: Colors.white, width: 1.5),
                       ),
                       child: const Text(
