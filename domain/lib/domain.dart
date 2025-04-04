@@ -14,8 +14,11 @@ export 'src/entity/setting/profile.dart';
 //repository
 export 'src/repositories/bible_repository.dart';
 export 'src/repositories/inductive_repository.dart';
+export 'src/repositories/start_repository.dart';
 
 //usecase
 export 'src/use_cases/fetch_all_folders_usecase.dart';
 export 'src/use_cases/fetch_bible_usecase.dart';
 export 'src/use_cases/put_folder_usecase.dart';
+export 'src/use_cases/hide_onboarding_usecase.dart';
+export 'src/use_cases/fetch_is_show_onboarding_usecase.dart';

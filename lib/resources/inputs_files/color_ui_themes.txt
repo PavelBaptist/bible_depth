@@ -1,139 +1,22 @@
 [LightModeColors]
 # States colors
-statesGreen600: #16A34A
-statesAmber500: #F59E0B
-statesRed700: #B91C1C
-# Accent colors
-accentGreen600: #16A34A
-accentRed100: #FEE2E2
-accentAmber500: #F59E0B
-accentOrange100: #FFEDD5
-accentRed700: #B91C1C
-accentGrey300: #D1D5DB
-# Dividers,borders colors
-borderViolet200: #DDD6FE
-borderGray400: #9CA3AF
-borderGray500: #6B7280
-borderGreen700: #15803D
-borderGreen600: #16A34A
-borderPrimary: #1E40AF
-bottomSheetHandle: #79747E
-dividerGray200: #DFE4E9
-# Background colors
-backgroundPrimary: #FCFCFC
-backgroundViolet50: #F5F3FF
-backgroundViolet100: #EDE9FE
-backgroundViolet200: #DDD6FE
-backgroundViolet400: #A78BFA
-backgroundViolet600: #7C3AED
-backgroundViolet800: #5B21B6
-backgroundCoolGray50: #F9FAFB
-backgroundCoolGray100: #F3F4F6
-backgroundCoolGray200: #E5E7EB
-backgroundCoolGray300: #D1D5DB
-backgroundRed50: #FEF2F2
-backgroundRed100: #FEE2E2
-backgroundRed200: #FECACA
-backgroundRed400: #F87171
-backgroundRed500: #F87171
-backgroundOrange50: #FFF7ED
-backgroundOrange100: #FFEDD5
-backgroundOrange200: #FED7AA
-backgroundOrange300: #FDBA74
-backgroundBlue: #3B67F6
-backgroundBlue300: #BFCEFE
-backgroundButtonDisable: #EFF3FF
-backgroundButtonSecondary: #FFFFFF
-backgroundButtonPrimary: #1E40AF
-backgroundAuthAppBar: #1E378A
-backgroundLightBlue: #DBE3FE
-backgroundCardJob: #FCFEFF
-backgroundButtonLoading: #93ACFD
-backgroundIconBlue: #1D49D8
-backgroundSnackBar: #322F35
+backgroundPrimary: #FFFFFF
+backgroundAbsolutlyDark: #000000
+darkBeruz: #2C85A3
+beruz: #6FC3C9
+dustyRose: #B46363
+grey: #D9D9D9
 # Text colors
-textGrey900: #111827
-textGrey700: #374151
-textGrey600: #79747E
-textGrey500: #73787D
-textGrey400: #9CA3AF
-textLightGrey: #FCFCFC
 textWhite: #FFFFFF
-textViolet800: #5B21B6
-textGreen800: #166534
-textPrimary: #1E40AF
-textActiveTab: #FCFEFF
-textNoactiveTab: #D1D5DB
-textRed: #991B1B
-# ShadowColors
-shadowAppBar: #64748B
+
 
 [DarkModeColors]
 # States colors
-statesGreen600: #16A34A
-statesAmber500: #F59E0B
-statesRed700: #B91C1C
-# Accent colors
-accentGreen600: #16A34A
-accentRed100: #FEE2E2
-accentAmber500: #F59E0B
-accentOrange100: #FFEDD5
-accentRed700: #B91C1C
-accentGrey300: #D1D5DB
-# Dividers,borders colors
-borderViolet200: #DDD6FE
-borderGray400: #9CA3AF
-borderGray500: #6B7280
-borderGreen700: #15803D
-borderGreen600: #16A34A
-borderPrimary: #1E40AF
-bottomSheetHandle: #79747E
-dividerGray200: #DFE4E9
-# Background colors
-backgroundPrimary: #FCFCFC
-backgroundViolet50: #F5F3FF
-backgroundViolet100: #EDE9FE
-backgroundViolet200: #DDD6FE
-backgroundViolet400: #A78BFA
-backgroundViolet600: #7C3AED
-backgroundViolet800: #5B21B6
-backgroundCoolGray50: #F9FAFB
-backgroundCoolGray100: #F3F4F6
-backgroundCoolGray200: #E5E7EB
-backgroundCoolGray300: #D1D5DB
-backgroundRed50: #FEF2F2
-backgroundRed100: #FEE2E2
-backgroundRed200: #FECACA
-backgroundRed400: #F87171
-backgroundRed500: #F87171
-backgroundOrange50: #FFF7ED
-backgroundOrange100: #FFEDD5
-backgroundOrange200: #FED7AA
-backgroundOrange300: #FDBA74
-backgroundBlue: #3B67F6
-backgroundBlue300: #BFCEFE
-backgroundButtonDisable: #EFF3FF
-backgroundButtonSecondary: #FFFFFF
-backgroundButtonPrimary: #1E40AF
-backgroundAuthAppBar: #1E378A
-backgroundLightBlue: #DBE3FE
-backgroundCardJob: #FCFEFF
-backgroundButtonLoading: #93ACFD
-backgroundIconBlue: #1D49D8
-backgroundSnackBar: #322F35
+backgroundPrimary: #FFFFFF
+backgroundAbsolutlyDark: #000000
+darkBeruz: #2C85A3
+beruz: #6FC3C9
+dustyRose: #B46363
+grey: #D9D9D9
 # Text colors
-textPrimary: #1E40AF
-textGrey900: #111827
-textGrey700: #374151
-textGrey600: #79747E
-textGrey500: #73787D
-textGrey400: #9CA3AF
-textLightGrey: #FCFCFC
 textWhite: #FFFFFF
-textViolet800: #5B21B6
-textGreen800: #166534
-textActiveTab: #FCFEFF
-textNoactiveTab: #D1D5DB
-textRed: #991B1B
-# ShadowColors
-shadowAppBar: #64748B

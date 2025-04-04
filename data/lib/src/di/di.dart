@@ -9,8 +9,7 @@ abstract class ServiceModule {
   @preResolve
   Future<SharedPreferences> get prefs => SharedPreferences.getInstance();
 
-  @preResolve
-  Future<Store> provideStore() async => openStore();
+  Store provideStore() => openStore();
 }
 
 final GetIt getIt = GetIt.instance;

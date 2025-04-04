@@ -19,8 +19,14 @@ import 'package:data/src/repositories/source/database/bible_local_data_source.da
     as _i708;
 import 'package:data/src/repositories/source/database/inductive_local_data_source.dart'
     as _i574;
+import 'package:data/src/repositories/source/database/start_data_source.dart'
+    as _i371;
 import 'package:data/src/repositories/source/inductive_repository_impl.dart'
     as _i851;
+import 'package:data/src/repositories/source/preference/app_preference.dart'
+    as _i534;
+import 'package:data/src/repositories/source/start_repository_impl.dart'
+    as _i587;
 import 'package:domain/domain.dart' as _i494;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
@@ -42,18 +48,21 @@ extension GetItInjectableX on _i174.GetIt {
       () => serviceModule.prefs,
       preResolve: true,
     );
-    await gh.factoryAsync<_i337.Store>(
-      () => serviceModule.provideStore(),
-      preResolve: true,
-    );
+    gh.factory<_i337.Store>(() => serviceModule.provideStore());
     gh.lazySingleton<_i708.BibleLocalDataSource>(
         () => _i708.BibleLocalDataSource());
     gh.lazySingleton<_i723.AppDatabase>(
         () => _i723.AppDatabase(gh<_i337.Store>()));
+    gh.lazySingleton<_i534.AppPreferences>(
+        () => _i534.AppPreferences(gh<_i460.SharedPreferences>()));
     gh.lazySingleton<_i494.BibleRepository>(
         () => _i454.BibleRepositoryImpl(gh<_i437.BibleLocalDataSource>()));
     gh.lazySingleton<_i574.InductiveLocalDataSource>(
         () => _i574.InductiveLocalDataSource(gh<_i437.AppDatabase>()));
+    gh.lazySingleton<_i371.StartDataSource>(
+        () => _i371.StartDataSource(gh<_i437.AppPreferences>()));
+    gh.lazySingleton<_i494.StartRepository>(
+        () => _i587.StartRepositoryImpl(gh<_i437.StartDataSource>()));
     gh.lazySingleton<_i494.InductiveRepository>(() =>
         _i851.InductiveRepositoryImpl(gh<_i437.InductiveLocalDataSource>()));
     return this;
