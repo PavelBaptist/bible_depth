@@ -127,5 +127,6 @@ flutter_launcher_icons:
   macos:
     generate: true
     image_path: "assets/icons/launch_icon.png"
+
 flutter_intl:
   enabled: true

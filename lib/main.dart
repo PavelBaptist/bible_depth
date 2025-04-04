@@ -1,5 +1,4 @@
 import 'package:bible_depth/library.dart';
-import 'package:shared/shared.dart';
 
 void main(List<String> args) async {
   WidgetsFlutterBinding.ensureInitialized();
