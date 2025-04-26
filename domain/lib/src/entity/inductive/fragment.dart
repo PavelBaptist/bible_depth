@@ -12,5 +12,7 @@ class Fragment with _$Fragment {
     @Default('') String description,
     @Default(0) int bookId,
     @Default('') String bookName,
+    @Default('') String shortBookName,
+    @Default(Folder()) Folder folder,
   }) = _Fragment;
 }

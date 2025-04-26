@@ -13,6 +13,7 @@ class FolderLocal {
   @Id()
   int id;
   String name;
+  @Backlink('folder')
   final fragments = ToMany<FragmentLocal>();
 }
 
@@ -22,7 +23,6 @@ extension FolderMapper on Folder {
       id: id,
       name: name,
     );
-    folder.fragments.addAll(fragments.map((e) => e.toLocalFragment()).toList());
     return folder;
   }
 }
@@ -30,8 +30,9 @@ extension FolderMapper on Folder {
 extension LocalFolderDataMapper on FolderLocal {
   Folder toFolder() {
     return Folder(
+      id: id,
       name: name,
-      fragments: fragments.map((e) => e.toFragment()).toList(),
+      // fragments: fragments.map((e) => e.toFragment()).toList(),
     );
   }
 }

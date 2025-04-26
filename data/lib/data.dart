@@ -22,3 +22,4 @@ export 'src/repositories/source/start_repository_impl.dart';
 
 //preferences
 export 'src/repositories/source/preference/app_preference.dart';
+export 'src/local/objectbox_store_provider.dart';

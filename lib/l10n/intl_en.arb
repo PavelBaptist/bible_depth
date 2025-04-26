@@ -1,5 +1,17 @@
 {
   "bibleDepth": "BIBLE DEPTH",
   "startTheDive": "STRAR THE DIVE",
-  "myAnalysis": "MY ANALYSIS"
+  "myAnalysis": "MY ANALYSIS",
+  "emptyFolder": "У тебя ещё нет разборов",
+  "addAnalysis": "+Добавить разбор",
+  "choiceBook": "ВЫБЕРИТЕ КНИГУ БИБЛИИ",
+  "selectAnExcerptToStudy": "Выберите отрывок для изучения",
+  "numberChapter": "Глава {number}",
+  "create": "Создать",
+  "selectFolder": "Выберите папку",
+  "haveNotFolders": "У вас пока нет папок с разборами, создайте новую",
+  "createNewFolder": "Создать новую папку",
+  "cancel": "Отменить",
+  "add": "добавить",
+  "name": "Название"
 }

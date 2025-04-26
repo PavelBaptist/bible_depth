@@ -10,7 +10,7 @@ class PutFoldersUseCase {
   final InductiveRepository _inductiveRepository;
 
   @protected
-  Either<Failure, bool> call(Folder folder) {
+  Either<Failure, Folder> call(Folder folder) {
     final result = _inductiveRepository.putFolders(folder);
     return result;
   }

@@ -1,6 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'dart:convert';
-
 import 'package:data/data.dart';
 import 'package:domain/domain.dart';
 import 'package:objectbox/objectbox.dart';
@@ -8,10 +5,12 @@ import 'package:objectbox/objectbox.dart';
 class BookLocal {
   final int id;
   final String bookName;
+  final String shortName;
   final List<ChapterLocal> chapters;
   BookLocal({
     required this.id,
     required this.bookName,
+    required this.shortName,
     required this.chapters,
   });
 
@@ -19,14 +18,15 @@ class BookLocal {
     return BookLocal(
       id: map['id'],
       bookName: map['bookName'],
+      shortName: map['shortName'],
       chapters: (map['chapters'] as List)
-          .map((e) => ChapterLocal.fromJson(e, map['id']))
+          .map((e) => ChapterLocal.fromMap(e, map['id']))
           .toList(),
     );
   }
 
-  factory BookLocal.fromJson(String source) =>
-      BookLocal.fromMap(json.decode(source) as Map<String, dynamic>);
+  // factory BookLocal.fromJson(String source) =>
+  //     BookLocal.fromMap(json.decode(source) as Map<String, dynamic>);
 }
 
 extension BookMapper on Book {
@@ -34,6 +34,7 @@ extension BookMapper on Book {
     return BookLocal(
       id: id,
       bookName: bookName,
+      shortName: shortName,
       chapters: chapters.map((e) => e.toLocalChapter()).toList(),
     );
   }
@@ -44,6 +45,7 @@ extension LocalBookDataMapper on BookLocal {
     return Book(
       id: id,
       bookName: bookName,
+      shortName: shortName,
       chapters: chapters.map((e) => e.toChapter()).toList(),
     );
   }
@@ -62,16 +64,16 @@ class ChapterLocal {
 
   factory ChapterLocal.fromMap(Map<String, dynamic> map, int bookId) {
     return ChapterLocal(
-      id: map['id'] as int,
+      id: map['id'],
       bookId: bookId,
       verses: (map['verses'] as List)
-          .map((e) => VerseLocal.fromJson(e, map['id'], bookId))
+          .map((e) => VerseLocal.fromMap(e, map['id'], bookId))
           .toList(),
     );
   }
 
-  factory ChapterLocal.fromJson(String source, int bookId) =>
-      ChapterLocal.fromMap(json.decode(source) as Map<String, dynamic>, bookId);
+  // factory ChapterLocal.fromJson(String source, int bookId) =>
+  //     ChapterLocal.fromMap(json.decode(source) as Map<String, dynamic>, bookId);
 }
 
 extension ChapterMapper on Chapter {
@@ -102,6 +104,7 @@ class VerseLocal {
   final int bookId;
   final int chapterId;
   final words = ToMany<WordLocal>();
+  final fragment = ToOne<FragmentLocal>();
   final String text;
   VerseLocal({
     this.id = 0,
@@ -127,9 +130,9 @@ class VerseLocal {
     return verse;
   }
 
-  factory VerseLocal.fromJson(String source, int chapterId, int bookId) =>
-      VerseLocal.fromMap(
-          json.decode(source) as Map<String, dynamic>, chapterId, bookId);
+  // factory VerseLocal.fromJson(String source, int chapterId, int bookId) =>
+  //     VerseLocal.fromMap(
+  //         json.decode(source) as Map<String, dynamic>, chapterId, bookId);
 }
 
 extension VerseMapper on Verse {
@@ -142,6 +145,7 @@ extension VerseMapper on Verse {
       text: text,
     );
     verse.words.addAll(words.map((e) => e.toLocalWord()).toList());
+    verse.fragment.target = fragment.toLocalFragment();
     return verse;
   }
 }
@@ -150,10 +154,13 @@ extension LocalVerseDataMapper on VerseLocal {
   Verse toVerse() {
     return Verse(
       id: id,
+      number: number,
       bookId: bookId,
       chapterId: chapterId,
       text: text,
       words: words.map((e) => e.toWord()).toList(),
+      fragment:
+          fragment.target != null ? fragment.target!.toFragment() : Fragment(),
     );
   }
 }

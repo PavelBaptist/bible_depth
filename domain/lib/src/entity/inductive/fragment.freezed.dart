@@ -22,6 +22,8 @@ mixin _$Fragment {
   String get description => throw _privateConstructorUsedError;
   int get bookId => throw _privateConstructorUsedError;
   String get bookName => throw _privateConstructorUsedError;
+  String get shortBookName => throw _privateConstructorUsedError;
+  Folder get folder => throw _privateConstructorUsedError;
 
   /// Create a copy of Fragment
   /// with the given fields replaced by the non-null parameter values.
@@ -41,7 +43,11 @@ abstract class $FragmentCopyWith<$Res> {
       List<Verse> text,
       String description,
       int bookId,
-      String bookName});
+      String bookName,
+      String shortBookName,
+      Folder folder});
+
+  $FolderCopyWith<$Res> get folder;
 }
 
 /// @nodoc
@@ -65,6 +71,8 @@ class _$FragmentCopyWithImpl<$Res, $Val extends Fragment>
     Object? description = null,
     Object? bookId = null,
     Object? bookName = null,
+    Object? shortBookName = null,
+    Object? folder = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -91,7 +99,25 @@ class _$FragmentCopyWithImpl<$Res, $Val extends Fragment>
           ? _value.bookName
           : bookName // ignore: cast_nullable_to_non_nullable
               as String,
+      shortBookName: null == shortBookName
+          ? _value.shortBookName
+          : shortBookName // ignore: cast_nullable_to_non_nullable
+              as String,
+      folder: null == folder
+          ? _value.folder
+          : folder // ignore: cast_nullable_to_non_nullable
+              as Folder,
     ) as $Val);
+  }
+
+  /// Create a copy of Fragment
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $FolderCopyWith<$Res> get folder {
+    return $FolderCopyWith<$Res>(_value.folder, (value) {
+      return _then(_value.copyWith(folder: value) as $Val);
+    });
   }
 }
 
@@ -109,7 +135,12 @@ abstract class _$$FragmentImplCopyWith<$Res>
       List<Verse> text,
       String description,
       int bookId,
-      String bookName});
+      String bookName,
+      String shortBookName,
+      Folder folder});
+
+  @override
+  $FolderCopyWith<$Res> get folder;
 }
 
 /// @nodoc
@@ -131,6 +162,8 @@ class __$$FragmentImplCopyWithImpl<$Res>
     Object? description = null,
     Object? bookId = null,
     Object? bookName = null,
+    Object? shortBookName = null,
+    Object? folder = null,
   }) {
     return _then(_$FragmentImpl(
       id: null == id
@@ -157,6 +190,14 @@ class __$$FragmentImplCopyWithImpl<$Res>
           ? _value.bookName
           : bookName // ignore: cast_nullable_to_non_nullable
               as String,
+      shortBookName: null == shortBookName
+          ? _value.shortBookName
+          : shortBookName // ignore: cast_nullable_to_non_nullable
+              as String,
+      folder: null == folder
+          ? _value.folder
+          : folder // ignore: cast_nullable_to_non_nullable
+              as Folder,
     ));
   }
 }
@@ -170,7 +211,9 @@ class _$FragmentImpl implements _Fragment {
       final List<Verse> text = const [],
       this.description = '',
       this.bookId = 0,
-      this.bookName = ''})
+      this.bookName = '',
+      this.shortBookName = '',
+      this.folder = const Folder()})
       : _text = text;
 
   @override
@@ -197,10 +240,16 @@ class _$FragmentImpl implements _Fragment {
   @override
   @JsonKey()
   final String bookName;
+  @override
+  @JsonKey()
+  final String shortBookName;
+  @override
+  @JsonKey()
+  final Folder folder;
 
   @override
   String toString() {
-    return 'Fragment(id: $id, name: $name, text: $text, description: $description, bookId: $bookId, bookName: $bookName)';
+    return 'Fragment(id: $id, name: $name, text: $text, description: $description, bookId: $bookId, bookName: $bookName, shortBookName: $shortBookName, folder: $folder)';
   }
 
   @override
@@ -215,7 +264,10 @@ class _$FragmentImpl implements _Fragment {
                 other.description == description) &&
             (identical(other.bookId, bookId) || other.bookId == bookId) &&
             (identical(other.bookName, bookName) ||
-                other.bookName == bookName));
+                other.bookName == bookName) &&
+            (identical(other.shortBookName, shortBookName) ||
+                other.shortBookName == shortBookName) &&
+            (identical(other.folder, folder) || other.folder == folder));
   }
 
   @override
@@ -226,7 +278,9 @@ class _$FragmentImpl implements _Fragment {
       const DeepCollectionEquality().hash(_text),
       description,
       bookId,
-      bookName);
+      bookName,
+      shortBookName,
+      folder);
 
   /// Create a copy of Fragment
   /// with the given fields replaced by the non-null parameter values.
@@ -244,7 +298,9 @@ abstract class _Fragment implements Fragment {
       final List<Verse> text,
       final String description,
       final int bookId,
-      final String bookName}) = _$FragmentImpl;
+      final String bookName,
+      final String shortBookName,
+      final Folder folder}) = _$FragmentImpl;
 
   @override
   int get id;
@@ -258,6 +314,10 @@ abstract class _Fragment implements Fragment {
   int get bookId;
   @override
   String get bookName;
+  @override
+  String get shortBookName;
+  @override
+  Folder get folder;
 
   /// Create a copy of Fragment
   /// with the given fields replaced by the non-null parameter values.

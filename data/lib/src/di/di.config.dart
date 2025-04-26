@@ -48,7 +48,10 @@ extension GetItInjectableX on _i174.GetIt {
       () => serviceModule.prefs,
       preResolve: true,
     );
-    gh.factory<_i337.Store>(() => serviceModule.provideStore());
+    await gh.factoryAsync<_i337.Store>(
+      () => serviceModule.provideStore(),
+      preResolve: true,
+    );
     gh.lazySingleton<_i708.BibleLocalDataSource>(
         () => _i708.BibleLocalDataSource());
     gh.lazySingleton<_i723.AppDatabase>(

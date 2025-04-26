@@ -20,10 +20,29 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'ru';
 
+  static String m0(number) => "Глава ${number}";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "add": MessageLookupByLibrary.simpleMessage("добавить"),
+        "addAnalysis": MessageLookupByLibrary.simpleMessage("+Добавить разбор"),
         "bibleDepth": MessageLookupByLibrary.simpleMessage("ГЛУБИНЫ БИБЛИИ"),
+        "cancel": MessageLookupByLibrary.simpleMessage("Отменить"),
+        "choiceBook":
+            MessageLookupByLibrary.simpleMessage("ВЫБЕРИТЕ КНИГУ БИБЛИИ"),
+        "create": MessageLookupByLibrary.simpleMessage("Создать"),
+        "createNewFolder":
+            MessageLookupByLibrary.simpleMessage("Создать новую папку"),
+        "emptyFolder":
+            MessageLookupByLibrary.simpleMessage("У тебя ещё нет разборов"),
+        "haveNotFolders": MessageLookupByLibrary.simpleMessage(
+            "У вас пока нет папок с разборами, создайте новую"),
         "myAnalysis": MessageLookupByLibrary.simpleMessage("МОИ РАЗБОРЫ"),
+        "name": MessageLookupByLibrary.simpleMessage("Название"),
+        "numberChapter": m0,
+        "selectAnExcerptToStudy": MessageLookupByLibrary.simpleMessage(
+            "Выберите отрывок для изучения"),
+        "selectFolder": MessageLookupByLibrary.simpleMessage("Выберите папку"),
         "startTheDive":
             MessageLookupByLibrary.simpleMessage("НАЧАТЬ ПОГРУЖЕНИЕ")
       };

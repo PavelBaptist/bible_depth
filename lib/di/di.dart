@@ -1,9 +1,11 @@
-import 'package:get_it/get_it.dart';
-import 'package:injectable/injectable.dart';
+import 'package:bible_depth/library.dart';
 
 import 'di.config.dart';
 
 final GetIt getIt = GetIt.instance;
 
 @injectableInit
-void configureInjection() => getIt.init();
+Future<void> configureInjection() async {
+  await getIt.init();
+  await getIt.allReady();
+}

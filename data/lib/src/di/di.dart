@@ -1,3 +1,4 @@
+import 'package:data/data.dart';
 import 'package:data/objectbox.g.dart';
 import 'package:data/src/di/di.config.dart';
 import 'package:get_it/get_it.dart';
@@ -9,10 +10,11 @@ abstract class ServiceModule {
   @preResolve
   Future<SharedPreferences> get prefs => SharedPreferences.getInstance();
 
-  Store provideStore() => openStore();
+  @preResolve
+  Future<Store> provideStore() async => await openSharedStore();
 }
 
 final GetIt getIt = GetIt.instance;
 
 @injectableInit
-void configureInjection() => getIt.init();
+Future<void> configureInjection() => getIt.init();

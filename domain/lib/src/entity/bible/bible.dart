@@ -8,6 +8,7 @@ class Book with _$Book {
   const factory Book({
     @Default(0) int id,
     @Default('') String bookName,
+    @Default('') String shortName,
     @Default([]) List<Chapter> chapters,
   }) = _Book;
 }
@@ -30,5 +31,6 @@ class Verse with _$Verse {
     @Default(0) int chapterId,
     @Default([]) List<Word> words,
     @Default('') String text,
+    @Default(Fragment()) Fragment fragment,
   }) = _Verse;
 }

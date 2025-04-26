@@ -3,9 +3,6 @@ import 'dart:async';
 import 'package:data/data.dart';
 import 'package:domain/domain.dart';
 import 'package:injectable/injectable.dart';
-import 'package:shared/shared.dart';
-
-import 'package:dartz/dartz.dart';
 
 @LazySingleton(as: StartRepository)
 class StartRepositoryImpl implements StartRepository {

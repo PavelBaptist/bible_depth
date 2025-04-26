@@ -1,4 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:data/data.dart';
 import 'package:domain/domain.dart';
 import 'package:objectbox/objectbox.dart';
 
@@ -12,19 +13,24 @@ class WordLocal {
   @Id()
   int id;
   final String value;
+  // final verse = ToOne<VerseLocal>();
 }
 
 extension WordMapper on Word {
   WordLocal toLocalWord() {
-    return WordLocal(id: id, value: value);
+    WordLocal word = WordLocal(id: id, value: value);
+    // word.verse.target = verse.toLocalVerse();
+    return word;
   }
 }
 
 extension LocalWordDataMapper on WordLocal {
   Word toWord() {
-    return Word(
+    Word word = Word(
       id: id,
       value: value,
+      // verse: verse.target != null ? verse.target!.toVerse() : Verse(),
     );
+    return word;
   }
 }

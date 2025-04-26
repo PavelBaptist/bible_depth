@@ -14,7 +14,7 @@ class BibleLocalDataSource {
     final input = await rootBundle.loadString(translate.path);
     final json = jsonDecode(input);
     final result =
-        (json['books'] as List).map((e) => BookLocal.fromJson(e)).toList();
+        (json['books'] as List).map((e) => BookLocal.fromMap(e)).toList();
 
     return result.map((e) => e.toBook()).toList();
   }

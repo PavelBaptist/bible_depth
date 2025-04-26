@@ -12,6 +12,6 @@ class AppConfig extends ApplicationConfig {
 
   @override
   Future<void> config() async {
-    di.configureInjection();
+    await di.configureInjection();
   }
 }

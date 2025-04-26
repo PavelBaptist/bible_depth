@@ -20,17 +20,11 @@
           "type": 9
         }
       ],
-      "relations": [
-        {
-          "id": "1:6968967606021430674",
-          "name": "fragments",
-          "targetId": "2:3960909509973879731"
-        }
-      ]
+      "relations": []
     },
     {
       "id": "2:3960909509973879731",
-      "lastPropertyId": "5:7548585482656102127",
+      "lastPropertyId": "6:5389801780994316776",
       "name": "FragmentLocal",
       "properties": [
         {
@@ -58,19 +52,21 @@
           "id": "5:7548585482656102127",
           "name": "bookName",
           "type": 9
+        },
+        {
+          "id": "6:5389801780994316776",
+          "name": "folderId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "1:5597378087385502750",
+          "relationTarget": "FolderLocal"
         }
       ],
-      "relations": [
-        {
-          "id": "2:903052182966308622",
-          "name": "text",
-          "targetId": "3:1454267786881740801"
-        }
-      ]
+      "relations": []
     },
     {
       "id": "3:1454267786881740801",
-      "lastPropertyId": "5:8391278738909900399",
+      "lastPropertyId": "6:2979426491443797314",
       "name": "VerseLocal",
       "properties": [
         {
@@ -98,11 +94,19 @@
           "id": "5:8391278738909900399",
           "name": "number",
           "type": 6
+        },
+        {
+          "id": "6:2979426491443797314",
+          "name": "fragmentId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "2:4074713988327459675",
+          "relationTarget": "FragmentLocal"
         }
       ],
       "relations": [
         {
-          "id": "3:4276822390928392685",
+          "id": "4:2306486577618217812",
           "name": "words",
           "targetId": "4:2968965411853438485"
         }
@@ -110,7 +114,7 @@
     },
     {
       "id": "4:2968965411853438485",
-      "lastPropertyId": "2:2827609652975143762",
+      "lastPropertyId": "4:4519813948655732556",
       "name": "WordLocal",
       "properties": [
         {
@@ -129,14 +133,24 @@
     }
   ],
   "lastEntityId": "4:2968965411853438485",
-  "lastIndexId": "0:0",
-  "lastRelationId": "3:4276822390928392685",
+  "lastIndexId": "4:1373592188249137506",
+  "lastRelationId": "4:2306486577618217812",
   "lastSequenceId": "0:0",
   "modelVersion": 5,
   "modelVersionParserMinimum": 5,
   "retiredEntityUids": [],
-  "retiredIndexUids": [],
-  "retiredPropertyUids": [],
-  "retiredRelationUids": [],
+  "retiredIndexUids": [
+    4649469458336730149,
+    1373592188249137506
+  ],
+  "retiredPropertyUids": [
+    3859540035582067240,
+    4519813948655732556
+  ],
+  "retiredRelationUids": [
+    6968967606021430674,
+    903052182966308622,
+    4276822390928392685
+  ],
   "version": 1
 }

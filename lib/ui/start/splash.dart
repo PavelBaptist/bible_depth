@@ -94,7 +94,7 @@ class _SplashScreenState extends State<SplashScreen>
                                     padding: const EdgeInsets.symmetric(
                                         horizontal: 30, vertical: 15),
                                     side: const BorderSide(
-                                        color: Colors.white, width: 0.5),
+                                        color: Colors.white, width: 1),
                                   ),
                                   child: Text(
                                     appLocale.startTheDive,
@@ -121,6 +121,7 @@ class _SplashScreenState extends State<SplashScreen>
   Future<void> init() async {
     await AppInitializer(AppConfig.getInstance()).init();
     final startService = GetIt.instance.get<StartService>();
+    GetIt.instance.get<MainService>();
     final isShowOnboarding = await startService.isShowOnboarding;
     if (isShowOnboarding) {
       await Future.delayed(const Duration(milliseconds: 800));

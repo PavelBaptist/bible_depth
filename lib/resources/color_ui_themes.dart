@@ -18,8 +18,13 @@ class _LightModeColors {
   final Color beruz = Color(0xFF6FC3C9);
   final Color dustyRose = Color(0xFFB46363);
   final Color grey = Color(0xFFD9D9D9);
+  // borders, shadows
+  final Color bordersPrimary = Color(0xFF000000);
+  final Color cursor = Color(0xFF535050);
+  final Color shadowAppBar = Color(0xFF64748B);
   // Text colors
   final Color textWhite = Color(0xFFFFFFFF);
+  final Color textPrimary = Color(0xFF000000);
 }
 
 class _DarkModeColors {
@@ -30,6 +35,11 @@ class _DarkModeColors {
   final Color beruz = Color(0xFF6FC3C9);
   final Color dustyRose = Color(0xFFB46363);
   final Color grey = Color(0xFFD9D9D9);
+  // borders, shadows
+  final Color bordersPrimary = Color(0xFF000000);
+  final Color cursor = Color(0xFF535050);
+  final Color shadowAppBar = Color(0xFF64748B);
   // Text colors
   final Color textWhite = Color(0xFFFFFFFF);
+  final Color textPrimary = Color(0xFF000000);
 }

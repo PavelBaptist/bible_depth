@@ -3,5 +3,14 @@ import 'package:domain/domain.dart';
 
 abstract class InductiveRepository {
   Either<Failure, Stream<List<Folder>>> fetchAllFolders();
-  Either<Failure, bool> putFolders(Folder folder);
+  Either<Failure, Folder> putFolders(Folder folder);
+
+  Either<Failure, Stream<List<Fragment>>> fetchFragments(int folderId);
+  Either<Failure, bool> putFragments(Fragment fragment);
+
+  Either<Failure, Stream<List<Verse>>> fetchAllVerses(int fragmentId);
+  Either<Failure, bool> putVerse(List<Verse> verses);
+
+  Either<Failure, Stream<List<Word>>> fetchAllWords();
+  Either<Failure, bool> putWord(Word words);
 }

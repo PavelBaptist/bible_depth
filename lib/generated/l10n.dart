@@ -79,6 +79,126 @@ class S {
       args: [],
     );
   }
+
+  /// `У тебя ещё нет разборов`
+  String get emptyFolder {
+    return Intl.message(
+      'У тебя ещё нет разборов',
+      name: 'emptyFolder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `+Добавить разбор`
+  String get addAnalysis {
+    return Intl.message(
+      '+Добавить разбор',
+      name: 'addAnalysis',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `ВЫБЕРИТЕ КНИГУ БИБЛИИ`
+  String get choiceBook {
+    return Intl.message(
+      'ВЫБЕРИТЕ КНИГУ БИБЛИИ',
+      name: 'choiceBook',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Выберите отрывок для изучения`
+  String get selectAnExcerptToStudy {
+    return Intl.message(
+      'Выберите отрывок для изучения',
+      name: 'selectAnExcerptToStudy',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Глава {number}`
+  String numberChapter(Object number) {
+    return Intl.message(
+      'Глава $number',
+      name: 'numberChapter',
+      desc: '',
+      args: [number],
+    );
+  }
+
+  /// `Создать`
+  String get create {
+    return Intl.message(
+      'Создать',
+      name: 'create',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Выберите папку`
+  String get selectFolder {
+    return Intl.message(
+      'Выберите папку',
+      name: 'selectFolder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `У вас пока нет папок с разборами, создайте новую`
+  String get haveNotFolders {
+    return Intl.message(
+      'У вас пока нет папок с разборами, создайте новую',
+      name: 'haveNotFolders',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Создать новую папку`
+  String get createNewFolder {
+    return Intl.message(
+      'Создать новую папку',
+      name: 'createNewFolder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Отменить`
+  String get cancel {
+    return Intl.message(
+      'Отменить',
+      name: 'cancel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `добавить`
+  String get add {
+    return Intl.message(
+      'добавить',
+      name: 'add',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Название`
+  String get name {
+    return Intl.message(
+      'Название',
+      name: 'name',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

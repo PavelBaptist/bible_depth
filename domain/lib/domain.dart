@@ -22,3 +22,8 @@ export 'src/use_cases/fetch_bible_usecase.dart';
 export 'src/use_cases/put_folder_usecase.dart';
 export 'src/use_cases/hide_onboarding_usecase.dart';
 export 'src/use_cases/fetch_is_show_onboarding_usecase.dart';
+export 'src/use_cases/put_fragment_usecase.dart';
+export 'src/use_cases/put_verse_usecase.dart';
+export 'src/use_cases/put_word_usecase.dart';
+export 'src/use_cases/fetch_fragments_usecase.dart';
+export 'src/use_cases/fetch_verses_usecase.dart';
