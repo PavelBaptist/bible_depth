@@ -27,3 +27,5 @@ export 'src/use_cases/put_verse_usecase.dart';
 export 'src/use_cases/put_word_usecase.dart';
 export 'src/use_cases/fetch_fragments_usecase.dart';
 export 'src/use_cases/fetch_verses_usecase.dart';
+export 'src/use_cases/create_bible_usecase.dart';
+export 'src/use_cases/get_chapters_for_book_usecase.dart';

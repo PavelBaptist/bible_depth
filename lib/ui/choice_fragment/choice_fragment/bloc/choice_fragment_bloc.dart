@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:bible_depth/library.dart';
 import 'package:domain/domain.dart';
 part 'choice_fragment_event.dart';
@@ -7,8 +5,8 @@ part 'choice_fragment_state.dart';
 
 class ChoiceFragmentBloc
     extends Bloc<ChoiceFragmentEvent, ChoiceFragmentState> {
-  ChoiceFragmentBloc({required this.book})
-      : super(ChoiceFragmentView(fragment: null, linkText: '')) {
+  ChoiceFragmentBloc({required this.book}) : super(ChoiceFragmentLoading()) {
+    on<ChoiceFragmentInit>(_init);
     on<ChoiceFragmentSelectVerse>(_selectVerse);
     on<CreateNewFolderAndFragment>(_createNewFolder);
     on<CreateNewFragment>(_createNewFragment);
@@ -19,6 +17,28 @@ class ChoiceFragmentBloc
   Verse? firstVerse;
   Verse? secondVerse;
   Fragment? fragment;
+  List<Chapter> chapters = [];
+
+  Future<void> _init(
+      ChoiceFragmentInit event, Emitter<ChoiceFragmentState> emit) async {
+    _bibleService = GetIt.instance.get<BibleService>();
+
+    await _bibleService.getChaptersForBook(book.bookId).then((either) async {
+      either.fold(
+        (l) {
+          GetIt.I<Talker>().handle(l);
+        },
+        (r) {
+          chapters = r;
+          emit(ChoiceFragmentView(
+            fragment: null,
+            linkText: '',
+            chapters: chapters,
+          ));
+        },
+      );
+    });
+  }
 
   Future<void> _selectVerse(ChoiceFragmentSelectVerse event,
       Emitter<ChoiceFragmentState> emit) async {
@@ -42,7 +62,7 @@ class ChoiceFragmentBloc
       for (int chapter = firstVerse!.chapterId;
           chapter <= secondVerse!.chapterId;
           chapter++) {
-        for (final verse in book.chapters[chapter - 1].verses) {
+        for (final verse in chapters[chapter - 1].verses) {
           if (verse.chapterId >= firstVerse!.chapterId &&
               verse.chapterId <= secondVerse!.chapterId &&
               (verse.number >= firstVerse!.number ||
@@ -58,7 +78,11 @@ class ChoiceFragmentBloc
         shortBookName: book.shortName,
       );
     }
-    emit(ChoiceFragmentView(fragment: fragment, linkText: linkText()));
+    emit(ChoiceFragmentView(
+      fragment: fragment,
+      linkText: linkText(),
+      chapters: chapters,
+    ));
   }
 
   Future<void> _createNewFolder(CreateNewFolderAndFragment event,

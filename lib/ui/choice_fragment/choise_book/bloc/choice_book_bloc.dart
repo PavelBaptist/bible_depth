@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:bible_depth/library.dart';
 import 'package:domain/domain.dart';
 part 'choice_book_event.dart';
@@ -19,7 +17,9 @@ class ChoiceBookBloc extends Bloc<ChoiceBookEvent, ChoiceBookState> {
 
     await _bibleService.getBible().then((either) async {
       either.fold(
-        (l) {},
+        (l) {
+          GetIt.I<Talker>().handle(l);
+        },
         (r) {
           add(ChoiceBookloadEvent(books: r));
         },

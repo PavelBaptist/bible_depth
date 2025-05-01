@@ -40,14 +40,19 @@ class MainPage extends StatelessWidget {
             children: [
               SafeArea(
                 bottom: false,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                child: Column(
                   children: [
-                    Text(
-                      appLocale.myAnalysis,
-                      style: theme.jura700x36.copyWith(
-                        color: theme.textPrimary,
-                      ),
+                    const SizedBox(height: 20),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          appLocale.myAnalysis,
+                          style: theme.jura700x36.copyWith(
+                            color: theme.textPrimary,
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),

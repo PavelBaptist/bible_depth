@@ -110,11 +110,6 @@ final _entities = <obx_int.ModelEntity>[
             type: 6,
             flags: 0),
         obx_int.ModelProperty(
-            id: const obx_int.IdUid(4, 9102258010613119613),
-            name: 'text',
-            type: 9,
-            flags: 0),
-        obx_int.ModelProperty(
             id: const obx_int.IdUid(5, 8391278738909900399),
             name: 'number',
             type: 6,
@@ -127,17 +122,15 @@ final _entities = <obx_int.ModelEntity>[
             indexId: const obx_int.IdUid(2, 4074713988327459675),
             relationTarget: 'FragmentLocal')
       ],
-      relations: <obx_int.ModelRelation>[
-        obx_int.ModelRelation(
-            id: const obx_int.IdUid(4, 2306486577618217812),
-            name: 'words',
-            targetId: const obx_int.IdUid(4, 2968965411853438485))
-      ],
-      backlinks: <obx_int.ModelBacklink>[]),
+      relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[
+        obx_int.ModelBacklink(
+            name: 'words', srcEntity: 'WordLocal', srcField: 'verse')
+      ]),
   obx_int.ModelEntity(
       id: const obx_int.IdUid(4, 2968965411853438485),
       name: 'WordLocal',
-      lastPropertyId: const obx_int.IdUid(4, 4519813948655732556),
+      lastPropertyId: const obx_int.IdUid(5, 5803068062754091279),
       flags: 0,
       properties: <obx_int.ModelProperty>[
         obx_int.ModelProperty(
@@ -149,9 +142,79 @@ final _entities = <obx_int.ModelEntity>[
             id: const obx_int.IdUid(2, 2827609652975143762),
             name: 'value',
             type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 5803068062754091279),
+            name: 'verseId',
+            type: 11,
+            flags: 520,
+            indexId: const obx_int.IdUid(5, 1691014882085764308),
+            relationTarget: 'VerseLocal')
+      ],
+      relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(5, 7185371223478614403),
+      name: 'BookLocal',
+      lastPropertyId: const obx_int.IdUid(5, 8728132709671035824),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 4991224564528957844),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 1129472134480709850),
+            name: 'bookId',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 8736782475556116186),
+            name: 'translate',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 659185716363673351),
+            name: 'bookName',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 8728132709671035824),
+            name: 'shortName',
+            type: 9,
             flags: 0)
       ],
       relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(6, 3650286781991589145),
+      name: 'ChapterLocal',
+      lastPropertyId: const obx_int.IdUid(3, 3737092396647499978),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 3843379987178825861),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 2996033745922202548),
+            name: 'chapterId',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 3737092396647499978),
+            name: 'bookId',
+            type: 6,
+            flags: 0)
+      ],
+      relations: <obx_int.ModelRelation>[
+        obx_int.ModelRelation(
+            id: const obx_int.IdUid(5, 6780013490363375989),
+            name: 'verses',
+            targetId: const obx_int.IdUid(3, 1454267786881740801))
+      ],
       backlinks: <obx_int.ModelBacklink>[])
 ];
 
@@ -190,17 +253,22 @@ Future<obx.Store> openStore(
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
       entities: _entities,
-      lastEntityId: const obx_int.IdUid(4, 2968965411853438485),
-      lastIndexId: const obx_int.IdUid(4, 1373592188249137506),
-      lastRelationId: const obx_int.IdUid(4, 2306486577618217812),
+      lastEntityId: const obx_int.IdUid(6, 3650286781991589145),
+      lastIndexId: const obx_int.IdUid(5, 1691014882085764308),
+      lastRelationId: const obx_int.IdUid(5, 6780013490363375989),
       lastSequenceId: const obx_int.IdUid(0, 0),
       retiredEntityUids: const [],
       retiredIndexUids: const [4649469458336730149, 1373592188249137506],
-      retiredPropertyUids: const [3859540035582067240, 4519813948655732556],
+      retiredPropertyUids: const [
+        3859540035582067240,
+        4519813948655732556,
+        9102258010613119613
+      ],
       retiredRelationUids: const [
         6968967606021430674,
         903052182966308622,
-        4276822390928392685
+        4276822390928392685,
+        2306486577618217812
       ],
       modelVersion: 5,
       modelVersionParserMinimum: 5,
@@ -300,19 +368,20 @@ obx_int.ModelDefinition getObjectBoxModel() {
     VerseLocal: obx_int.EntityDefinition<VerseLocal>(
         model: _entities[2],
         toOneRelations: (VerseLocal object) => [object.fragment],
-        toManyRelations: (VerseLocal object) =>
-            {obx_int.RelInfo<VerseLocal>.toMany(4, object.id): object.words},
+        toManyRelations: (VerseLocal object) => {
+              obx_int.RelInfo<WordLocal>.toOneBacklink(
+                      5, object.id, (WordLocal srcObject) => srcObject.verse):
+                  object.words
+            },
         getId: (VerseLocal object) => object.id,
         setId: (VerseLocal object, int id) {
           object.id = id;
         },
         objectToFB: (VerseLocal object, fb.Builder fbb) {
-          final textOffset = fbb.writeString(object.text);
           fbb.startTable(7);
           fbb.addInt64(0, object.id);
           fbb.addInt64(1, object.bookId);
           fbb.addInt64(2, object.chapterId);
-          fbb.addOffset(3, textOffset);
           fbb.addInt64(4, object.number);
           fbb.addInt64(5, object.fragment.targetId);
           fbb.finish(fbb.endTable());
@@ -329,24 +398,24 @@ obx_int.ModelDefinition getObjectBoxModel() {
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 6, 0);
           final chapterIdParam =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0);
-          final textParam = const fb.StringReader(asciiOptimization: true)
-              .vTableGet(buffer, rootOffset, 10, '');
           final object = VerseLocal(
               id: idParam,
               number: numberParam,
               bookId: bookIdParam,
-              chapterId: chapterIdParam,
-              text: textParam);
+              chapterId: chapterIdParam);
           object.fragment.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 14, 0);
           object.fragment.attach(store);
-          obx_int.InternalToManyAccess.setRelInfo<VerseLocal>(object.words,
-              store, obx_int.RelInfo<VerseLocal>.toMany(4, object.id));
+          obx_int.InternalToManyAccess.setRelInfo<VerseLocal>(
+              object.words,
+              store,
+              obx_int.RelInfo<WordLocal>.toOneBacklink(
+                  5, object.id, (WordLocal srcObject) => srcObject.verse));
           return object;
         }),
     WordLocal: obx_int.EntityDefinition<WordLocal>(
         model: _entities[3],
-        toOneRelations: (WordLocal object) => [],
+        toOneRelations: (WordLocal object) => [object.verse],
         toManyRelations: (WordLocal object) => {},
         getId: (WordLocal object) => object.id,
         setId: (WordLocal object, int id) {
@@ -354,9 +423,10 @@ obx_int.ModelDefinition getObjectBoxModel() {
         },
         objectToFB: (WordLocal object, fb.Builder fbb) {
           final valueOffset = fbb.writeString(object.value);
-          fbb.startTable(5);
+          fbb.startTable(6);
           fbb.addInt64(0, object.id);
           fbb.addOffset(1, valueOffset);
+          fbb.addInt64(4, object.verse.targetId);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -368,7 +438,84 @@ obx_int.ModelDefinition getObjectBoxModel() {
           final valueParam = const fb.StringReader(asciiOptimization: true)
               .vTableGet(buffer, rootOffset, 6, '');
           final object = WordLocal(id: idParam, value: valueParam);
+          object.verse.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 12, 0);
+          object.verse.attach(store);
+          return object;
+        }),
+    BookLocal: obx_int.EntityDefinition<BookLocal>(
+        model: _entities[4],
+        toOneRelations: (BookLocal object) => [],
+        toManyRelations: (BookLocal object) => {},
+        getId: (BookLocal object) => object.id,
+        setId: (BookLocal object, int id) {
+          object.id = id;
+        },
+        objectToFB: (BookLocal object, fb.Builder fbb) {
+          final translateOffset = fbb.writeString(object.translate);
+          final bookNameOffset = fbb.writeString(object.bookName);
+          final shortNameOffset = fbb.writeString(object.shortName);
+          fbb.startTable(6);
+          fbb.addInt64(0, object.id);
+          fbb.addInt64(1, object.bookId);
+          fbb.addOffset(2, translateOffset);
+          fbb.addOffset(3, bookNameOffset);
+          fbb.addOffset(4, shortNameOffset);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (obx.Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final idParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          final translateParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 8, '');
+          final bookIdParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 6, 0);
+          final bookNameParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 10, '');
+          final shortNameParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 12, '');
+          final object = BookLocal(
+              id: idParam,
+              translate: translateParam,
+              bookId: bookIdParam,
+              bookName: bookNameParam,
+              shortName: shortNameParam);
 
+          return object;
+        }),
+    ChapterLocal: obx_int.EntityDefinition<ChapterLocal>(
+        model: _entities[5],
+        toOneRelations: (ChapterLocal object) => [],
+        toManyRelations: (ChapterLocal object) =>
+            {obx_int.RelInfo<ChapterLocal>.toMany(5, object.id): object.verses},
+        getId: (ChapterLocal object) => object.id,
+        setId: (ChapterLocal object, int id) {
+          object.id = id;
+        },
+        objectToFB: (ChapterLocal object, fb.Builder fbb) {
+          fbb.startTable(4);
+          fbb.addInt64(0, object.id);
+          fbb.addInt64(1, object.chapterId);
+          fbb.addInt64(2, object.bookId);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (obx.Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final idParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          final chapterIdParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 6, 0);
+          final bookIdParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0);
+          final object = ChapterLocal(
+              id: idParam, chapterId: chapterIdParam, bookId: bookIdParam);
+          obx_int.InternalToManyAccess.setRelInfo<ChapterLocal>(object.verses,
+              store, obx_int.RelInfo<ChapterLocal>.toMany(5, object.id));
           return object;
         })
   };
@@ -436,21 +583,17 @@ class VerseLocal_ {
   static final chapterId =
       obx.QueryIntegerProperty<VerseLocal>(_entities[2].properties[2]);
 
-  /// See [VerseLocal.text].
-  static final text =
-      obx.QueryStringProperty<VerseLocal>(_entities[2].properties[3]);
-
   /// See [VerseLocal.number].
   static final number =
-      obx.QueryIntegerProperty<VerseLocal>(_entities[2].properties[4]);
+      obx.QueryIntegerProperty<VerseLocal>(_entities[2].properties[3]);
 
   /// See [VerseLocal.fragment].
   static final fragment = obx.QueryRelationToOne<VerseLocal, FragmentLocal>(
-      _entities[2].properties[5]);
+      _entities[2].properties[4]);
 
   /// see [VerseLocal.words]
   static final words =
-      obx.QueryRelationToMany<VerseLocal, WordLocal>(_entities[2].relations[0]);
+      obx.QueryBacklinkToMany<WordLocal, VerseLocal>(WordLocal_.verse);
 }
 
 /// [WordLocal] entity fields to define ObjectBox queries.
@@ -462,4 +605,50 @@ class WordLocal_ {
   /// See [WordLocal.value].
   static final value =
       obx.QueryStringProperty<WordLocal>(_entities[3].properties[1]);
+
+  /// See [WordLocal.verse].
+  static final verse =
+      obx.QueryRelationToOne<WordLocal, VerseLocal>(_entities[3].properties[2]);
+}
+
+/// [BookLocal] entity fields to define ObjectBox queries.
+class BookLocal_ {
+  /// See [BookLocal.id].
+  static final id =
+      obx.QueryIntegerProperty<BookLocal>(_entities[4].properties[0]);
+
+  /// See [BookLocal.bookId].
+  static final bookId =
+      obx.QueryIntegerProperty<BookLocal>(_entities[4].properties[1]);
+
+  /// See [BookLocal.translate].
+  static final translate =
+      obx.QueryStringProperty<BookLocal>(_entities[4].properties[2]);
+
+  /// See [BookLocal.bookName].
+  static final bookName =
+      obx.QueryStringProperty<BookLocal>(_entities[4].properties[3]);
+
+  /// See [BookLocal.shortName].
+  static final shortName =
+      obx.QueryStringProperty<BookLocal>(_entities[4].properties[4]);
+}
+
+/// [ChapterLocal] entity fields to define ObjectBox queries.
+class ChapterLocal_ {
+  /// See [ChapterLocal.id].
+  static final id =
+      obx.QueryIntegerProperty<ChapterLocal>(_entities[5].properties[0]);
+
+  /// See [ChapterLocal.chapterId].
+  static final chapterId =
+      obx.QueryIntegerProperty<ChapterLocal>(_entities[5].properties[1]);
+
+  /// See [ChapterLocal.bookId].
+  static final bookId =
+      obx.QueryIntegerProperty<ChapterLocal>(_entities[5].properties[2]);
+
+  /// see [ChapterLocal.verses]
+  static final verses = obx.QueryRelationToMany<ChapterLocal, VerseLocal>(
+      _entities[5].relations[0]);
 }

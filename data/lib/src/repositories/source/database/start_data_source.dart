@@ -1,10 +1,5 @@
-import 'dart:convert';
-
 import 'package:data/data.dart';
-import 'package:domain/domain.dart';
-import 'package:flutter/services.dart';
 import 'package:injectable/injectable.dart';
-import 'package:shared/shared.dart';
 
 @LazySingleton()
 class StartDataSource {

@@ -72,25 +72,26 @@ class VersesListWidget extends StatelessWidget {
     final theme = UIThemes.of(context);
     final appLocale = S.of(context);
     return verses.isNotEmpty
-        ? ListView.separated(
-            padding: const EdgeInsets.all(GeneralConstants.padding)
-                .copyWith(bottom: 200),
-            itemBuilder: (_, index) => Wrap(
-              spacing: 12,
-              children: List.generate(
-                verses[index].words.length,
-                (iWord) => GestureDetector(
-                  onTap: () => onTap(verses[index].words[iWord]),
-                  child: Text(
-                    verses[index].words[iWord].value,
-                    style: theme.jura500x16.copyWith(color: theme.textPrimary),
-                  ),
-                ),
-              ),
-            ),
-            separatorBuilder: (_, __) => const SizedBox(height: 12),
-            itemCount: verses.length,
-          )
+        ? const SizedBox()
+        // ListView.separated(
+        //     padding: const EdgeInsets.all(GeneralConstants.padding)
+        //         .copyWith(bottom: 200),
+        //     itemBuilder: (_, index) => Wrap(
+        //       spacing: 12,
+        //       children: List.generate(
+        //         verses[index].words.length,
+        //         (iWord) => GestureDetector(
+        //           onTap: () => onTap(verses[index].words[iWord]),
+        //           child: Text(
+        //             verses[index].words[iWord].value,
+        //             style: theme.jura500x16.copyWith(color: theme.textPrimary),
+        //           ),
+        //         ),
+        //       ),
+        //     ),
+        //     separatorBuilder: (_, __) => const SizedBox(height: 12),
+        //     itemCount: verses.length,
+        //   )
         : const SizedBox();
   }
 }

@@ -7,6 +7,7 @@ part 'word.freezed.dart';
 class Word with _$Word {
   const factory Word({
     @Default(0) int id,
+    @Default(Verse()) Verse verse,
     @Default('') String value,
   }) = _word;
 }

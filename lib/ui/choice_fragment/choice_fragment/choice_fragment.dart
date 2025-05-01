@@ -20,7 +20,8 @@ class ChoiceFragmentPage extends StatelessWidget {
     final theme = UIThemes.of(context);
     final appLocale = S.of(context);
     return BlocProvider(
-      create: (context) => ChoiceFragmentBloc(book: book),
+      create: (context) =>
+          ChoiceFragmentBloc(book: book)..add(ChoiceFragmentInit()),
       child: BlocBuilder<ChoiceFragmentBloc, ChoiceFragmentState>(
           builder: (context, state) {
         final bloc = context.read<ChoiceFragmentBloc>();
@@ -89,7 +90,7 @@ class ChoiceFragmentPage extends StatelessWidget {
           body: state is ChoiceFragmentView
               ? SelectedFragmentWidget(
                   fragment: state.fragment,
-                  book: book,
+                  chapters: state.chapters,
                   selectVerse: (verse) => bloc.add(
                     ChoiceFragmentSelectVerse(verse: verse),
                   ),
@@ -105,11 +106,11 @@ class SelectedFragmentWidget extends StatelessWidget {
   const SelectedFragmentWidget(
       {super.key,
       required this.fragment,
-      required this.book,
+      required this.chapters,
       required this.selectVerse});
 
   final Fragment? fragment;
-  final Book book;
+  final List<Chapter> chapters;
   final void Function(Verse verse) selectVerse;
 
   @override
@@ -130,7 +131,7 @@ class SelectedFragmentWidget extends StatelessWidget {
               ),
             if (index == 0) const SizedBox(height: 16),
             ChapterWidget(
-              chapter: book.chapters[index],
+              chapter: chapters[index],
               fragment: fragment,
               selectVerse: (verse) => selectVerse(verse),
             ),
@@ -138,7 +139,7 @@ class SelectedFragmentWidget extends StatelessWidget {
         );
       },
       separatorBuilder: (_, __) => const SizedBox(height: 16),
-      itemCount: book.chapters.length,
+      itemCount: chapters.length,
     );
   }
 }

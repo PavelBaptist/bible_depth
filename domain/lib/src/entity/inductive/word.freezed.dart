@@ -17,6 +17,7 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$Word {
   int get id => throw _privateConstructorUsedError;
+  Verse get verse => throw _privateConstructorUsedError;
   String get value => throw _privateConstructorUsedError;
 
   /// Create a copy of Word
@@ -30,7 +31,9 @@ abstract class $WordCopyWith<$Res> {
   factory $WordCopyWith(Word value, $Res Function(Word) then) =
       _$WordCopyWithImpl<$Res, Word>;
   @useResult
-  $Res call({int id, String value});
+  $Res call({int id, Verse verse, String value});
+
+  $VerseCopyWith<$Res> get verse;
 }
 
 /// @nodoc
@@ -49,6 +52,7 @@ class _$WordCopyWithImpl<$Res, $Val extends Word>
   @override
   $Res call({
     Object? id = null,
+    Object? verse = null,
     Object? value = null,
   }) {
     return _then(_value.copyWith(
@@ -56,11 +60,25 @@ class _$WordCopyWithImpl<$Res, $Val extends Word>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int,
+      verse: null == verse
+          ? _value.verse
+          : verse // ignore: cast_nullable_to_non_nullable
+              as Verse,
       value: null == value
           ? _value.value
           : value // ignore: cast_nullable_to_non_nullable
               as String,
     ) as $Val);
+  }
+
+  /// Create a copy of Word
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $VerseCopyWith<$Res> get verse {
+    return $VerseCopyWith<$Res>(_value.verse, (value) {
+      return _then(_value.copyWith(verse: value) as $Val);
+    });
   }
 }
 
@@ -71,7 +89,10 @@ abstract class _$$wordImplCopyWith<$Res> implements $WordCopyWith<$Res> {
       __$$wordImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int id, String value});
+  $Res call({int id, Verse verse, String value});
+
+  @override
+  $VerseCopyWith<$Res> get verse;
 }
 
 /// @nodoc
@@ -87,6 +108,7 @@ class __$$wordImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = null,
+    Object? verse = null,
     Object? value = null,
   }) {
     return _then(_$wordImpl(
@@ -94,6 +116,10 @@ class __$$wordImplCopyWithImpl<$Res>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int,
+      verse: null == verse
+          ? _value.verse
+          : verse // ignore: cast_nullable_to_non_nullable
+              as Verse,
       value: null == value
           ? _value.value
           : value // ignore: cast_nullable_to_non_nullable
@@ -105,18 +131,21 @@ class __$$wordImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$wordImpl implements _word {
-  const _$wordImpl({this.id = 0, this.value = ''});
+  const _$wordImpl({this.id = 0, this.verse = const Verse(), this.value = ''});
 
   @override
   @JsonKey()
   final int id;
   @override
   @JsonKey()
+  final Verse verse;
+  @override
+  @JsonKey()
   final String value;
 
   @override
   String toString() {
-    return 'Word(id: $id, value: $value)';
+    return 'Word(id: $id, verse: $verse, value: $value)';
   }
 
   @override
@@ -125,11 +154,12 @@ class _$wordImpl implements _word {
         (other.runtimeType == runtimeType &&
             other is _$wordImpl &&
             (identical(other.id, id) || other.id == id) &&
+            (identical(other.verse, verse) || other.verse == verse) &&
             (identical(other.value, value) || other.value == value));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, id, value);
+  int get hashCode => Object.hash(runtimeType, id, verse, value);
 
   /// Create a copy of Word
   /// with the given fields replaced by the non-null parameter values.
@@ -141,10 +171,13 @@ class _$wordImpl implements _word {
 }
 
 abstract class _word implements Word {
-  const factory _word({final int id, final String value}) = _$wordImpl;
+  const factory _word({final int id, final Verse verse, final String value}) =
+      _$wordImpl;
 
   @override
   int get id;
+  @override
+  Verse get verse;
   @override
   String get value;
 

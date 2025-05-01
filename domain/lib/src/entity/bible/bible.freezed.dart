@@ -17,9 +17,10 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$Book {
   int get id => throw _privateConstructorUsedError;
+  int get bookId => throw _privateConstructorUsedError;
+  String get translate => throw _privateConstructorUsedError;
   String get bookName => throw _privateConstructorUsedError;
   String get shortName => throw _privateConstructorUsedError;
-  List<Chapter> get chapters => throw _privateConstructorUsedError;
 
   /// Create a copy of Book
   /// with the given fields replaced by the non-null parameter values.
@@ -33,7 +34,11 @@ abstract class $BookCopyWith<$Res> {
       _$BookCopyWithImpl<$Res, Book>;
   @useResult
   $Res call(
-      {int id, String bookName, String shortName, List<Chapter> chapters});
+      {int id,
+      int bookId,
+      String translate,
+      String bookName,
+      String shortName});
 }
 
 /// @nodoc
@@ -52,15 +57,24 @@ class _$BookCopyWithImpl<$Res, $Val extends Book>
   @override
   $Res call({
     Object? id = null,
+    Object? bookId = null,
+    Object? translate = null,
     Object? bookName = null,
     Object? shortName = null,
-    Object? chapters = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int,
+      bookId: null == bookId
+          ? _value.bookId
+          : bookId // ignore: cast_nullable_to_non_nullable
+              as int,
+      translate: null == translate
+          ? _value.translate
+          : translate // ignore: cast_nullable_to_non_nullable
+              as String,
       bookName: null == bookName
           ? _value.bookName
           : bookName // ignore: cast_nullable_to_non_nullable
@@ -69,10 +83,6 @@ class _$BookCopyWithImpl<$Res, $Val extends Book>
           ? _value.shortName
           : shortName // ignore: cast_nullable_to_non_nullable
               as String,
-      chapters: null == chapters
-          ? _value.chapters
-          : chapters // ignore: cast_nullable_to_non_nullable
-              as List<Chapter>,
     ) as $Val);
   }
 }
@@ -85,7 +95,11 @@ abstract class _$$BookImplCopyWith<$Res> implements $BookCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {int id, String bookName, String shortName, List<Chapter> chapters});
+      {int id,
+      int bookId,
+      String translate,
+      String bookName,
+      String shortName});
 }
 
 /// @nodoc
@@ -101,15 +115,24 @@ class __$$BookImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = null,
+    Object? bookId = null,
+    Object? translate = null,
     Object? bookName = null,
     Object? shortName = null,
-    Object? chapters = null,
   }) {
     return _then(_$BookImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int,
+      bookId: null == bookId
+          ? _value.bookId
+          : bookId // ignore: cast_nullable_to_non_nullable
+              as int,
+      translate: null == translate
+          ? _value.translate
+          : translate // ignore: cast_nullable_to_non_nullable
+              as String,
       bookName: null == bookName
           ? _value.bookName
           : bookName // ignore: cast_nullable_to_non_nullable
@@ -118,10 +141,6 @@ class __$$BookImplCopyWithImpl<$Res>
           ? _value.shortName
           : shortName // ignore: cast_nullable_to_non_nullable
               as String,
-      chapters: null == chapters
-          ? _value._chapters
-          : chapters // ignore: cast_nullable_to_non_nullable
-              as List<Chapter>,
     ));
   }
 }
@@ -131,32 +150,30 @@ class __$$BookImplCopyWithImpl<$Res>
 class _$BookImpl implements _Book {
   const _$BookImpl(
       {this.id = 0,
+      this.bookId = 0,
+      this.translate = '',
       this.bookName = '',
-      this.shortName = '',
-      final List<Chapter> chapters = const []})
-      : _chapters = chapters;
+      this.shortName = ''});
 
   @override
   @JsonKey()
   final int id;
   @override
   @JsonKey()
+  final int bookId;
+  @override
+  @JsonKey()
+  final String translate;
+  @override
+  @JsonKey()
   final String bookName;
   @override
   @JsonKey()
   final String shortName;
-  final List<Chapter> _chapters;
-  @override
-  @JsonKey()
-  List<Chapter> get chapters {
-    if (_chapters is EqualUnmodifiableListView) return _chapters;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_chapters);
-  }
 
   @override
   String toString() {
-    return 'Book(id: $id, bookName: $bookName, shortName: $shortName, chapters: $chapters)';
+    return 'Book(id: $id, bookId: $bookId, translate: $translate, bookName: $bookName, shortName: $shortName)';
   }
 
   @override
@@ -165,16 +182,18 @@ class _$BookImpl implements _Book {
         (other.runtimeType == runtimeType &&
             other is _$BookImpl &&
             (identical(other.id, id) || other.id == id) &&
+            (identical(other.bookId, bookId) || other.bookId == bookId) &&
+            (identical(other.translate, translate) ||
+                other.translate == translate) &&
             (identical(other.bookName, bookName) ||
                 other.bookName == bookName) &&
             (identical(other.shortName, shortName) ||
-                other.shortName == shortName) &&
-            const DeepCollectionEquality().equals(other._chapters, _chapters));
+                other.shortName == shortName));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, id, bookName, shortName,
-      const DeepCollectionEquality().hash(_chapters));
+  int get hashCode =>
+      Object.hash(runtimeType, id, bookId, translate, bookName, shortName);
 
   /// Create a copy of Book
   /// with the given fields replaced by the non-null parameter values.
@@ -188,18 +207,21 @@ class _$BookImpl implements _Book {
 abstract class _Book implements Book {
   const factory _Book(
       {final int id,
+      final int bookId,
+      final String translate,
       final String bookName,
-      final String shortName,
-      final List<Chapter> chapters}) = _$BookImpl;
+      final String shortName}) = _$BookImpl;
 
   @override
   int get id;
   @override
+  int get bookId;
+  @override
+  String get translate;
+  @override
   String get bookName;
   @override
   String get shortName;
-  @override
-  List<Chapter> get chapters;
 
   /// Create a copy of Book
   /// with the given fields replaced by the non-null parameter values.
@@ -213,6 +235,7 @@ abstract class _Book implements Book {
 mixin _$Chapter {
   int get id => throw _privateConstructorUsedError;
   int get bookId => throw _privateConstructorUsedError;
+  int get chAapterId => throw _privateConstructorUsedError;
   List<Verse> get verses => throw _privateConstructorUsedError;
 
   /// Create a copy of Chapter
@@ -226,7 +249,7 @@ abstract class $ChapterCopyWith<$Res> {
   factory $ChapterCopyWith(Chapter value, $Res Function(Chapter) then) =
       _$ChapterCopyWithImpl<$Res, Chapter>;
   @useResult
-  $Res call({int id, int bookId, List<Verse> verses});
+  $Res call({int id, int bookId, int chAapterId, List<Verse> verses});
 }
 
 /// @nodoc
@@ -246,6 +269,7 @@ class _$ChapterCopyWithImpl<$Res, $Val extends Chapter>
   $Res call({
     Object? id = null,
     Object? bookId = null,
+    Object? chAapterId = null,
     Object? verses = null,
   }) {
     return _then(_value.copyWith(
@@ -256,6 +280,10 @@ class _$ChapterCopyWithImpl<$Res, $Val extends Chapter>
       bookId: null == bookId
           ? _value.bookId
           : bookId // ignore: cast_nullable_to_non_nullable
+              as int,
+      chAapterId: null == chAapterId
+          ? _value.chAapterId
+          : chAapterId // ignore: cast_nullable_to_non_nullable
               as int,
       verses: null == verses
           ? _value.verses
@@ -272,7 +300,7 @@ abstract class _$$ChapterImplCopyWith<$Res> implements $ChapterCopyWith<$Res> {
       __$$ChapterImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int id, int bookId, List<Verse> verses});
+  $Res call({int id, int bookId, int chAapterId, List<Verse> verses});
 }
 
 /// @nodoc
@@ -290,6 +318,7 @@ class __$$ChapterImplCopyWithImpl<$Res>
   $Res call({
     Object? id = null,
     Object? bookId = null,
+    Object? chAapterId = null,
     Object? verses = null,
   }) {
     return _then(_$ChapterImpl(
@@ -300,6 +329,10 @@ class __$$ChapterImplCopyWithImpl<$Res>
       bookId: null == bookId
           ? _value.bookId
           : bookId // ignore: cast_nullable_to_non_nullable
+              as int,
+      chAapterId: null == chAapterId
+          ? _value.chAapterId
+          : chAapterId // ignore: cast_nullable_to_non_nullable
               as int,
       verses: null == verses
           ? _value._verses
@@ -313,7 +346,10 @@ class __$$ChapterImplCopyWithImpl<$Res>
 
 class _$ChapterImpl implements _Chapter {
   const _$ChapterImpl(
-      {this.id = 0, this.bookId = 0, final List<Verse> verses = const []})
+      {this.id = 0,
+      this.bookId = 0,
+      this.chAapterId = 0,
+      final List<Verse> verses = const []})
       : _verses = verses;
 
   @override
@@ -322,6 +358,9 @@ class _$ChapterImpl implements _Chapter {
   @override
   @JsonKey()
   final int bookId;
+  @override
+  @JsonKey()
+  final int chAapterId;
   final List<Verse> _verses;
   @override
   @JsonKey()
@@ -333,7 +372,7 @@ class _$ChapterImpl implements _Chapter {
 
   @override
   String toString() {
-    return 'Chapter(id: $id, bookId: $bookId, verses: $verses)';
+    return 'Chapter(id: $id, bookId: $bookId, chAapterId: $chAapterId, verses: $verses)';
   }
 
   @override
@@ -343,12 +382,14 @@ class _$ChapterImpl implements _Chapter {
             other is _$ChapterImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.bookId, bookId) || other.bookId == bookId) &&
+            (identical(other.chAapterId, chAapterId) ||
+                other.chAapterId == chAapterId) &&
             const DeepCollectionEquality().equals(other._verses, _verses));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, id, bookId, const DeepCollectionEquality().hash(_verses));
+  int get hashCode => Object.hash(runtimeType, id, bookId, chAapterId,
+      const DeepCollectionEquality().hash(_verses));
 
   /// Create a copy of Chapter
   /// with the given fields replaced by the non-null parameter values.
@@ -363,12 +404,15 @@ abstract class _Chapter implements Chapter {
   const factory _Chapter(
       {final int id,
       final int bookId,
+      final int chAapterId,
       final List<Verse> verses}) = _$ChapterImpl;
 
   @override
   int get id;
   @override
   int get bookId;
+  @override
+  int get chAapterId;
   @override
   List<Verse> get verses;
 
@@ -385,10 +429,10 @@ mixin _$Verse {
   int get id => throw _privateConstructorUsedError;
   int get number => throw _privateConstructorUsedError;
   int get bookId => throw _privateConstructorUsedError;
-  int get chapterId => throw _privateConstructorUsedError;
-  List<Word> get words => throw _privateConstructorUsedError;
-  String get text => throw _privateConstructorUsedError;
-  Fragment get fragment => throw _privateConstructorUsedError;
+  int get chapterId =>
+      throw _privateConstructorUsedError; // @Default([]) List<Word> words,
+// @Default('') String text,
+  Fragment? get fragment => throw _privateConstructorUsedError;
 
   /// Create a copy of Verse
   /// with the given fields replaced by the non-null parameter values.
@@ -402,15 +446,9 @@ abstract class $VerseCopyWith<$Res> {
       _$VerseCopyWithImpl<$Res, Verse>;
   @useResult
   $Res call(
-      {int id,
-      int number,
-      int bookId,
-      int chapterId,
-      List<Word> words,
-      String text,
-      Fragment fragment});
+      {int id, int number, int bookId, int chapterId, Fragment? fragment});
 
-  $FragmentCopyWith<$Res> get fragment;
+  $FragmentCopyWith<$Res>? get fragment;
 }
 
 /// @nodoc
@@ -432,9 +470,7 @@ class _$VerseCopyWithImpl<$Res, $Val extends Verse>
     Object? number = null,
     Object? bookId = null,
     Object? chapterId = null,
-    Object? words = null,
-    Object? text = null,
-    Object? fragment = null,
+    Object? fragment = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -453,18 +489,10 @@ class _$VerseCopyWithImpl<$Res, $Val extends Verse>
           ? _value.chapterId
           : chapterId // ignore: cast_nullable_to_non_nullable
               as int,
-      words: null == words
-          ? _value.words
-          : words // ignore: cast_nullable_to_non_nullable
-              as List<Word>,
-      text: null == text
-          ? _value.text
-          : text // ignore: cast_nullable_to_non_nullable
-              as String,
-      fragment: null == fragment
+      fragment: freezed == fragment
           ? _value.fragment
           : fragment // ignore: cast_nullable_to_non_nullable
-              as Fragment,
+              as Fragment?,
     ) as $Val);
   }
 
@@ -472,8 +500,12 @@ class _$VerseCopyWithImpl<$Res, $Val extends Verse>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $FragmentCopyWith<$Res> get fragment {
-    return $FragmentCopyWith<$Res>(_value.fragment, (value) {
+  $FragmentCopyWith<$Res>? get fragment {
+    if (_value.fragment == null) {
+      return null;
+    }
+
+    return $FragmentCopyWith<$Res>(_value.fragment!, (value) {
       return _then(_value.copyWith(fragment: value) as $Val);
     });
   }
@@ -487,16 +519,10 @@ abstract class _$$VerseImplCopyWith<$Res> implements $VerseCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {int id,
-      int number,
-      int bookId,
-      int chapterId,
-      List<Word> words,
-      String text,
-      Fragment fragment});
+      {int id, int number, int bookId, int chapterId, Fragment? fragment});
 
   @override
-  $FragmentCopyWith<$Res> get fragment;
+  $FragmentCopyWith<$Res>? get fragment;
 }
 
 /// @nodoc
@@ -516,9 +542,7 @@ class __$$VerseImplCopyWithImpl<$Res>
     Object? number = null,
     Object? bookId = null,
     Object? chapterId = null,
-    Object? words = null,
-    Object? text = null,
-    Object? fragment = null,
+    Object? fragment = freezed,
   }) {
     return _then(_$VerseImpl(
       id: null == id
@@ -537,18 +561,10 @@ class __$$VerseImplCopyWithImpl<$Res>
           ? _value.chapterId
           : chapterId // ignore: cast_nullable_to_non_nullable
               as int,
-      words: null == words
-          ? _value._words
-          : words // ignore: cast_nullable_to_non_nullable
-              as List<Word>,
-      text: null == text
-          ? _value.text
-          : text // ignore: cast_nullable_to_non_nullable
-              as String,
-      fragment: null == fragment
+      fragment: freezed == fragment
           ? _value.fragment
           : fragment // ignore: cast_nullable_to_non_nullable
-              as Fragment,
+              as Fragment?,
     ));
   }
 }
@@ -561,10 +577,7 @@ class _$VerseImpl implements _Verse {
       this.number = 0,
       this.bookId = 0,
       this.chapterId = 0,
-      final List<Word> words = const [],
-      this.text = '',
-      this.fragment = const Fragment()})
-      : _words = words;
+      this.fragment = null});
 
   @override
   @JsonKey()
@@ -578,25 +591,15 @@ class _$VerseImpl implements _Verse {
   @override
   @JsonKey()
   final int chapterId;
-  final List<Word> _words;
+// @Default([]) List<Word> words,
+// @Default('') String text,
   @override
   @JsonKey()
-  List<Word> get words {
-    if (_words is EqualUnmodifiableListView) return _words;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_words);
-  }
-
-  @override
-  @JsonKey()
-  final String text;
-  @override
-  @JsonKey()
-  final Fragment fragment;
+  final Fragment? fragment;
 
   @override
   String toString() {
-    return 'Verse(id: $id, number: $number, bookId: $bookId, chapterId: $chapterId, words: $words, text: $text, fragment: $fragment)';
+    return 'Verse(id: $id, number: $number, bookId: $bookId, chapterId: $chapterId, fragment: $fragment)';
   }
 
   @override
@@ -609,15 +612,13 @@ class _$VerseImpl implements _Verse {
             (identical(other.bookId, bookId) || other.bookId == bookId) &&
             (identical(other.chapterId, chapterId) ||
                 other.chapterId == chapterId) &&
-            const DeepCollectionEquality().equals(other._words, _words) &&
-            (identical(other.text, text) || other.text == text) &&
             (identical(other.fragment, fragment) ||
                 other.fragment == fragment));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, id, number, bookId, chapterId,
-      const DeepCollectionEquality().hash(_words), text, fragment);
+  int get hashCode =>
+      Object.hash(runtimeType, id, number, bookId, chapterId, fragment);
 
   /// Create a copy of Verse
   /// with the given fields replaced by the non-null parameter values.
@@ -634,9 +635,7 @@ abstract class _Verse implements Verse {
       final int number,
       final int bookId,
       final int chapterId,
-      final List<Word> words,
-      final String text,
-      final Fragment fragment}) = _$VerseImpl;
+      final Fragment? fragment}) = _$VerseImpl;
 
   @override
   int get id;
@@ -645,13 +644,10 @@ abstract class _Verse implements Verse {
   @override
   int get bookId;
   @override
-  int get chapterId;
+  int get chapterId; // @Default([]) List<Word> words,
+// @Default('') String text,
   @override
-  List<Word> get words;
-  @override
-  String get text;
-  @override
-  Fragment get fragment;
+  Fragment? get fragment;
 
   /// Create a copy of Verse
   /// with the given fields replaced by the non-null parameter values.

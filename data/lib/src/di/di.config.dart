@@ -52,22 +52,22 @@ extension GetItInjectableX on _i174.GetIt {
       () => serviceModule.provideStore(),
       preResolve: true,
     );
-    gh.lazySingleton<_i708.BibleLocalDataSource>(
-        () => _i708.BibleLocalDataSource());
     gh.lazySingleton<_i723.AppDatabase>(
         () => _i723.AppDatabase(gh<_i337.Store>()));
     gh.lazySingleton<_i534.AppPreferences>(
         () => _i534.AppPreferences(gh<_i460.SharedPreferences>()));
-    gh.lazySingleton<_i494.BibleRepository>(
-        () => _i454.BibleRepositoryImpl(gh<_i437.BibleLocalDataSource>()));
     gh.lazySingleton<_i574.InductiveLocalDataSource>(
         () => _i574.InductiveLocalDataSource(gh<_i437.AppDatabase>()));
+    gh.lazySingleton<_i708.BibleLocalDataSource>(
+        () => _i708.BibleLocalDataSource(gh<_i437.AppDatabase>()));
     gh.lazySingleton<_i371.StartDataSource>(
         () => _i371.StartDataSource(gh<_i437.AppPreferences>()));
     gh.lazySingleton<_i494.StartRepository>(
         () => _i587.StartRepositoryImpl(gh<_i437.StartDataSource>()));
     gh.lazySingleton<_i494.InductiveRepository>(() =>
         _i851.InductiveRepositoryImpl(gh<_i437.InductiveLocalDataSource>()));
+    gh.lazySingleton<_i494.BibleRepository>(
+        () => _i454.BibleRepositoryImpl(gh<_i437.BibleLocalDataSource>()));
     return this;
   }
 }

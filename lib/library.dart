@@ -1,5 +1,7 @@
 library path;
 
+export 'dart:async';
+
 export 'package:flutter/material.dart';
 export 'package:auto_route/auto_route.dart';
 export 'package:get_it/get_it.dart';
@@ -16,6 +18,8 @@ export 'package:bible_depth/router/routers.gr.dart';
 export 'package:flutter_bloc/flutter_bloc.dart';
 export 'package:equatable/equatable.dart';
 export 'package:injectable/injectable.dart';
+export 'package:talker_flutter/talker_flutter.dart';
+export 'package:talker_bloc_logger/talker_bloc_logger_observer.dart';
 
 export 'core/version_handler.dart';
 export 'router/routers.dart';

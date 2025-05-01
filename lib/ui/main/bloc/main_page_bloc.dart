@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:bible_depth/library.dart';
 import 'package:domain/domain.dart';
 part 'main_page_event.dart';
@@ -27,7 +25,6 @@ class MainPageBloc extends Bloc<MainPageEvent, MainPageState> {
         (stream) async {
           _subscription = stream.listen((folders) {
             add(MainPageloadEvent(folders: folders));
-            // print(folders.first);
           }, onError: (error) {});
         },
       );

@@ -43,14 +43,14 @@ class AnalysisBloc extends Bloc<AnalysisEvent, AnalysisState> {
     Word newWord = event.word.copyWith(); //применение стиля и прочего к слову
 
     //логика обновления
-    _mainService.putWord(newWord);
-    List<Verse> newText = text
-        .map((verse) => verse.copyWith(
-            words:
-                verse.words.map((e) => e == event.word ? newWord : e).toList()))
-        .toList();
+    // _mainService.putWord(newWord);
+    // List<Verse> newText = text
+    //     .map((verse) => verse.copyWith(
+    //         words:
+    //             verse.words.map((e) => e == event.word ? newWord : e).toList()))
+    //     .toList();
 
-    text = newText;
+    // text = newText;
     add(AnalysisloadEvent(verses: text));
   }
 

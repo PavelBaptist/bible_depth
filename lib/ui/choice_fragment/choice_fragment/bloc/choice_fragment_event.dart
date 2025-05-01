@@ -3,6 +3,12 @@ part of 'choice_fragment_bloc.dart';
 @immutable
 sealed class ChoiceFragmentEvent extends Equatable {}
 
+final class ChoiceFragmentInit extends ChoiceFragmentEvent {
+  ChoiceFragmentInit();
+  @override
+  List<Object?> get props => [];
+}
+
 final class ChoiceFragmentSelectVerse extends ChoiceFragmentEvent {
   final Verse verse;
   ChoiceFragmentSelectVerse({required this.verse});

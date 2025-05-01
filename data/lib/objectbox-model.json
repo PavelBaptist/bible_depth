@@ -86,11 +86,6 @@
           "type": 6
         },
         {
-          "id": "4:9102258010613119613",
-          "name": "text",
-          "type": 9
-        },
-        {
           "id": "5:8391278738909900399",
           "name": "number",
           "type": 6
@@ -104,17 +99,11 @@
           "relationTarget": "FragmentLocal"
         }
       ],
-      "relations": [
-        {
-          "id": "4:2306486577618217812",
-          "name": "words",
-          "targetId": "4:2968965411853438485"
-        }
-      ]
+      "relations": []
     },
     {
       "id": "4:2968965411853438485",
-      "lastPropertyId": "4:4519813948655732556",
+      "lastPropertyId": "5:5803068062754091279",
       "name": "WordLocal",
       "properties": [
         {
@@ -127,14 +116,86 @@
           "id": "2:2827609652975143762",
           "name": "value",
           "type": 9
+        },
+        {
+          "id": "5:5803068062754091279",
+          "name": "verseId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "5:1691014882085764308",
+          "relationTarget": "VerseLocal"
         }
       ],
       "relations": []
+    },
+    {
+      "id": "5:7185371223478614403",
+      "lastPropertyId": "5:8728132709671035824",
+      "name": "BookLocal",
+      "properties": [
+        {
+          "id": "1:4991224564528957844",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:1129472134480709850",
+          "name": "bookId",
+          "type": 6
+        },
+        {
+          "id": "3:8736782475556116186",
+          "name": "translate",
+          "type": 9
+        },
+        {
+          "id": "4:659185716363673351",
+          "name": "bookName",
+          "type": 9
+        },
+        {
+          "id": "5:8728132709671035824",
+          "name": "shortName",
+          "type": 9
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "6:3650286781991589145",
+      "lastPropertyId": "3:3737092396647499978",
+      "name": "ChapterLocal",
+      "properties": [
+        {
+          "id": "1:3843379987178825861",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:2996033745922202548",
+          "name": "chapterId",
+          "type": 6
+        },
+        {
+          "id": "3:3737092396647499978",
+          "name": "bookId",
+          "type": 6
+        }
+      ],
+      "relations": [
+        {
+          "id": "5:6780013490363375989",
+          "name": "verses",
+          "targetId": "3:1454267786881740801"
+        }
+      ]
     }
   ],
-  "lastEntityId": "4:2968965411853438485",
-  "lastIndexId": "4:1373592188249137506",
-  "lastRelationId": "4:2306486577618217812",
+  "lastEntityId": "6:3650286781991589145",
+  "lastIndexId": "5:1691014882085764308",
+  "lastRelationId": "5:6780013490363375989",
   "lastSequenceId": "0:0",
   "modelVersion": 5,
   "modelVersionParserMinimum": 5,
@@ -145,12 +206,14 @@
   ],
   "retiredPropertyUids": [
     3859540035582067240,
-    4519813948655732556
+    4519813948655732556,
+    9102258010613119613
   ],
   "retiredRelationUids": [
     6968967606021430674,
     903052182966308622,
-    4276822390928392685
+    4276822390928392685,
+    2306486577618217812
   ],
   "version": 1
 }

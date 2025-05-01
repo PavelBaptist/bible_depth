@@ -13,13 +13,14 @@ class WordLocal {
   @Id()
   int id;
   final String value;
+  final verse = ToOne<VerseLocal>();
   // final verse = ToOne<VerseLocal>();
 }
 
 extension WordMapper on Word {
   WordLocal toLocalWord() {
     WordLocal word = WordLocal(id: id, value: value);
-    // word.verse.target = verse.toLocalVerse();
+    word.verse.target = verse.toLocalVerse();
     return word;
   }
 }
@@ -29,7 +30,7 @@ extension LocalWordDataMapper on WordLocal {
     Word word = Word(
       id: id,
       value: value,
-      // verse: verse.target != null ? verse.target!.toVerse() : Verse(),
+      verse: verse.target != null ? verse.target!.toVerse() : Verse(),
     );
     return word;
   }

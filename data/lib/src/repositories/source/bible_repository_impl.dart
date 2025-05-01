@@ -16,10 +16,30 @@ class BibleRepositoryImpl implements BibleRepository {
   final BibleLocalDataSource _bibleLocalDataSource;
 
   @override
+  Future<Either<Failure, bool>> createBible(TranslateBible translate) async {
+    try {
+      await _bibleLocalDataSource.createBible(translate);
+      return Right(true);
+    } catch (e) {
+      return Left(Failure.serverError());
+    }
+  }
+
+  @override
   Future<Either<Failure, List<Book>>> fetchBible(
       TranslateBible translate) async {
     try {
       final response = await _bibleLocalDataSource.fetchBible(translate);
+      return Right(response);
+    } catch (e) {
+      return Left(Failure.serverError());
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<Chapter>>> getChaptersForBook(int bookId) async {
+    try {
+      final response = await _bibleLocalDataSource.getChaptersForBook(bookId);
       return Right(response);
     } catch (e) {
       return Left(Failure.serverError());

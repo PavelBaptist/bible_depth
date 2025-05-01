@@ -8,10 +8,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 @module
 abstract class ServiceModule {
   @preResolve
-  Future<SharedPreferences> get prefs => SharedPreferences.getInstance();
+  Future<SharedPreferences> get prefs async =>
+      await SharedPreferences.getInstance();
 
   @preResolve
-  Future<Store> provideStore() async => await openSharedStore();
+  Future<Store> provideStore() => openSharedStore();
 }
 
 final GetIt getIt = GetIt.instance;

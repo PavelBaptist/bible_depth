@@ -1,5 +1,4 @@
 import 'package:data/data.dart';
-import 'package:domain/domain.dart';
 import 'package:injectable/injectable.dart';
 
 @LazySingleton()
@@ -22,7 +21,7 @@ class InductiveLocalDataSource {
   //Verse
   Stream<List<VerseLocal>> fetchVerses(int fragmentId) =>
       _appDatabase.getVerse(fragmentId);
-  List<int> putVerse(List<VerseLocal> verses) => _appDatabase.putVerse(verses);
+  List<int> putVerse(List<VerseLocal> verses) => _appDatabase.putVerses(verses);
   VerseLocal? getVerseById(int id) => _appDatabase.getVerseById(id);
 
   //Word
