@@ -4,18 +4,18 @@
   "_note3": "If you have VCS merge conflicts, you must resolve them according to ObjectBox docs.",
   "entities": [
     {
-      "id": "1:8011048593561155606",
-      "lastPropertyId": "2:18929626888440079",
+      "id": "1:2354704808836906264",
+      "lastPropertyId": "2:7964111414782150076",
       "name": "FolderLocal",
       "properties": [
         {
-          "id": "1:5929135141955702599",
+          "id": "1:4142557069072229393",
           "name": "id",
           "type": 6,
           "flags": 1
         },
         {
-          "id": "2:18929626888440079",
+          "id": "2:7964111414782150076",
           "name": "name",
           "type": 9
         }
@@ -23,197 +23,129 @@
       "relations": []
     },
     {
-      "id": "2:3960909509973879731",
-      "lastPropertyId": "6:5389801780994316776",
+      "id": "2:8864542356979381165",
+      "lastPropertyId": "6:6828844625469242700",
       "name": "FragmentLocal",
       "properties": [
         {
-          "id": "1:7166941501949261613",
+          "id": "1:4966738114109466114",
           "name": "id",
           "type": 6,
           "flags": 1
         },
         {
-          "id": "2:2218065215704425944",
+          "id": "2:8164982933155899417",
           "name": "name",
           "type": 9
         },
         {
-          "id": "3:4637618593733295496",
+          "id": "3:4358123042564763919",
           "name": "description",
           "type": 9
         },
         {
-          "id": "4:1037542684261231704",
+          "id": "4:4236731623833230986",
           "name": "bookId",
           "type": 6
         },
         {
-          "id": "5:7548585482656102127",
+          "id": "5:1247646740754642045",
           "name": "bookName",
           "type": 9
         },
         {
-          "id": "6:5389801780994316776",
+          "id": "6:6828844625469242700",
           "name": "folderId",
           "type": 11,
           "flags": 520,
-          "indexId": "1:5597378087385502750",
+          "indexId": "1:6286170932481431751",
           "relationTarget": "FolderLocal"
         }
       ],
       "relations": []
     },
     {
-      "id": "3:1454267786881740801",
-      "lastPropertyId": "6:2979426491443797314",
+      "id": "3:7658541836684713826",
+      "lastPropertyId": "5:5879873086898957401",
       "name": "VerseLocal",
       "properties": [
         {
-          "id": "1:4964970067270604321",
+          "id": "1:2378728768379147097",
           "name": "id",
           "type": 6,
           "flags": 1
         },
         {
-          "id": "2:6275203807537770890",
-          "name": "bookId",
-          "type": 6
-        },
-        {
-          "id": "3:8641133270969219601",
-          "name": "chapterId",
-          "type": 6
-        },
-        {
-          "id": "5:8391278738909900399",
+          "id": "2:8053772381277776352",
           "name": "number",
           "type": 6
         },
         {
-          "id": "6:2979426491443797314",
+          "id": "3:3649448812682242186",
+          "name": "bookId",
+          "type": 6
+        },
+        {
+          "id": "4:6107660225857527849",
+          "name": "chapterId",
+          "type": 6
+        },
+        {
+          "id": "5:5879873086898957401",
           "name": "fragmentId",
           "type": 11,
           "flags": 520,
-          "indexId": "2:4074713988327459675",
+          "indexId": "2:481913656593467680",
           "relationTarget": "FragmentLocal"
         }
       ],
       "relations": []
     },
     {
-      "id": "4:2968965411853438485",
-      "lastPropertyId": "5:5803068062754091279",
+      "id": "4:3095107107054516958",
+      "lastPropertyId": "4:5332258311812615035",
       "name": "WordLocal",
       "properties": [
         {
-          "id": "1:8035096912124096853",
+          "id": "1:2023895090272783721",
           "name": "id",
           "type": 6,
           "flags": 1
         },
         {
-          "id": "2:2827609652975143762",
+          "id": "2:1466011949069712379",
           "name": "value",
           "type": 9
         },
         {
-          "id": "5:5803068062754091279",
+          "id": "3:943754159878733605",
           "name": "verseId",
           "type": 11,
           "flags": 520,
-          "indexId": "5:1691014882085764308",
+          "indexId": "3:4626927757986903153",
           "relationTarget": "VerseLocal"
+        },
+        {
+          "id": "4:5332258311812615035",
+          "name": "fragmentId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "4:3649836660616419947",
+          "relationTarget": "FragmentLocal"
         }
       ],
       "relations": []
-    },
-    {
-      "id": "5:7185371223478614403",
-      "lastPropertyId": "5:8728132709671035824",
-      "name": "BookLocal",
-      "properties": [
-        {
-          "id": "1:4991224564528957844",
-          "name": "id",
-          "type": 6,
-          "flags": 1
-        },
-        {
-          "id": "2:1129472134480709850",
-          "name": "bookId",
-          "type": 6
-        },
-        {
-          "id": "3:8736782475556116186",
-          "name": "translate",
-          "type": 9
-        },
-        {
-          "id": "4:659185716363673351",
-          "name": "bookName",
-          "type": 9
-        },
-        {
-          "id": "5:8728132709671035824",
-          "name": "shortName",
-          "type": 9
-        }
-      ],
-      "relations": []
-    },
-    {
-      "id": "6:3650286781991589145",
-      "lastPropertyId": "3:3737092396647499978",
-      "name": "ChapterLocal",
-      "properties": [
-        {
-          "id": "1:3843379987178825861",
-          "name": "id",
-          "type": 6,
-          "flags": 1
-        },
-        {
-          "id": "2:2996033745922202548",
-          "name": "chapterId",
-          "type": 6
-        },
-        {
-          "id": "3:3737092396647499978",
-          "name": "bookId",
-          "type": 6
-        }
-      ],
-      "relations": [
-        {
-          "id": "5:6780013490363375989",
-          "name": "verses",
-          "targetId": "3:1454267786881740801"
-        }
-      ]
     }
   ],
-  "lastEntityId": "6:3650286781991589145",
-  "lastIndexId": "5:1691014882085764308",
-  "lastRelationId": "5:6780013490363375989",
+  "lastEntityId": "4:3095107107054516958",
+  "lastIndexId": "4:3649836660616419947",
+  "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
   "modelVersion": 5,
   "modelVersionParserMinimum": 5,
   "retiredEntityUids": [],
-  "retiredIndexUids": [
-    4649469458336730149,
-    1373592188249137506
-  ],
-  "retiredPropertyUids": [
-    3859540035582067240,
-    4519813948655732556,
-    9102258010613119613
-  ],
-  "retiredRelationUids": [
-    6968967606021430674,
-    903052182966308622,
-    4276822390928392685,
-    2306486577618217812
-  ],
+  "retiredIndexUids": [],
+  "retiredPropertyUids": [],
+  "retiredRelationUids": [],
   "version": 1
 }

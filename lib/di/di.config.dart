@@ -28,24 +28,24 @@ extension GetItInjectableX on _i174.GetIt {
       environmentFilter,
     );
     final mainServiceModule = _$MainServiceModule();
-    gh.lazySingleton<_i641.BibleService>(() => _i641.BibleService(
-          fetchBibleUseCase: gh<_i494.FetchBibleUseCase>(),
-          putFoldersUseCase: gh<_i494.PutFoldersUseCase>(),
-          putFragmentUseCase: gh<_i494.PutFragmentUseCase>(),
-          putVerseUseCase: gh<_i494.PutVerseUseCase>(),
-          putWordUseCase: gh<_i494.PutWordUseCase>(),
-          getChaptersForBookUsecase: gh<_i494.GetChaptersForBookUsecase>(),
-          createBibleUseCase: gh<_i494.CreateBibleUseCase>(),
-        ));
     await gh.factoryAsync<_i702.MainService>(
       () => mainServiceModule.provideMainService(
         gh<_i494.FetchAllFoldersUseCase>(),
         gh<_i494.FetchFragmentsUseCase>(),
         gh<_i494.FetchVersesUseCase>(),
         gh<_i494.PutWordUseCase>(),
+        gh<_i494.FetchWordsForFragmentUseCase>(),
       ),
       preResolve: true,
     );
+    gh.lazySingleton<_i641.BibleService>(() => _i641.BibleService(
+          fetchAllBookUseCase: gh<_i494.FetchAllBookUseCase>(),
+          putFoldersUseCase: gh<_i494.PutFoldersUseCase>(),
+          putFragmentUseCase: gh<_i494.PutFragmentUseCase>(),
+          putVerseUseCase: gh<_i494.PutVerseUseCase>(),
+          putWordUseCase: gh<_i494.PutWordUseCase>(),
+          getChaptersForBookUsecase: gh<_i494.GetChaptersForBookUsecase>(),
+        ));
     gh.lazySingleton<_i562.StartService>(() => _i562.StartService(
           hideOnboardingUseCase: gh<_i494.HideOnboardingUseCase>(),
           fetchIsShowOnboardingUseCase:

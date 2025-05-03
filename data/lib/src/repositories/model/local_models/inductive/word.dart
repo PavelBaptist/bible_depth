@@ -14,13 +14,14 @@ class WordLocal {
   int id;
   final String value;
   final verse = ToOne<VerseLocal>();
-  // final verse = ToOne<VerseLocal>();
+  final fragment = ToOne<FragmentLocal>();
 }
 
 extension WordMapper on Word {
   WordLocal toLocalWord() {
     WordLocal word = WordLocal(id: id, value: value);
     word.verse.target = verse.toLocalVerse();
+    word.fragment.target = fragment.toLocalFragment();
     return word;
   }
 }
@@ -31,6 +32,8 @@ extension LocalWordDataMapper on WordLocal {
       id: id,
       value: value,
       verse: verse.target != null ? verse.target!.toVerse() : Verse(),
+      fragment:
+          fragment.target != null ? fragment.target!.toFragment() : Fragment(),
     );
     return word;
   }

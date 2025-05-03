@@ -25,6 +25,7 @@ class _LightModeColors {
   // Text colors
   final Color textWhite = Color(0xFFFFFFFF);
   final Color textPrimary = Color(0xFF000000);
+  final Color textGrey = Color(0xFF4e4d4d);
 }
 
 class _DarkModeColors {
@@ -42,4 +43,5 @@ class _DarkModeColors {
   // Text colors
   final Color textWhite = Color(0xFFFFFFFF);
   final Color textPrimary = Color(0xFF000000);
+  final Color textGrey = Color(0xFF4e4d4d);
 }

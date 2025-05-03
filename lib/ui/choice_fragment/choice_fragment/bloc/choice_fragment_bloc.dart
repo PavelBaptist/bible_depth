@@ -23,7 +23,7 @@ class ChoiceFragmentBloc
       ChoiceFragmentInit event, Emitter<ChoiceFragmentState> emit) async {
     _bibleService = GetIt.instance.get<BibleService>();
 
-    await _bibleService.getChaptersForBook(book.bookId).then((either) async {
+    await _bibleService.getChaptersForBook(book.id).then((either) async {
       either.fold(
         (l) {
           GetIt.I<Talker>().handle(l);
@@ -91,8 +91,8 @@ class ChoiceFragmentBloc
     final successOrFailure = _bibleService.putFolder(Folder(name: event.name));
     successOrFailure.fold(
       (l) {},
-      (r) {
-        putFragment(r);
+      (r) async {
+        await putFragment(r);
       },
     );
   }
@@ -100,11 +100,11 @@ class ChoiceFragmentBloc
   Future<void> _createNewFragment(
       CreateNewFragment event, Emitter<ChoiceFragmentState> emit) async {
     _bibleService = GetIt.instance.get<BibleService>();
-    putFragment(event.folder);
+    await putFragment(event.folder);
   }
 
-  void putFragment(Folder folder) {
-    _bibleService.putFragment(
+  Future<void> putFragment(Folder folder) async {
+    await _bibleService.putFragment(
       fragment!.copyWith(
         bookId: book.id,
         folder: folder,

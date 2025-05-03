@@ -25,6 +25,8 @@ class InductiveLocalDataSource {
   VerseLocal? getVerseById(int id) => _appDatabase.getVerseById(id);
 
   //Word
-  Stream<List<WordLocal>> fetchAllWords() => _appDatabase.getWords();
+  Stream<List<WordLocal>> fetchAllWords(int fragmentId) =>
+      _appDatabase.watchWordsForFragment(fragmentId);
   int putWord(WordLocal word) => _appDatabase.putWord(word);
+  List<int> putWords(List<WordLocal> words) => _appDatabase.putWords(words);
 }

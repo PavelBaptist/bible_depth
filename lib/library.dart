@@ -54,3 +54,5 @@ export 'ui/fragments/bloc/fragment_bloc.dart';
 //analysis
 export 'ui/analysis/analysis_page.dart';
 export 'ui/analysis/bloc/analysis_bloc.dart';
+export 'ui/analysis/widgets/word_widget.dart';
+export 'ui/analysis/widgets/verses_list_widget.dart';

@@ -9,10 +9,10 @@ final class AnalysisLoading extends AnalysisState {
 }
 
 final class AnalysisLoaded extends AnalysisState {
-  final List<Verse> verses;
+  final List<Word> words;
 
-  AnalysisLoaded({required this.verses});
+  AnalysisLoaded({required this.words});
 
   @override
-  List<Object?> get props => [verses];
+  List<Object?> get props => [words];
 }

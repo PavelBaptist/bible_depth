@@ -1,10 +1,13 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:data/data.dart';
 import 'package:domain/domain.dart';
+import 'package:flutter/services.dart';
 import 'package:injectable/injectable.dart';
 
 import 'package:dartz/dartz.dart';
+import 'package:shared/shared.dart';
 
 @LazySingleton(as: InductiveRepository)
 class InductiveRepositoryImpl implements InductiveRepository {
@@ -57,8 +60,8 @@ class InductiveRepositoryImpl implements InductiveRepository {
   }
 
   @override
-  Either<Failure, Stream<List<Word>>> fetchAllWords() {
-    final response = _inductiveLocalDataSource.fetchAllWords();
+  Either<Failure, Stream<List<Word>>> fetchWordsForFragment(int fragmentId) {
+    final response = _inductiveLocalDataSource.fetchAllWords(fragmentId);
     Stream<List<Word>> convertStream = response.map((wordLocalList) {
       return wordLocalList.map((wordLocal) => wordLocal.toWord()).toList();
     });
@@ -66,7 +69,7 @@ class InductiveRepositoryImpl implements InductiveRepository {
   }
 
   @override
-  Either<Failure, bool> putFragments(Fragment fragment) {
+  Future<Either<Failure, bool>> putFragments(Fragment fragment) async {
     int idFragment =
         _inductiveLocalDataSource.putFragment(fragment.toLocalFragment());
     FragmentLocal? newFragment =
@@ -74,22 +77,31 @@ class InductiveRepositoryImpl implements InductiveRepository {
     if (newFragment == null) {
       return left(ServerError());
     }
-    _inductiveLocalDataSource.putVerse(fragment.text
+    List<int> idVerses = _inductiveLocalDataSource.putVerse(fragment.text
         .map((e) =>
             e.copyWith(fragment: newFragment.toFragment()).toLocalVerse())
         .toList());
-    // List<int> idVerses = _inductiveLocalDataSource.putVerse(fragment.text
-    //     .map((verse) => verse.copyWith(
-    //         words: [], fragment: newFragment.toFragment()).toLocalVerse())
-    //     .toList());
-    // for (int i = 0; i < idVerses.length; i++) {
-    //   VerseLocal? newVerse =
-    //       _inductiveLocalDataSource.getVerseById(idVerses[i]);
-    //   _inductiveLocalDataSource.putWord(fragment.text[i].words
-    //       .map(
-    //           (word) => word.copyWith(verse: newVerse!.toVerse()).toLocalWord())
-    //       .toList());
-    // }
+
+    final input = await rootBundle.loadString(TranslateBible.rst.path);
+    final json = jsonDecode(input);
+    int bookId = fragment.text.first.bookId;
+
+    for (int i = 0; i < idVerses.length; i++) {
+      Verse verse = fragment.text[i];
+
+      final resultVerses = ((json['books'] as List)[bookId - 1]['chapters']
+          [verse.chapterId - 1]['verses'] as List);
+
+      final resultWords = resultVerses[verse.number - 1]['text'] as String;
+      _inductiveLocalDataSource.putWords(
+        resultWords.split(' ').map((e) {
+          WordLocal word = WordLocal(value: e);
+          word.fragment.target = newFragment;
+          word.verse.target = verse.copyWith(id: idVerses[i]).toLocalVerse();
+          return word;
+        }).toList(),
+      );
+    }
     return right(true);
   }
 

@@ -13,6 +13,7 @@ shadowAppBar: #64748B
 # Text colors
 textWhite: #FFFFFF
 textPrimary: #000000
+textGrey: #4e4d4d
 
 
 [DarkModeColors]
@@ -30,3 +31,4 @@ shadowAppBar: #64748B
 # Text colors
 textWhite: #FFFFFF
 textPrimary: #000000
+textGrey: #4e4d4d

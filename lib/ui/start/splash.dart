@@ -125,8 +125,6 @@ class _SplashScreenState extends State<SplashScreen>
     final isShowOnboarding = await startService.isShowOnboarding;
     if (isShowOnboarding) {
       await Future.delayed(const Duration(milliseconds: 800));
-      final bible = GetIt.instance.get<BibleService>();
-      await bible.createBible();
       _controller.forward();
     } else {
       if (mounted) {

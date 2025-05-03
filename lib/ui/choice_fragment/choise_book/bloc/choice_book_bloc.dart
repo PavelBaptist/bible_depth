@@ -15,7 +15,7 @@ class ChoiceBookBloc extends Bloc<ChoiceBookEvent, ChoiceBookState> {
       ChoiceBookInitEvent event, Emitter<ChoiceBookState> emit) async {
     _bibleService = GetIt.instance.get<BibleService>();
 
-    await _bibleService.getBible().then((either) async {
+    await _bibleService.getAllBook().then((either) async {
       either.fold(
         (l) {
           GetIt.I<Talker>().handle(l);

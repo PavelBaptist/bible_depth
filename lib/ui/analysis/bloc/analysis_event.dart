@@ -9,12 +9,12 @@ final class AnalysisInitEvent extends AnalysisEvent {
 }
 
 final class AnalysisloadEvent extends AnalysisEvent {
-  final List<Verse> verses;
+  final List<Word> words;
 
-  AnalysisloadEvent({required this.verses});
+  AnalysisloadEvent({required this.words});
 
   @override
-  List<Object?> get props => [verses];
+  List<Object?> get props => [words];
 }
 
 final class AddStyleWordEvent extends AnalysisEvent {

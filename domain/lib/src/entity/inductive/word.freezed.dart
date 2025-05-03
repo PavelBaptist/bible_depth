@@ -18,6 +18,7 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$Word {
   int get id => throw _privateConstructorUsedError;
   Verse get verse => throw _privateConstructorUsedError;
+  Fragment get fragment => throw _privateConstructorUsedError;
   String get value => throw _privateConstructorUsedError;
 
   /// Create a copy of Word
@@ -31,9 +32,10 @@ abstract class $WordCopyWith<$Res> {
   factory $WordCopyWith(Word value, $Res Function(Word) then) =
       _$WordCopyWithImpl<$Res, Word>;
   @useResult
-  $Res call({int id, Verse verse, String value});
+  $Res call({int id, Verse verse, Fragment fragment, String value});
 
   $VerseCopyWith<$Res> get verse;
+  $FragmentCopyWith<$Res> get fragment;
 }
 
 /// @nodoc
@@ -53,6 +55,7 @@ class _$WordCopyWithImpl<$Res, $Val extends Word>
   $Res call({
     Object? id = null,
     Object? verse = null,
+    Object? fragment = null,
     Object? value = null,
   }) {
     return _then(_value.copyWith(
@@ -64,6 +67,10 @@ class _$WordCopyWithImpl<$Res, $Val extends Word>
           ? _value.verse
           : verse // ignore: cast_nullable_to_non_nullable
               as Verse,
+      fragment: null == fragment
+          ? _value.fragment
+          : fragment // ignore: cast_nullable_to_non_nullable
+              as Fragment,
       value: null == value
           ? _value.value
           : value // ignore: cast_nullable_to_non_nullable
@@ -80,6 +87,16 @@ class _$WordCopyWithImpl<$Res, $Val extends Word>
       return _then(_value.copyWith(verse: value) as $Val);
     });
   }
+
+  /// Create a copy of Word
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $FragmentCopyWith<$Res> get fragment {
+    return $FragmentCopyWith<$Res>(_value.fragment, (value) {
+      return _then(_value.copyWith(fragment: value) as $Val);
+    });
+  }
 }
 
 /// @nodoc
@@ -89,10 +106,12 @@ abstract class _$$wordImplCopyWith<$Res> implements $WordCopyWith<$Res> {
       __$$wordImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int id, Verse verse, String value});
+  $Res call({int id, Verse verse, Fragment fragment, String value});
 
   @override
   $VerseCopyWith<$Res> get verse;
+  @override
+  $FragmentCopyWith<$Res> get fragment;
 }
 
 /// @nodoc
@@ -109,6 +128,7 @@ class __$$wordImplCopyWithImpl<$Res>
   $Res call({
     Object? id = null,
     Object? verse = null,
+    Object? fragment = null,
     Object? value = null,
   }) {
     return _then(_$wordImpl(
@@ -120,6 +140,10 @@ class __$$wordImplCopyWithImpl<$Res>
           ? _value.verse
           : verse // ignore: cast_nullable_to_non_nullable
               as Verse,
+      fragment: null == fragment
+          ? _value.fragment
+          : fragment // ignore: cast_nullable_to_non_nullable
+              as Fragment,
       value: null == value
           ? _value.value
           : value // ignore: cast_nullable_to_non_nullable
@@ -131,7 +155,11 @@ class __$$wordImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$wordImpl implements _word {
-  const _$wordImpl({this.id = 0, this.verse = const Verse(), this.value = ''});
+  const _$wordImpl(
+      {this.id = 0,
+      this.verse = const Verse(),
+      this.fragment = const Fragment(),
+      this.value = ''});
 
   @override
   @JsonKey()
@@ -141,11 +169,14 @@ class _$wordImpl implements _word {
   final Verse verse;
   @override
   @JsonKey()
+  final Fragment fragment;
+  @override
+  @JsonKey()
   final String value;
 
   @override
   String toString() {
-    return 'Word(id: $id, verse: $verse, value: $value)';
+    return 'Word(id: $id, verse: $verse, fragment: $fragment, value: $value)';
   }
 
   @override
@@ -155,11 +186,13 @@ class _$wordImpl implements _word {
             other is _$wordImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.verse, verse) || other.verse == verse) &&
+            (identical(other.fragment, fragment) ||
+                other.fragment == fragment) &&
             (identical(other.value, value) || other.value == value));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, id, verse, value);
+  int get hashCode => Object.hash(runtimeType, id, verse, fragment, value);
 
   /// Create a copy of Word
   /// with the given fields replaced by the non-null parameter values.
@@ -171,13 +204,18 @@ class _$wordImpl implements _word {
 }
 
 abstract class _word implements Word {
-  const factory _word({final int id, final Verse verse, final String value}) =
-      _$wordImpl;
+  const factory _word(
+      {final int id,
+      final Verse verse,
+      final Fragment fragment,
+      final String value}) = _$wordImpl;
 
   @override
   int get id;
   @override
   Verse get verse;
+  @override
+  Fragment get fragment;
   @override
   String get value;
 

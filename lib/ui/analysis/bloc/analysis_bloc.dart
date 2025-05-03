@@ -15,23 +15,22 @@ class AnalysisBloc extends Bloc<AnalysisEvent, AnalysisState> {
   final int idFragment;
   late MainService _mainService;
   StreamSubscription? _subscription;
-  List<Verse> text = [];
+  List<Word> text = [];
 
   Future<void> _init(
       AnalysisInitEvent event, Emitter<AnalysisState> emit) async {
     _mainService = GetIt.instance.get<MainService>();
     _subscription?.cancel();
 
-    await Future.delayed(const Duration(seconds: 1));
+    // await Future.delayed(const Duration(milliseconds: 100));
 
-    await _mainService.fetchVerses(idFragment).then((either) async {
+    await _mainService.fetchWordsForFragment(idFragment).then((either) async {
       await either.fold(
         (failure) {},
         (stream) async {
-          _subscription = stream.listen((verses) {
-            text = verses;
-            add(AnalysisloadEvent(verses: verses));
-            _subscription?.cancel();
+          _subscription = stream.listen((words) {
+            text = words;
+            add(AnalysisloadEvent(words: words));
           }, onError: (error) {});
         },
       );
@@ -40,24 +39,18 @@ class AnalysisBloc extends Bloc<AnalysisEvent, AnalysisState> {
 
   Future<void> _addStyle(
       AddStyleWordEvent event, Emitter<AnalysisState> emit) async {
-    Word newWord = event.word.copyWith(); //применение стиля и прочего к слову
-
-    //логика обновления
-    // _mainService.putWord(newWord);
-    // List<Verse> newText = text
-    //     .map((verse) => verse.copyWith(
-    //         words:
-    //             verse.words.map((e) => e == event.word ? newWord : e).toList()))
-    //     .toList();
-
-    // text = newText;
-    add(AnalysisloadEvent(verses: text));
+    // if (event.word.value.contains('!')) {
+    //   _mainService.putWord(event.word.copyWith(
+    //       value: event.word.value.substring(0, event.word.value.length - 1)));
+    // } else {
+    //   _mainService.putWord(event.word.copyWith(value: '${event.word.value}!'));
+    // }
   }
 
   Future<void> _page(
       AnalysisloadEvent event, Emitter<AnalysisState> emit) async {
     emit(AnalysisLoaded(
-      verses: event.verses,
+      words: event.words,
     ));
   }
 

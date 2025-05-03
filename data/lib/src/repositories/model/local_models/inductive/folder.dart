@@ -32,7 +32,6 @@ extension LocalFolderDataMapper on FolderLocal {
     return Folder(
       id: id,
       name: name,
-      // fragments: fragments.map((e) => e.toFragment()).toList(),
     );
   }
 }

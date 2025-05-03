@@ -7,7 +7,6 @@ part 'bible.freezed.dart';
 class Book with _$Book {
   const factory Book({
     @Default(0) int id,
-    @Default(0) int bookId,
     @Default('') String translate,
     @Default('') String bookName,
     @Default('') String shortName,
@@ -19,7 +18,6 @@ class Chapter with _$Chapter {
   const factory Chapter({
     @Default(0) int id,
     @Default(0) int bookId,
-    @Default(0) int chAapterId,
     @Default([]) List<Verse> verses,
   }) = _Chapter;
 }

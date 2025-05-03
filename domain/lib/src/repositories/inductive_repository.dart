@@ -6,11 +6,11 @@ abstract class InductiveRepository {
   Either<Failure, Folder> putFolders(Folder folder);
 
   Either<Failure, Stream<List<Fragment>>> fetchFragments(int folderId);
-  Either<Failure, bool> putFragments(Fragment fragment);
+  Future<Either<Failure, bool>> putFragments(Fragment fragment);
 
   Either<Failure, Stream<List<Verse>>> fetchAllVerses(int fragmentId);
   Either<Failure, bool> putVerse(List<Verse> verses);
 
-  Either<Failure, Stream<List<Word>>> fetchAllWords();
+  Either<Failure, Stream<List<Word>>> fetchWordsForFragment(int fragmentId);
   Either<Failure, bool> putWord(Word words);
 }

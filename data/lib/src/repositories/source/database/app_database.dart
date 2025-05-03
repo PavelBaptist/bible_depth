@@ -8,32 +8,6 @@ class AppDatabase {
 
   final Store store;
 
-  ///Book
-  int putBook(BookLocal book) {
-    return store.box<BookLocal>().put(book);
-  }
-
-  BookLocal? getBookById(int id) {
-    return store.box<BookLocal>().get(id);
-  }
-
-  List<BookLocal> getBooks() {
-    return store.box<BookLocal>().getAll();
-  }
-
-  ///Chapter
-  int putChapter(ChapterLocal chapter) {
-    return store.box<ChapterLocal>().put(chapter);
-  }
-
-  List<ChapterLocal> getChaptersForBook(int bookId) {
-    return store
-        .box<ChapterLocal>()
-        .query(ChapterLocal_.bookId.equals(bookId))
-        .build()
-        .find();
-  }
-
   ///Folder
   int putFolder(FolderLocal folder) {
     return store.box<FolderLocal>().put(folder);
@@ -77,14 +51,6 @@ class AppDatabase {
     return store.box<VerseLocal>().get(id);
   }
 
-  // List<VerseLocal> getVerseForBook(int bookId) {
-  //   return store
-  //       .box<VerseLocal>()
-  //       .query(VerseLocal_.bookId.equals(bookId))
-  //       .build()
-  //       .find();
-  // }
-
   Stream<List<VerseLocal>> getVerse(int fragmentId) {
     final builder =
         store.box<VerseLocal>().query(VerseLocal_.fragment.equals(fragmentId));
@@ -96,8 +62,16 @@ class AppDatabase {
     return store.box<WordLocal>().put(word);
   }
 
-  Stream<List<WordLocal>> getWords() {
-    final builder = store.box<WordLocal>().query();
-    return builder.watch(triggerImmediately: true).map((query) => query.find());
+  List<int> putWords(List<WordLocal> words) {
+    return store.box<WordLocal>().putMany(words);
+  }
+
+  Stream<List<WordLocal>> watchWordsForFragment(int fragmentId) {
+    final box = store.box<WordLocal>();
+
+    return box
+        .query(WordLocal_.fragment.equals(fragmentId))
+        .watch(triggerImmediately: true)
+        .map((query) => query.find());
   }
 }

@@ -3,7 +3,7 @@ import 'package:bible_depth/library.dart';
 void main() async {
   final talker = TalkerFlutter.init();
   GetIt.I.registerSingleton<Talker>(talker);
-  // Bloc.observer = TalkerBlocObserver(talker: talker);
+  Bloc.observer = TalkerBlocObserver(talker: talker);
   runZonedGuarded(
     _runMyApp,
     (error, stack) => GetIt.I<Talker>().handle(error, stack),

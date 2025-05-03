@@ -1,6 +1,6 @@
-import 'package:data/data.dart';
 import 'package:data/objectbox.g.dart';
-import 'package:data/src/di/di.config.dart';
+import 'package:data/src/local/objectbox_store_provider.dart';
+import 'di.config.dart';
 import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
 import 'package:shared_preferences/shared_preferences.dart';

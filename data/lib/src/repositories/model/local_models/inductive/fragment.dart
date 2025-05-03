@@ -32,7 +32,6 @@ extension FragmentMapper on Fragment {
       bookId: bookId,
       bookName: bookName,
     );
-    // fragment.text.addAll(text.map((e) => e.toLocalVerse()).toList());
     fragment.folder.target = folder.toLocalFolder();
     return fragment;
   }
@@ -43,7 +42,6 @@ extension LocalFragmentDataMapper on FragmentLocal {
     return Fragment(
       id: id,
       name: name,
-      // text: text.map((e) => e.toVerse()).toList(),
       description: description,
       bookId: bookId,
       bookName: bookName,
