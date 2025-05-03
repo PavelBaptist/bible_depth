@@ -42,8 +42,12 @@ class _ChoiceFolderState extends State<ChoiceFolder> {
                 ),
                 if (widget.folders.isNotEmpty)
                   IconButton(
-                      onPressed: widget.createNewFolder,
-                      icon: const Icon(Icons.add_rounded))
+                    onPressed: widget.createNewFolder,
+                    icon: Icon(
+                      Icons.add_rounded,
+                      color: theme.textPrimary,
+                    ),
+                  )
               ],
             ),
             const SizedBox(height: 12),

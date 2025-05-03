@@ -30,7 +30,8 @@ class VersesListWidget extends StatelessWidget {
                       padding: const EdgeInsets.only(bottom: 12.0),
                       child: Text(
                         appLocale.numberChapter(iWords.first.verse.chapterId),
-                        style: theme.jura700x22,
+                        style:
+                            theme.jura700x22.copyWith(color: theme.textPrimary),
                       ),
                     ),
                   Wrap(
@@ -57,7 +58,7 @@ class VersesListWidget extends StatelessWidget {
                         .first
                         .verse
                         .chapterId),
-                style: theme.jura700x22,
+                style: theme.jura700x22.copyWith(color: theme.textPrimary),
               ),
             ),
             itemCount: chapters.keys.length,
