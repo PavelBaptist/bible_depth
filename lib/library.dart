@@ -20,6 +20,7 @@ export 'package:equatable/equatable.dart';
 export 'package:injectable/injectable.dart';
 export 'package:talker_flutter/talker_flutter.dart';
 export 'package:talker_bloc_logger/talker_bloc_logger_observer.dart';
+export 'package:vibration/vibration.dart';
 
 export 'core/version_handler.dart';
 export 'router/routers.dart';
@@ -56,3 +57,10 @@ export 'ui/analysis/analysis_page.dart';
 export 'ui/analysis/bloc/analysis_bloc.dart';
 export 'ui/analysis/widgets/word_widget.dart';
 export 'ui/analysis/widgets/verses_list_widget.dart';
+export 'ui/analysis/widgets/bottom_menu.dart';
+export 'ui/analysis/widgets/floating_menu_styles.dart';
+export 'ui/analysis/widgets/floating_menu.dart';
+export 'ui/analysis/widgets/floating_menu_pencil.dart';
+export 'ui/analysis/widgets/create_style.dart';
+export 'ui/analysis/widgets/delete.dart';
+export 'ui/analysis/widgets/styly_widget.dart';

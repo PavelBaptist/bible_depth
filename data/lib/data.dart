@@ -8,6 +8,7 @@ export 'src/repositories/model/local_models/bible/bible.dart';
 export 'src/repositories/model/local_models/inductive/word.dart';
 export 'src/repositories/model/local_models/inductive/fragment.dart';
 export 'src/repositories/model/local_models/inductive/folder.dart';
+export 'src/repositories/model/local_models/inductive/word_style.dart';
 
 //database
 export 'src/repositories/source/database/app_database.dart';

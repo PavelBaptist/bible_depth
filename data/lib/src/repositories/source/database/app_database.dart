@@ -74,4 +74,27 @@ class AppDatabase {
         .watch(triggerImmediately: true)
         .map((query) => query.find());
   }
+
+  ///WordStyle
+  int putWordStyle(WordStyleLocal word) {
+    return store.box<WordStyleLocal>().put(word);
+  }
+
+  List<int> putWordStyles(List<WordStyleLocal> words) {
+    return store.box<WordStyleLocal>().putMany(words);
+  }
+
+  Stream<List<WordStyleLocal>> watchWordsStyle() {
+    final box = store.box<WordStyleLocal>();
+
+    return box
+        .query()
+        .order(WordStyleLocal_.order)
+        .watch(triggerImmediately: true)
+        .map((query) => query.find());
+  }
+
+  bool deleteWordStyle(WordStyleLocal word) {
+    return store.box<WordStyleLocal>().remove(word.id);
+  }
 }

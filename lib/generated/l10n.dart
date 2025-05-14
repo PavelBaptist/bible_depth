@@ -199,6 +199,96 @@ class S {
       args: [],
     );
   }
+
+  /// `Создайте новый стиль`
+  String get createNewStyle {
+    return Intl.message(
+      'Создайте новый стиль',
+      name: 'createNewStyle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Жирный`
+  String get bold {
+    return Intl.message(
+      'Жирный',
+      name: 'bold',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Курсивный`
+  String get italics {
+    return Intl.message(
+      'Курсивный',
+      name: 'italics',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Цвет текста`
+  String get colorFont {
+    return Intl.message(
+      'Цвет текста',
+      name: 'colorFont',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Цвет фона`
+  String get colorBackground {
+    return Intl.message(
+      'Цвет фона',
+      name: 'colorBackground',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Цвет обводки`
+  String get colorBorder {
+    return Intl.message(
+      'Цвет обводки',
+      name: 'colorBorder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Образец`
+  String get sample {
+    return Intl.message(
+      'Образец',
+      name: 'sample',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Удаление`
+  String get delete {
+    return Intl.message(
+      'Удаление',
+      name: 'delete',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Удалить`
+  String get deleteTitleButton {
+    return Intl.message(
+      'Удалить',
+      name: 'deleteTitleButton',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

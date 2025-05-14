@@ -24,22 +24,32 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
-        "add": MessageLookupByLibrary.simpleMessage("добавить"),
+        "add": MessageLookupByLibrary.simpleMessage("Добавить"),
         "addAnalysis": MessageLookupByLibrary.simpleMessage("+Добавить разбор"),
         "bibleDepth": MessageLookupByLibrary.simpleMessage("ГЛУБИНЫ БИБЛИИ"),
+        "bold": MessageLookupByLibrary.simpleMessage("Жирный"),
         "cancel": MessageLookupByLibrary.simpleMessage("Отменить"),
         "choiceBook":
             MessageLookupByLibrary.simpleMessage("ВЫБЕРИТЕ КНИГУ БИБЛИИ"),
+        "colorBackground": MessageLookupByLibrary.simpleMessage("Цвет фона"),
+        "colorBorder": MessageLookupByLibrary.simpleMessage("Цвет обводки"),
+        "colorFont": MessageLookupByLibrary.simpleMessage("Цвет текста"),
         "create": MessageLookupByLibrary.simpleMessage("Создать"),
         "createNewFolder":
             MessageLookupByLibrary.simpleMessage("Создать новую папку"),
+        "createNewStyle":
+            MessageLookupByLibrary.simpleMessage("Создайте новый стиль"),
+        "delete": MessageLookupByLibrary.simpleMessage("Удаление"),
+        "deleteTitleButton": MessageLookupByLibrary.simpleMessage("Удалить"),
         "emptyFolder":
             MessageLookupByLibrary.simpleMessage("У тебя ещё нет разборов"),
         "haveNotFolders": MessageLookupByLibrary.simpleMessage(
             "У вас пока нет папок с разборами, создайте новую"),
+        "italics": MessageLookupByLibrary.simpleMessage("Курсивный"),
         "myAnalysis": MessageLookupByLibrary.simpleMessage("МОИ РАЗБОРЫ"),
         "name": MessageLookupByLibrary.simpleMessage("Название"),
         "numberChapter": m0,
+        "sample": MessageLookupByLibrary.simpleMessage("Образец"),
         "selectAnExcerptToStudy": MessageLookupByLibrary.simpleMessage(
             "Выберите отрывок для изучения"),
         "selectFolder": MessageLookupByLibrary.simpleMessage("Выберите папку"),

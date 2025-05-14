@@ -27,19 +27,29 @@ class MessageLookup extends MessageLookupByLibrary {
         "add": MessageLookupByLibrary.simpleMessage("добавить"),
         "addAnalysis": MessageLookupByLibrary.simpleMessage("+Добавить разбор"),
         "bibleDepth": MessageLookupByLibrary.simpleMessage("BIBLE DEPTH"),
+        "bold": MessageLookupByLibrary.simpleMessage("Жирный"),
         "cancel": MessageLookupByLibrary.simpleMessage("Отменить"),
         "choiceBook":
             MessageLookupByLibrary.simpleMessage("ВЫБЕРИТЕ КНИГУ БИБЛИИ"),
+        "colorBackground": MessageLookupByLibrary.simpleMessage("Цвет фона"),
+        "colorBorder": MessageLookupByLibrary.simpleMessage("Цвет обводки"),
+        "colorFont": MessageLookupByLibrary.simpleMessage("Цвет текста"),
         "create": MessageLookupByLibrary.simpleMessage("Создать"),
         "createNewFolder":
             MessageLookupByLibrary.simpleMessage("Создать новую папку"),
+        "createNewStyle":
+            MessageLookupByLibrary.simpleMessage("Создайте новый стиль"),
+        "delete": MessageLookupByLibrary.simpleMessage("Удаление"),
+        "deleteTitleButton": MessageLookupByLibrary.simpleMessage("Удалить"),
         "emptyFolder":
             MessageLookupByLibrary.simpleMessage("У тебя ещё нет разборов"),
         "haveNotFolders": MessageLookupByLibrary.simpleMessage(
             "У вас пока нет папок с разборами, создайте новую"),
+        "italics": MessageLookupByLibrary.simpleMessage("Курсивный"),
         "myAnalysis": MessageLookupByLibrary.simpleMessage("MY ANALYSIS"),
         "name": MessageLookupByLibrary.simpleMessage("Название"),
         "numberChapter": m0,
+        "sample": MessageLookupByLibrary.simpleMessage("Образец"),
         "selectAnExcerptToStudy": MessageLookupByLibrary.simpleMessage(
             "Выберите отрывок для изучения"),
         "selectFolder": MessageLookupByLibrary.simpleMessage("Выберите папку"),

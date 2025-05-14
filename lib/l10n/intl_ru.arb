@@ -12,6 +12,15 @@
   "haveNotFolders": "У вас пока нет папок с разборами, создайте новую",
   "createNewFolder": "Создать новую папку",
   "cancel": "Отменить",
-  "add": "добавить",
-  "name": "Название"
+  "add": "Добавить",
+  "name": "Название",
+  "createNewStyle": "Создайте новый стиль",
+  "bold": "Жирный",
+  "italics": "Курсивный",
+  "colorFont": "Цвет текста",
+  "colorBackground": "Цвет фона",
+  "colorBorder": "Цвет обводки",
+  "sample": "Образец",
+  "delete": "Удаление",
+  "deleteTitleButton": "Удалить"
 }

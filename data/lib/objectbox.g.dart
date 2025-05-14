@@ -18,6 +18,7 @@ import 'src/repositories/model/local_models/bible/bible.dart';
 import 'src/repositories/model/local_models/inductive/folder.dart';
 import 'src/repositories/model/local_models/inductive/fragment.dart';
 import 'src/repositories/model/local_models/inductive/word.dart';
+import 'src/repositories/model/local_models/inductive/word_style.dart';
 
 export 'package:objectbox/objectbox.dart'; // so that callers only have to import this file
 
@@ -130,7 +131,7 @@ final _entities = <obx_int.ModelEntity>[
   obx_int.ModelEntity(
       id: const obx_int.IdUid(4, 3095107107054516958),
       name: 'WordLocal',
-      lastPropertyId: const obx_int.IdUid(4, 5332258311812615035),
+      lastPropertyId: const obx_int.IdUid(10, 5196976144236519777),
       flags: 0,
       properties: <obx_int.ModelProperty>[
         obx_int.ModelProperty(
@@ -156,7 +157,81 @@ final _entities = <obx_int.ModelEntity>[
             type: 11,
             flags: 520,
             indexId: const obx_int.IdUid(4, 3649836660616419947),
-            relationTarget: 'FragmentLocal')
+            relationTarget: 'FragmentLocal'),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 5053231344193861389),
+            name: 'fontColor',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(6, 5593218043952000076),
+            name: 'borderColor',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(7, 5536910020624000763),
+            name: 'backgroundColor',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(8, 508198109141134897),
+            name: 'italics',
+            type: 1,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(9, 4482267314774627146),
+            name: 'bold',
+            type: 1,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(10, 5196976144236519777),
+            name: 'transfer',
+            type: 1,
+            flags: 0)
+      ],
+      relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(5, 2178459227808806062),
+      name: 'WordStyleLocal',
+      lastPropertyId: const obx_int.IdUid(8, 3627508948762934150),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 9015773460339433737),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 8166464494464423033),
+            name: 'fontColor',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 6604140815879610650),
+            name: 'borderColor',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 3576716896569769754),
+            name: 'backgroundColor',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 2705945056711445315),
+            name: 'italics',
+            type: 1,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(6, 6525014642048646056),
+            name: 'bold',
+            type: 1,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(7, 1811175571227809973),
+            name: 'order',
+            type: 6,
+            flags: 0)
       ],
       relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[])
@@ -197,13 +272,13 @@ Future<obx.Store> openStore(
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
       entities: _entities,
-      lastEntityId: const obx_int.IdUid(4, 3095107107054516958),
+      lastEntityId: const obx_int.IdUid(5, 2178459227808806062),
       lastIndexId: const obx_int.IdUid(4, 3649836660616419947),
       lastRelationId: const obx_int.IdUid(0, 0),
       lastSequenceId: const obx_int.IdUid(0, 0),
       retiredEntityUids: const [],
       retiredIndexUids: const [],
-      retiredPropertyUids: const [],
+      retiredPropertyUids: const [3627508948762934150],
       retiredRelationUids: const [],
       modelVersion: 5,
       modelVersionParserMinimum: 5,
@@ -358,11 +433,20 @@ obx_int.ModelDefinition getObjectBoxModel() {
         },
         objectToFB: (WordLocal object, fb.Builder fbb) {
           final valueOffset = fbb.writeString(object.value);
-          fbb.startTable(5);
+          final fontColorOffset = fbb.writeString(object.fontColor);
+          final borderColorOffset = fbb.writeString(object.borderColor);
+          final backgroundColorOffset = fbb.writeString(object.backgroundColor);
+          fbb.startTable(11);
           fbb.addInt64(0, object.id);
           fbb.addOffset(1, valueOffset);
           fbb.addInt64(2, object.verse.targetId);
           fbb.addInt64(3, object.fragment.targetId);
+          fbb.addOffset(4, fontColorOffset);
+          fbb.addOffset(5, borderColorOffset);
+          fbb.addOffset(6, backgroundColorOffset);
+          fbb.addBool(7, object.italics);
+          fbb.addBool(8, object.bold);
+          fbb.addBool(9, object.transfer);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -373,13 +457,88 @@ obx_int.ModelDefinition getObjectBoxModel() {
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
           final valueParam = const fb.StringReader(asciiOptimization: true)
               .vTableGet(buffer, rootOffset, 6, '');
-          final object = WordLocal(id: idParam, value: valueParam);
+          final fontColorParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 12, '');
+          final borderColorParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 14, '');
+          final backgroundColorParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 16, '');
+          final italicsParam =
+              const fb.BoolReader().vTableGet(buffer, rootOffset, 18, false);
+          final boldParam =
+              const fb.BoolReader().vTableGet(buffer, rootOffset, 20, false);
+          final transferParam =
+              const fb.BoolReader().vTableGet(buffer, rootOffset, 22, false);
+          final object = WordLocal(
+              id: idParam,
+              value: valueParam,
+              fontColor: fontColorParam,
+              borderColor: borderColorParam,
+              backgroundColor: backgroundColorParam,
+              italics: italicsParam,
+              bold: boldParam,
+              transfer: transferParam);
           object.verse.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0);
           object.verse.attach(store);
           object.fragment.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 10, 0);
           object.fragment.attach(store);
+          return object;
+        }),
+    WordStyleLocal: obx_int.EntityDefinition<WordStyleLocal>(
+        model: _entities[4],
+        toOneRelations: (WordStyleLocal object) => [],
+        toManyRelations: (WordStyleLocal object) => {},
+        getId: (WordStyleLocal object) => object.id,
+        setId: (WordStyleLocal object, int id) {
+          object.id = id;
+        },
+        objectToFB: (WordStyleLocal object, fb.Builder fbb) {
+          final fontColorOffset = fbb.writeString(object.fontColor);
+          final borderColorOffset = fbb.writeString(object.borderColor);
+          final backgroundColorOffset = fbb.writeString(object.backgroundColor);
+          fbb.startTable(9);
+          fbb.addInt64(0, object.id);
+          fbb.addOffset(1, fontColorOffset);
+          fbb.addOffset(2, borderColorOffset);
+          fbb.addOffset(3, backgroundColorOffset);
+          fbb.addBool(4, object.italics);
+          fbb.addBool(5, object.bold);
+          fbb.addInt64(6, object.order);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (obx.Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final idParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          final fontColorParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 6, '');
+          final borderColorParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 8, '');
+          final backgroundColorParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 10, '');
+          final italicsParam =
+              const fb.BoolReader().vTableGet(buffer, rootOffset, 12, false);
+          final boldParam =
+              const fb.BoolReader().vTableGet(buffer, rootOffset, 14, false);
+          final orderParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 16, 0);
+          final object = WordStyleLocal(
+              id: idParam,
+              fontColor: fontColorParam,
+              borderColor: borderColorParam,
+              backgroundColor: backgroundColorParam,
+              italics: italicsParam,
+              bold: boldParam,
+              order: orderParam);
+
           return object;
         })
   };
@@ -477,4 +636,59 @@ class WordLocal_ {
   /// See [WordLocal.fragment].
   static final fragment = obx.QueryRelationToOne<WordLocal, FragmentLocal>(
       _entities[3].properties[3]);
+
+  /// See [WordLocal.fontColor].
+  static final fontColor =
+      obx.QueryStringProperty<WordLocal>(_entities[3].properties[4]);
+
+  /// See [WordLocal.borderColor].
+  static final borderColor =
+      obx.QueryStringProperty<WordLocal>(_entities[3].properties[5]);
+
+  /// See [WordLocal.backgroundColor].
+  static final backgroundColor =
+      obx.QueryStringProperty<WordLocal>(_entities[3].properties[6]);
+
+  /// See [WordLocal.italics].
+  static final italics =
+      obx.QueryBooleanProperty<WordLocal>(_entities[3].properties[7]);
+
+  /// See [WordLocal.bold].
+  static final bold =
+      obx.QueryBooleanProperty<WordLocal>(_entities[3].properties[8]);
+
+  /// See [WordLocal.transfer].
+  static final transfer =
+      obx.QueryBooleanProperty<WordLocal>(_entities[3].properties[9]);
+}
+
+/// [WordStyleLocal] entity fields to define ObjectBox queries.
+class WordStyleLocal_ {
+  /// See [WordStyleLocal.id].
+  static final id =
+      obx.QueryIntegerProperty<WordStyleLocal>(_entities[4].properties[0]);
+
+  /// See [WordStyleLocal.fontColor].
+  static final fontColor =
+      obx.QueryStringProperty<WordStyleLocal>(_entities[4].properties[1]);
+
+  /// See [WordStyleLocal.borderColor].
+  static final borderColor =
+      obx.QueryStringProperty<WordStyleLocal>(_entities[4].properties[2]);
+
+  /// See [WordStyleLocal.backgroundColor].
+  static final backgroundColor =
+      obx.QueryStringProperty<WordStyleLocal>(_entities[4].properties[3]);
+
+  /// See [WordStyleLocal.italics].
+  static final italics =
+      obx.QueryBooleanProperty<WordStyleLocal>(_entities[4].properties[4]);
+
+  /// See [WordStyleLocal.bold].
+  static final bold =
+      obx.QueryBooleanProperty<WordStyleLocal>(_entities[4].properties[5]);
+
+  /// See [WordStyleLocal.order].
+  static final order =
+      obx.QueryIntegerProperty<WordStyleLocal>(_entities[4].properties[6]);
 }

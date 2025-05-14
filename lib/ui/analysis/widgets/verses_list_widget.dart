@@ -3,10 +3,18 @@ import 'package:domain/domain.dart';
 import 'package:shared/shared.dart';
 
 class VersesListWidget extends StatelessWidget {
-  const VersesListWidget({super.key, required this.words, required this.onTap});
+  const VersesListWidget({
+    super.key,
+    required this.words,
+    required this.onTap,
+    required this.sizeText,
+    required this.newLineByVerse,
+  });
 
   final List<Word> words;
   final Function(Word word) onTap;
+  final double sizeText;
+  final bool newLineByVerse;
 
   @override
   Widget build(BuildContext context) {
@@ -35,14 +43,30 @@ class VersesListWidget extends StatelessWidget {
                       ),
                     ),
                   Wrap(
-                    spacing: 12,
+                    spacing: 2,
+                    runSpacing: 4,
                     children: List.generate(
-                      iWords.length,
+                      iWords.length * 2,
                       (index) {
+                        final wordIndex = index ~/ 2;
+
+                        if (index.isOdd) {
+                          if (wordIndex + 1 != iWords.length &&
+                              ((iWords[wordIndex].verse.number !=
+                                          iWords[wordIndex + 1].verse.number &&
+                                      newLineByVerse) ||
+                                  iWords[wordIndex + 1].transfer)) {
+                            return const SizedBox(width: double.infinity);
+                          } else {
+                            return const SizedBox();
+                          }
+                        }
+
                         return WordWidget(
                           words: iWords,
-                          index: index,
-                          onTap: () => onTap(iWords[index]),
+                          index: wordIndex,
+                          onTap: () => onTap(iWords[wordIndex]),
+                          sizeText: sizeText,
                         );
                       },
                     ),

@@ -103,7 +103,7 @@
     },
     {
       "id": "4:3095107107054516958",
-      "lastPropertyId": "4:5332258311812615035",
+      "lastPropertyId": "10:5196976144236519777",
       "name": "WordLocal",
       "properties": [
         {
@@ -132,12 +132,86 @@
           "flags": 520,
           "indexId": "4:3649836660616419947",
           "relationTarget": "FragmentLocal"
+        },
+        {
+          "id": "5:5053231344193861389",
+          "name": "fontColor",
+          "type": 9
+        },
+        {
+          "id": "6:5593218043952000076",
+          "name": "borderColor",
+          "type": 9
+        },
+        {
+          "id": "7:5536910020624000763",
+          "name": "backgroundColor",
+          "type": 9
+        },
+        {
+          "id": "8:508198109141134897",
+          "name": "italics",
+          "type": 1
+        },
+        {
+          "id": "9:4482267314774627146",
+          "name": "bold",
+          "type": 1
+        },
+        {
+          "id": "10:5196976144236519777",
+          "name": "transfer",
+          "type": 1
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "5:2178459227808806062",
+      "lastPropertyId": "8:3627508948762934150",
+      "name": "WordStyleLocal",
+      "properties": [
+        {
+          "id": "1:9015773460339433737",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:8166464494464423033",
+          "name": "fontColor",
+          "type": 9
+        },
+        {
+          "id": "3:6604140815879610650",
+          "name": "borderColor",
+          "type": 9
+        },
+        {
+          "id": "4:3576716896569769754",
+          "name": "backgroundColor",
+          "type": 9
+        },
+        {
+          "id": "5:2705945056711445315",
+          "name": "italics",
+          "type": 1
+        },
+        {
+          "id": "6:6525014642048646056",
+          "name": "bold",
+          "type": 1
+        },
+        {
+          "id": "7:1811175571227809973",
+          "name": "order",
+          "type": 6
         }
       ],
       "relations": []
     }
   ],
-  "lastEntityId": "4:3095107107054516958",
+  "lastEntityId": "5:2178459227808806062",
   "lastIndexId": "4:3649836660616419947",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
@@ -145,7 +219,9 @@
   "modelVersionParserMinimum": 5,
   "retiredEntityUids": [],
   "retiredIndexUids": [],
-  "retiredPropertyUids": [],
+  "retiredPropertyUids": [
+    3627508948762934150
+  ],
   "retiredRelationUids": [],
   "version": 1
 }

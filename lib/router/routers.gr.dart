@@ -10,7 +10,6 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:auto_route/auto_route.dart' as _i7;
-import 'package:bible_depth/library.dart' as _i8;
 import 'package:bible_depth/ui/analysis/analysis_page.dart' as _i1;
 import 'package:bible_depth/ui/choice_fragment/choice_fragment/choice_fragment.dart'
     as _i3;
@@ -19,14 +18,14 @@ import 'package:bible_depth/ui/choice_fragment/choise_book/choice_book.dart'
 import 'package:bible_depth/ui/fragments/fragments_page.dart' as _i4;
 import 'package:bible_depth/ui/main/main_page.dart' as _i5;
 import 'package:bible_depth/ui/start/splash.dart' as _i6;
-import 'package:domain/domain.dart' as _i9;
+import 'package:domain/domain.dart' as _i8;
 
 /// generated route for
 /// [_i1.AnalysisPage]
 class AnalysisRoute extends _i7.PageRouteInfo<AnalysisRouteArgs> {
   AnalysisRoute({
     _i8.Key? key,
-    required _i9.Fragment fragment,
+    required _i8.Fragment fragment,
     List<_i7.PageRouteInfo>? children,
   }) : super(
          AnalysisRoute.name,
@@ -50,7 +49,7 @@ class AnalysisRouteArgs {
 
   final _i8.Key? key;
 
-  final _i9.Fragment fragment;
+  final _i8.Fragment fragment;
 
   @override
   String toString() {
@@ -63,7 +62,7 @@ class AnalysisRouteArgs {
 class ChoiceBookRoute extends _i7.PageRouteInfo<ChoiceBookRouteArgs> {
   ChoiceBookRoute({
     _i8.Key? key,
-    required List<_i9.Folder> folders,
+    required List<_i8.Folder> folders,
     List<_i7.PageRouteInfo>? children,
   }) : super(
          ChoiceBookRoute.name,
@@ -87,7 +86,7 @@ class ChoiceBookRouteArgs {
 
   final _i8.Key? key;
 
-  final List<_i9.Folder> folders;
+  final List<_i8.Folder> folders;
 
   @override
   String toString() {
@@ -100,8 +99,8 @@ class ChoiceBookRouteArgs {
 class ChoiceFragmentRoute extends _i7.PageRouteInfo<ChoiceFragmentRouteArgs> {
   ChoiceFragmentRoute({
     _i8.Key? key,
-    required _i9.Book book,
-    required List<_i9.Folder> folders,
+    required _i8.Book book,
+    required List<_i8.Folder> folders,
     List<_i7.PageRouteInfo>? children,
   }) : super(
          ChoiceFragmentRoute.name,
@@ -133,9 +132,9 @@ class ChoiceFragmentRouteArgs {
 
   final _i8.Key? key;
 
-  final _i9.Book book;
+  final _i8.Book book;
 
-  final List<_i9.Folder> folders;
+  final List<_i8.Folder> folders;
 
   @override
   String toString() {
@@ -148,7 +147,7 @@ class ChoiceFragmentRouteArgs {
 class FragmentRoute extends _i7.PageRouteInfo<FragmentRouteArgs> {
   FragmentRoute({
     _i8.Key? key,
-    required _i9.Folder folder,
+    required _i8.Folder folder,
     List<_i7.PageRouteInfo>? children,
   }) : super(
          FragmentRoute.name,
@@ -172,7 +171,7 @@ class FragmentRouteArgs {
 
   final _i8.Key? key;
 
-  final _i9.Folder folder;
+  final _i8.Folder folder;
 
   @override
   String toString() {

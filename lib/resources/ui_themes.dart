@@ -126,6 +126,12 @@ class UIThemes {
         fontWeight: FontWeight.w700,
       );
 
+  TextStyle get jura700x18 => const TextStyle(
+        fontFamily: "Jura",
+        fontSize: 18,
+        fontWeight: FontWeight.w700,
+      );
+
   TextStyle get jura700x16 => const TextStyle(
         fontFamily: "Jura",
         fontSize: 16,
@@ -150,6 +156,12 @@ class UIThemes {
         fontWeight: FontWeight.w500,
       );
 
+  TextStyle get jura400x18 => const TextStyle(
+        fontFamily: "Jura",
+        fontSize: 18,
+        fontWeight: FontWeight.w400,
+      );
+
   ///Montserrat
 
   TextStyle get montserrat500x20 => const TextStyle(
@@ -168,48 +180,121 @@ class UIThemes {
         height: 30 / 16.0,
       );
 
-
 // Automatically generated getters for colors
   // States colors
 
-  Color get backgroundPrimary =>
-      isDarkTheme ? ColorsUIThemes.instance.dark.backgroundPrimary : ColorsUIThemes.instance.light.backgroundPrimary;
+  Color get backgroundPrimary => isDarkTheme
+      ? ColorsUIThemes.instance.dark.backgroundPrimary
+      : ColorsUIThemes.instance.light.backgroundPrimary;
 
-  Color get backgroundAbsolutlyDark =>
-      isDarkTheme ? ColorsUIThemes.instance.dark.backgroundAbsolutlyDark : ColorsUIThemes.instance.light.backgroundAbsolutlyDark;
+  Color get backgroundAbsolutlyDark => isDarkTheme
+      ? ColorsUIThemes.instance.dark.backgroundAbsolutlyDark
+      : ColorsUIThemes.instance.light.backgroundAbsolutlyDark;
 
-  Color get darkBeruz =>
-      isDarkTheme ? ColorsUIThemes.instance.dark.darkBeruz : ColorsUIThemes.instance.light.darkBeruz;
+  Color get darkBeruz => isDarkTheme
+      ? ColorsUIThemes.instance.dark.darkBeruz
+      : ColorsUIThemes.instance.light.darkBeruz;
 
-  Color get beruz =>
-      isDarkTheme ? ColorsUIThemes.instance.dark.beruz : ColorsUIThemes.instance.light.beruz;
+  Color get beruz => isDarkTheme
+      ? ColorsUIThemes.instance.dark.beruz
+      : ColorsUIThemes.instance.light.beruz;
 
-  Color get dustyRose =>
-      isDarkTheme ? ColorsUIThemes.instance.dark.dustyRose : ColorsUIThemes.instance.light.dustyRose;
+  Color get lightBeruz => isDarkTheme
+      ? ColorsUIThemes.instance.dark.lightBeruz
+      : ColorsUIThemes.instance.light.lightBeruz;
 
-  Color get grey =>
-      isDarkTheme ? ColorsUIThemes.instance.dark.grey : ColorsUIThemes.instance.light.grey;
+  Color get dustyRose => isDarkTheme
+      ? ColorsUIThemes.instance.dark.dustyRose
+      : ColorsUIThemes.instance.light.dustyRose;
+
+  Color get grey => isDarkTheme
+      ? ColorsUIThemes.instance.dark.grey
+      : ColorsUIThemes.instance.light.grey;
+
+  Color get bottomBar => isDarkTheme
+      ? ColorsUIThemes.instance.dark.bottomBar
+      : ColorsUIThemes.instance.light.bottomBar;
 
   // borders, shadows
 
-  Color get bordersPrimary =>
-      isDarkTheme ? ColorsUIThemes.instance.dark.bordersPrimary : ColorsUIThemes.instance.light.bordersPrimary;
+  Color get bordersPrimary => isDarkTheme
+      ? ColorsUIThemes.instance.dark.bordersPrimary
+      : ColorsUIThemes.instance.light.bordersPrimary;
 
-  Color get cursor =>
-      isDarkTheme ? ColorsUIThemes.instance.dark.cursor : ColorsUIThemes.instance.light.cursor;
+  Color get cursor => isDarkTheme
+      ? ColorsUIThemes.instance.dark.cursor
+      : ColorsUIThemes.instance.light.cursor;
 
-  Color get shadowAppBar =>
-      isDarkTheme ? ColorsUIThemes.instance.dark.shadowAppBar : ColorsUIThemes.instance.light.shadowAppBar;
+  Color get shadowAppBar => isDarkTheme
+      ? ColorsUIThemes.instance.dark.shadowAppBar
+      : ColorsUIThemes.instance.light.shadowAppBar;
 
   // Text colors
 
-  Color get textWhite =>
-      isDarkTheme ? ColorsUIThemes.instance.dark.textWhite : ColorsUIThemes.instance.light.textWhite;
+  Color get textWhite => isDarkTheme
+      ? ColorsUIThemes.instance.dark.textWhite
+      : ColorsUIThemes.instance.light.textWhite;
 
-  Color get textPrimary =>
-      isDarkTheme ? ColorsUIThemes.instance.dark.textPrimary : ColorsUIThemes.instance.light.textPrimary;
+  Color get textPrimary => isDarkTheme
+      ? ColorsUIThemes.instance.dark.textPrimary
+      : ColorsUIThemes.instance.light.textPrimary;
 
-  Color get textGrey =>
-      isDarkTheme ? ColorsUIThemes.instance.dark.textGrey : ColorsUIThemes.instance.light.textGrey;
+  Color get textGrey => isDarkTheme
+      ? ColorsUIThemes.instance.dark.textGrey
+      : ColorsUIThemes.instance.light.textGrey;
+
+  // colors for analysis
+
+  Color get red => isDarkTheme
+      ? ColorsUIThemes.instance.dark.red
+      : ColorsUIThemes.instance.light.red;
+
+  Color get green => isDarkTheme
+      ? ColorsUIThemes.instance.dark.green
+      : ColorsUIThemes.instance.light.green;
+
+  Color get blue => isDarkTheme
+      ? ColorsUIThemes.instance.dark.blue
+      : ColorsUIThemes.instance.light.blue;
+
+  Color get yellow => isDarkTheme
+      ? ColorsUIThemes.instance.dark.yellow
+      : ColorsUIThemes.instance.light.yellow;
+
+  Color get black => isDarkTheme
+      ? ColorsUIThemes.instance.dark.black
+      : ColorsUIThemes.instance.light.black;
+
+  Color get white => isDarkTheme
+      ? ColorsUIThemes.instance.dark.white
+      : ColorsUIThemes.instance.light.white;
+
+  Color get purple => isDarkTheme
+      ? ColorsUIThemes.instance.dark.purple
+      : ColorsUIThemes.instance.light.purple;
+
+  Color get orange => isDarkTheme
+      ? ColorsUIThemes.instance.dark.orange
+      : ColorsUIThemes.instance.light.orange;
+
+  Color get pink => isDarkTheme
+      ? ColorsUIThemes.instance.dark.pink
+      : ColorsUIThemes.instance.light.pink;
+
+  Color get gray => isDarkTheme
+      ? ColorsUIThemes.instance.dark.gray
+      : ColorsUIThemes.instance.light.gray;
+
+  Color get cayan => isDarkTheme
+      ? ColorsUIThemes.instance.dark.cayan
+      : ColorsUIThemes.instance.light.cayan;
+
+  Color get teal => isDarkTheme
+      ? ColorsUIThemes.instance.dark.teal
+      : ColorsUIThemes.instance.light.teal;
+
+  Color get brown => isDarkTheme
+      ? ColorsUIThemes.instance.dark.brown
+      : ColorsUIThemes.instance.light.brown;
   // End of autogenerated getters
 }

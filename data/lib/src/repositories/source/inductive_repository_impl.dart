@@ -8,6 +8,7 @@ import 'package:injectable/injectable.dart';
 
 import 'package:dartz/dartz.dart';
 import 'package:shared/shared.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 @LazySingleton(as: InductiveRepository)
 class InductiveRepositoryImpl implements InductiveRepository {
@@ -115,6 +116,63 @@ class InductiveRepositoryImpl implements InductiveRepository {
   @override
   Either<Failure, bool> putWord(Word word) {
     _inductiveLocalDataSource.putWord(word.toLocalWord());
+    return right(true);
+  }
+
+  @override
+  Either<Failure, Stream<List<WordStyle>>> fetchWordsStyle() {
+    final response = _inductiveLocalDataSource.fetchAllWordsStyle();
+    Stream<List<WordStyle>> convertStream = response.map((wordStyleLocalList) {
+      return wordStyleLocalList
+          .map((wordStyleLocal) => wordStyleLocal.toWord())
+          .toList();
+    });
+    return right(convertStream);
+  }
+
+  @override
+  Either<Failure, bool> putWordStyle(WordStyle word) {
+    _inductiveLocalDataSource.putWordStyle(word.toLocalWord());
+    return right(true);
+  }
+
+  @override
+  Either<Failure, bool> putWordStyles(List<WordStyle> words) {
+    _inductiveLocalDataSource
+        .putWordStyles(words.map((e) => e.toLocalWord()).toList());
+    return right(true);
+  }
+
+  @override
+  Either<Failure, bool> deleteWordStyle(WordStyle word) {
+    return right(_inductiveLocalDataSource.deleteWordStyle(word.toLocalWord()));
+  }
+
+  @override
+  Future<Either<Failure, double>> fetchFontSize() async {
+    final prefs = await SharedPreferences.getInstance();
+    double? size = prefs.getDouble(SharedPreferenceKeys.fontSize);
+    return right(size ?? 18);
+  }
+
+  @override
+  Future<Either<Failure, bool>> putFontSize(double size) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setDouble(SharedPreferenceKeys.fontSize, size);
+    return right(true);
+  }
+
+  @override
+  Future<Either<Failure, bool>> fetchNewLineMode() async {
+    final prefs = await SharedPreferences.getInstance();
+    bool? mode = prefs.getBool(SharedPreferenceKeys.newLineMode);
+    return right(mode ?? false);
+  }
+
+  @override
+  Future<Either<Failure, bool>> putNewLineMode(bool mode) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool(SharedPreferenceKeys.newLineMode, mode);
     return right(true);
   }
 }

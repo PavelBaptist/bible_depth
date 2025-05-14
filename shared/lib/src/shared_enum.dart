@@ -6,3 +6,20 @@ enum TranslateBible {
   final String name;
   final String path;
 }
+
+enum ToolsBar {
+  style,
+  structural,
+  comment,
+  enter,
+  pencil;
+}
+
+enum Tools {
+  style,
+  structural,
+  comment,
+  heading,
+  enter,
+  eraser,
+}

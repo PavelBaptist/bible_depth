@@ -1,6 +1,8 @@
 import 'dart:ui';
 
 import 'package:bible_depth/library.dart';
+import 'package:domain/domain.dart';
+import 'package:shared/shared.dart';
 
 @RoutePage()
 class SplashScreen extends StatefulWidget {
@@ -121,9 +123,23 @@ class _SplashScreenState extends State<SplashScreen>
   Future<void> init() async {
     await AppInitializer(AppConfig.getInstance()).init();
     final startService = GetIt.instance.get<StartService>();
-    GetIt.instance.get<MainService>();
+    final mainService = GetIt.instance.get<MainService>();
     final isShowOnboarding = await startService.isShowOnboarding;
     if (isShowOnboarding) {
+      mainService.putWordStyle(WordStyle(
+        backgroundColor: colorToHex(Colors.blue),
+        order: 1,
+      ));
+      mainService.putWordStyle(WordStyle(
+        backgroundColor: colorToHex(Colors.green),
+        borderColor: colorToHex(Colors.yellow),
+        order: 2,
+      ));
+      mainService.putWordStyle(WordStyle(
+        borderColor: colorToHex(Colors.red),
+        fontColor: colorToHex(Colors.red),
+        order: 3,
+      ));
       await Future.delayed(const Duration(milliseconds: 800));
       _controller.forward();
     } else {

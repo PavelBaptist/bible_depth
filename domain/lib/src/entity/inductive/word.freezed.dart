@@ -20,6 +20,12 @@ mixin _$Word {
   Verse get verse => throw _privateConstructorUsedError;
   Fragment get fragment => throw _privateConstructorUsedError;
   String get value => throw _privateConstructorUsedError;
+  String get fontColor => throw _privateConstructorUsedError;
+  String get borderColor => throw _privateConstructorUsedError;
+  String get backgroundColor => throw _privateConstructorUsedError;
+  bool get italics => throw _privateConstructorUsedError;
+  bool get bold => throw _privateConstructorUsedError;
+  bool get transfer => throw _privateConstructorUsedError;
 
   /// Create a copy of Word
   /// with the given fields replaced by the non-null parameter values.
@@ -32,7 +38,17 @@ abstract class $WordCopyWith<$Res> {
   factory $WordCopyWith(Word value, $Res Function(Word) then) =
       _$WordCopyWithImpl<$Res, Word>;
   @useResult
-  $Res call({int id, Verse verse, Fragment fragment, String value});
+  $Res call(
+      {int id,
+      Verse verse,
+      Fragment fragment,
+      String value,
+      String fontColor,
+      String borderColor,
+      String backgroundColor,
+      bool italics,
+      bool bold,
+      bool transfer});
 
   $VerseCopyWith<$Res> get verse;
   $FragmentCopyWith<$Res> get fragment;
@@ -57,6 +73,12 @@ class _$WordCopyWithImpl<$Res, $Val extends Word>
     Object? verse = null,
     Object? fragment = null,
     Object? value = null,
+    Object? fontColor = null,
+    Object? borderColor = null,
+    Object? backgroundColor = null,
+    Object? italics = null,
+    Object? bold = null,
+    Object? transfer = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -75,6 +97,30 @@ class _$WordCopyWithImpl<$Res, $Val extends Word>
           ? _value.value
           : value // ignore: cast_nullable_to_non_nullable
               as String,
+      fontColor: null == fontColor
+          ? _value.fontColor
+          : fontColor // ignore: cast_nullable_to_non_nullable
+              as String,
+      borderColor: null == borderColor
+          ? _value.borderColor
+          : borderColor // ignore: cast_nullable_to_non_nullable
+              as String,
+      backgroundColor: null == backgroundColor
+          ? _value.backgroundColor
+          : backgroundColor // ignore: cast_nullable_to_non_nullable
+              as String,
+      italics: null == italics
+          ? _value.italics
+          : italics // ignore: cast_nullable_to_non_nullable
+              as bool,
+      bold: null == bold
+          ? _value.bold
+          : bold // ignore: cast_nullable_to_non_nullable
+              as bool,
+      transfer: null == transfer
+          ? _value.transfer
+          : transfer // ignore: cast_nullable_to_non_nullable
+              as bool,
     ) as $Val);
   }
 
@@ -106,7 +152,17 @@ abstract class _$$wordImplCopyWith<$Res> implements $WordCopyWith<$Res> {
       __$$wordImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int id, Verse verse, Fragment fragment, String value});
+  $Res call(
+      {int id,
+      Verse verse,
+      Fragment fragment,
+      String value,
+      String fontColor,
+      String borderColor,
+      String backgroundColor,
+      bool italics,
+      bool bold,
+      bool transfer});
 
   @override
   $VerseCopyWith<$Res> get verse;
@@ -130,6 +186,12 @@ class __$$wordImplCopyWithImpl<$Res>
     Object? verse = null,
     Object? fragment = null,
     Object? value = null,
+    Object? fontColor = null,
+    Object? borderColor = null,
+    Object? backgroundColor = null,
+    Object? italics = null,
+    Object? bold = null,
+    Object? transfer = null,
   }) {
     return _then(_$wordImpl(
       id: null == id
@@ -148,6 +210,30 @@ class __$$wordImplCopyWithImpl<$Res>
           ? _value.value
           : value // ignore: cast_nullable_to_non_nullable
               as String,
+      fontColor: null == fontColor
+          ? _value.fontColor
+          : fontColor // ignore: cast_nullable_to_non_nullable
+              as String,
+      borderColor: null == borderColor
+          ? _value.borderColor
+          : borderColor // ignore: cast_nullable_to_non_nullable
+              as String,
+      backgroundColor: null == backgroundColor
+          ? _value.backgroundColor
+          : backgroundColor // ignore: cast_nullable_to_non_nullable
+              as String,
+      italics: null == italics
+          ? _value.italics
+          : italics // ignore: cast_nullable_to_non_nullable
+              as bool,
+      bold: null == bold
+          ? _value.bold
+          : bold // ignore: cast_nullable_to_non_nullable
+              as bool,
+      transfer: null == transfer
+          ? _value.transfer
+          : transfer // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -159,7 +245,13 @@ class _$wordImpl implements _word {
       {this.id = 0,
       this.verse = const Verse(),
       this.fragment = const Fragment(),
-      this.value = ''});
+      this.value = '',
+      this.fontColor = '',
+      this.borderColor = '',
+      this.backgroundColor = '',
+      this.italics = false,
+      this.bold = false,
+      this.transfer = false});
 
   @override
   @JsonKey()
@@ -173,10 +265,28 @@ class _$wordImpl implements _word {
   @override
   @JsonKey()
   final String value;
+  @override
+  @JsonKey()
+  final String fontColor;
+  @override
+  @JsonKey()
+  final String borderColor;
+  @override
+  @JsonKey()
+  final String backgroundColor;
+  @override
+  @JsonKey()
+  final bool italics;
+  @override
+  @JsonKey()
+  final bool bold;
+  @override
+  @JsonKey()
+  final bool transfer;
 
   @override
   String toString() {
-    return 'Word(id: $id, verse: $verse, fragment: $fragment, value: $value)';
+    return 'Word(id: $id, verse: $verse, fragment: $fragment, value: $value, fontColor: $fontColor, borderColor: $borderColor, backgroundColor: $backgroundColor, italics: $italics, bold: $bold, transfer: $transfer)';
   }
 
   @override
@@ -188,11 +298,22 @@ class _$wordImpl implements _word {
             (identical(other.verse, verse) || other.verse == verse) &&
             (identical(other.fragment, fragment) ||
                 other.fragment == fragment) &&
-            (identical(other.value, value) || other.value == value));
+            (identical(other.value, value) || other.value == value) &&
+            (identical(other.fontColor, fontColor) ||
+                other.fontColor == fontColor) &&
+            (identical(other.borderColor, borderColor) ||
+                other.borderColor == borderColor) &&
+            (identical(other.backgroundColor, backgroundColor) ||
+                other.backgroundColor == backgroundColor) &&
+            (identical(other.italics, italics) || other.italics == italics) &&
+            (identical(other.bold, bold) || other.bold == bold) &&
+            (identical(other.transfer, transfer) ||
+                other.transfer == transfer));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, id, verse, fragment, value);
+  int get hashCode => Object.hash(runtimeType, id, verse, fragment, value,
+      fontColor, borderColor, backgroundColor, italics, bold, transfer);
 
   /// Create a copy of Word
   /// with the given fields replaced by the non-null parameter values.
@@ -208,7 +329,13 @@ abstract class _word implements Word {
       {final int id,
       final Verse verse,
       final Fragment fragment,
-      final String value}) = _$wordImpl;
+      final String value,
+      final String fontColor,
+      final String borderColor,
+      final String backgroundColor,
+      final bool italics,
+      final bool bold,
+      final bool transfer}) = _$wordImpl;
 
   @override
   int get id;
@@ -218,6 +345,18 @@ abstract class _word implements Word {
   Fragment get fragment;
   @override
   String get value;
+  @override
+  String get fontColor;
+  @override
+  String get borderColor;
+  @override
+  String get backgroundColor;
+  @override
+  bool get italics;
+  @override
+  bool get bold;
+  @override
+  bool get transfer;
 
   /// Create a copy of Word
   /// with the given fields replaced by the non-null parameter values.
