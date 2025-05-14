@@ -39,3 +39,5 @@ export 'src/use_cases/fetch_font_size_usecase.dart';
 export 'src/use_cases/put_font_size_usecase.dart';
 export 'src/use_cases/put_new_line_mode_usecase.dart';
 export 'src/use_cases/fetch_new_line_mode_usecase.dart';
+export 'src/use_cases/delete_words_usecase.dart';
+export 'src/use_cases/put_many_words_usecase.dart';

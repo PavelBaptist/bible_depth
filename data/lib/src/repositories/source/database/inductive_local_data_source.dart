@@ -29,6 +29,7 @@ class InductiveLocalDataSource {
       _appDatabase.watchWordsForFragment(fragmentId);
   int putWord(WordLocal word) => _appDatabase.putWord(word);
   List<int> putWords(List<WordLocal> words) => _appDatabase.putWords(words);
+  int deleteWords(List<WordLocal> words) => _appDatabase.deleteWords(words);
 
   //WordStyle
   Stream<List<WordStyleLocal>> fetchAllWordsStyle() =>

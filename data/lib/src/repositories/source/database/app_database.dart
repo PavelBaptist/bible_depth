@@ -66,11 +66,16 @@ class AppDatabase {
     return store.box<WordLocal>().putMany(words);
   }
 
+  int deleteWords(List<WordLocal> words) {
+    return store.box<WordLocal>().removeMany(words.map((e) => e.id).toList());
+  }
+
   Stream<List<WordLocal>> watchWordsForFragment(int fragmentId) {
     final box = store.box<WordLocal>();
 
     return box
         .query(WordLocal_.fragment.equals(fragmentId))
+        .order(WordLocal_.order)
         .watch(triggerImmediately: true)
         .map((query) => query.find());
   }

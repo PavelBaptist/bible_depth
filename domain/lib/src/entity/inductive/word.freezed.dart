@@ -26,6 +26,7 @@ mixin _$Word {
   bool get italics => throw _privateConstructorUsedError;
   bool get bold => throw _privateConstructorUsedError;
   bool get transfer => throw _privateConstructorUsedError;
+  int get order => throw _privateConstructorUsedError;
 
   /// Create a copy of Word
   /// with the given fields replaced by the non-null parameter values.
@@ -48,7 +49,8 @@ abstract class $WordCopyWith<$Res> {
       String backgroundColor,
       bool italics,
       bool bold,
-      bool transfer});
+      bool transfer,
+      int order});
 
   $VerseCopyWith<$Res> get verse;
   $FragmentCopyWith<$Res> get fragment;
@@ -79,6 +81,7 @@ class _$WordCopyWithImpl<$Res, $Val extends Word>
     Object? italics = null,
     Object? bold = null,
     Object? transfer = null,
+    Object? order = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -121,6 +124,10 @@ class _$WordCopyWithImpl<$Res, $Val extends Word>
           ? _value.transfer
           : transfer // ignore: cast_nullable_to_non_nullable
               as bool,
+      order: null == order
+          ? _value.order
+          : order // ignore: cast_nullable_to_non_nullable
+              as int,
     ) as $Val);
   }
 
@@ -162,7 +169,8 @@ abstract class _$$wordImplCopyWith<$Res> implements $WordCopyWith<$Res> {
       String backgroundColor,
       bool italics,
       bool bold,
-      bool transfer});
+      bool transfer,
+      int order});
 
   @override
   $VerseCopyWith<$Res> get verse;
@@ -192,6 +200,7 @@ class __$$wordImplCopyWithImpl<$Res>
     Object? italics = null,
     Object? bold = null,
     Object? transfer = null,
+    Object? order = null,
   }) {
     return _then(_$wordImpl(
       id: null == id
@@ -234,6 +243,10 @@ class __$$wordImplCopyWithImpl<$Res>
           ? _value.transfer
           : transfer // ignore: cast_nullable_to_non_nullable
               as bool,
+      order: null == order
+          ? _value.order
+          : order // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
@@ -251,7 +264,8 @@ class _$wordImpl implements _word {
       this.backgroundColor = '',
       this.italics = false,
       this.bold = false,
-      this.transfer = false});
+      this.transfer = false,
+      this.order = 0});
 
   @override
   @JsonKey()
@@ -283,10 +297,13 @@ class _$wordImpl implements _word {
   @override
   @JsonKey()
   final bool transfer;
+  @override
+  @JsonKey()
+  final int order;
 
   @override
   String toString() {
-    return 'Word(id: $id, verse: $verse, fragment: $fragment, value: $value, fontColor: $fontColor, borderColor: $borderColor, backgroundColor: $backgroundColor, italics: $italics, bold: $bold, transfer: $transfer)';
+    return 'Word(id: $id, verse: $verse, fragment: $fragment, value: $value, fontColor: $fontColor, borderColor: $borderColor, backgroundColor: $backgroundColor, italics: $italics, bold: $bold, transfer: $transfer, order: $order)';
   }
 
   @override
@@ -308,12 +325,13 @@ class _$wordImpl implements _word {
             (identical(other.italics, italics) || other.italics == italics) &&
             (identical(other.bold, bold) || other.bold == bold) &&
             (identical(other.transfer, transfer) ||
-                other.transfer == transfer));
+                other.transfer == transfer) &&
+            (identical(other.order, order) || other.order == order));
   }
 
   @override
   int get hashCode => Object.hash(runtimeType, id, verse, fragment, value,
-      fontColor, borderColor, backgroundColor, italics, bold, transfer);
+      fontColor, borderColor, backgroundColor, italics, bold, transfer, order);
 
   /// Create a copy of Word
   /// with the given fields replaced by the non-null parameter values.
@@ -335,7 +353,8 @@ abstract class _word implements Word {
       final String backgroundColor,
       final bool italics,
       final bool bold,
-      final bool transfer}) = _$wordImpl;
+      final bool transfer,
+      final int order}) = _$wordImpl;
 
   @override
   int get id;
@@ -357,6 +376,8 @@ abstract class _word implements Word {
   bool get bold;
   @override
   bool get transfer;
+  @override
+  int get order;
 
   /// Create a copy of Word
   /// with the given fields replaced by the non-null parameter values.

@@ -86,6 +86,7 @@ class InductiveRepositoryImpl implements InductiveRepository {
     final input = await rootBundle.loadString(TranslateBible.rst.path);
     final json = jsonDecode(input);
     int bookId = fragment.text.first.bookId;
+    int order = 1;
 
     for (int i = 0; i < idVerses.length; i++) {
       Verse verse = fragment.text[i];
@@ -94,11 +95,13 @@ class InductiveRepositoryImpl implements InductiveRepository {
           [verse.chapterId - 1]['verses'] as List);
 
       final resultWords = resultVerses[verse.number - 1]['text'] as String;
+
       _inductiveLocalDataSource.putWords(
         resultWords.split(' ').map((e) {
-          WordLocal word = WordLocal(value: e);
+          WordLocal word = WordLocal(value: e, order: order);
           word.fragment.target = newFragment;
           word.verse.target = verse.copyWith(id: idVerses[i]).toLocalVerse();
+          order++;
           return word;
         }).toList(),
       );
@@ -116,6 +119,14 @@ class InductiveRepositoryImpl implements InductiveRepository {
   @override
   Either<Failure, bool> putWord(Word word) {
     _inductiveLocalDataSource.putWord(word.toLocalWord());
+    return right(true);
+  }
+
+  @override
+  Either<Failure, bool> deleteWords(List<Word> words) {
+    _inductiveLocalDataSource.deleteWords(
+      words.map((e) => e.toLocalWord()).toList(),
+    );
     return right(true);
   }
 
@@ -173,6 +184,13 @@ class InductiveRepositoryImpl implements InductiveRepository {
   Future<Either<Failure, bool>> putNewLineMode(bool mode) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setBool(SharedPreferenceKeys.newLineMode, mode);
+    return right(true);
+  }
+
+  @override
+  Either<Failure, bool> putManyWords(List<Word> words) {
+    _inductiveLocalDataSource
+        .putWords(words.map((e) => e.toLocalWord()).toList());
     return right(true);
   }
 }

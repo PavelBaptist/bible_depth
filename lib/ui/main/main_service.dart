@@ -19,6 +19,8 @@ abstract class MainServiceModule {
     PutFontSizeUseCase putFontSizeUseCase,
     FetchNewLineModeUseCase fetchNewLineModeUseCase,
     PutNewLineModeUseCase putNewLineModeUseCase,
+    DeleteWordsUsecase deleteWordsUseCase,
+    PutManyWordsUseCase putManyWordsUseCase,
   ) async {
     return MainService(
       fetchAllFoldersUseCase: fetchAllFoldersUseCase,
@@ -34,6 +36,8 @@ abstract class MainServiceModule {
       putFontSizeUseCase: putFontSizeUseCase,
       fetchNewLineModeUseCase: fetchNewLineModeUseCase,
       putNewLineModeUseCase: putNewLineModeUseCase,
+      deleteWordsUseCase: deleteWordsUseCase,
+      putManyWordsUseCase: putManyWordsUseCase,
     );
   }
 }
@@ -53,6 +57,8 @@ class MainService {
     required PutFontSizeUseCase putFontSizeUseCase,
     required FetchNewLineModeUseCase fetchNewLineModeUseCase,
     required PutNewLineModeUseCase putNewLineModeUseCase,
+    required DeleteWordsUsecase deleteWordsUseCase,
+    required PutManyWordsUseCase putManyWordsUseCase,
   })  : _fetchAllFoldersUseCase = fetchAllFoldersUseCase,
         _fetchFragmentsUseCase = fetchFragmentsUseCase,
         _fetchVersesUseCase = fetchVersesUseCase,
@@ -65,7 +71,9 @@ class MainService {
         _fetchFontSizeUseCase = fetchFontSizeUseCase,
         _putFontSizeUseCase = putFontSizeUseCase,
         _fetchNewLineModeUseCase = fetchNewLineModeUseCase,
-        _putNewLineModeUseCase = putNewLineModeUseCase;
+        _putNewLineModeUseCase = putNewLineModeUseCase,
+        _deleteWordsUseCase = deleteWordsUseCase,
+        _putManyWordsUseCase = putManyWordsUseCase;
 
   final FetchAllFoldersUseCase _fetchAllFoldersUseCase;
   final FetchFragmentsUseCase _fetchFragmentsUseCase;
@@ -80,6 +88,8 @@ class MainService {
   final PutFontSizeUseCase _putFontSizeUseCase;
   final FetchNewLineModeUseCase _fetchNewLineModeUseCase;
   final PutNewLineModeUseCase _putNewLineModeUseCase;
+  final DeleteWordsUsecase _deleteWordsUseCase;
+  final PutManyWordsUseCase _putManyWordsUseCase;
 
   Future<Either<Failure, Stream<List<Folder>>>> fetchAllFoldes() async {
     return _fetchAllFoldersUseCase();
@@ -134,5 +144,13 @@ class MainService {
 
   Future<Either<Failure, bool>> fetchNewLineMode() {
     return _fetchNewLineModeUseCase();
+  }
+
+  Either<Failure, bool> deleteWords(List<Word> words) {
+    return _deleteWordsUseCase(words);
+  }
+
+  Either<Failure, bool> putManyWords(List<Word> words) {
+    return _putManyWordsUseCase(words);
   }
 }

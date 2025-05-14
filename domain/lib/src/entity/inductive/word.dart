@@ -17,6 +17,7 @@ class Word with _$Word {
     @Default(false) bool italics,
     @Default(false) bool bold,
     @Default(false) bool transfer,
+    @Default(0) int order,
   }) = _word;
 }
 

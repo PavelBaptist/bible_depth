@@ -13,6 +13,8 @@ abstract class InductiveRepository {
 
   Either<Failure, Stream<List<Word>>> fetchWordsForFragment(int fragmentId);
   Either<Failure, bool> putWord(Word words);
+  Either<Failure, bool> putManyWords(List<Word> words);
+  Either<Failure, bool> deleteWords(List<Word> words);
 
   Either<Failure, Stream<List<WordStyle>>> fetchWordsStyle();
   Either<Failure, bool> putWordStyle(WordStyle words);

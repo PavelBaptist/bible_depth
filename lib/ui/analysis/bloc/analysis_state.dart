@@ -5,8 +5,8 @@ sealed class AnalysisState extends Equatable {
   final ToolsBar? toolsBar;
   final Tools? tools;
   final WordStyle? style;
-  final List<Word> cashWord;
-  final List<Word> secondCash;
+  final List<Map<String, List<Word>>> cashWord;
+  final List<Map<String, List<Word>>> secondCash;
   final double sizaText;
   final bool newLineByVerse;
 

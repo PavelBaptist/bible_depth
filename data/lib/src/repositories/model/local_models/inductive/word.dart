@@ -14,6 +14,7 @@ class WordLocal {
     this.italics = false,
     this.bold = false,
     this.transfer = false,
+    required this.order,
   });
 
   @Id()
@@ -27,6 +28,7 @@ class WordLocal {
   final bool transfer;
   final verse = ToOne<VerseLocal>();
   final fragment = ToOne<FragmentLocal>();
+  final int order;
 }
 
 extension WordMapper on Word {
@@ -40,6 +42,7 @@ extension WordMapper on Word {
       italics: italics,
       bold: bold,
       transfer: transfer,
+      order: order,
     );
     word.verse.target = verse.toLocalVerse();
     word.fragment.target = fragment.toLocalFragment();
@@ -61,6 +64,7 @@ extension LocalWordDataMapper on WordLocal {
       verse: verse.target != null ? verse.target!.toVerse() : Verse(),
       fragment:
           fragment.target != null ? fragment.target!.toFragment() : Fragment(),
+      order: order,
     );
     return word;
   }

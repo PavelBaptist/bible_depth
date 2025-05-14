@@ -131,7 +131,7 @@ final _entities = <obx_int.ModelEntity>[
   obx_int.ModelEntity(
       id: const obx_int.IdUid(4, 3095107107054516958),
       name: 'WordLocal',
-      lastPropertyId: const obx_int.IdUid(10, 5196976144236519777),
+      lastPropertyId: const obx_int.IdUid(11, 1537591211026084395),
       flags: 0,
       properties: <obx_int.ModelProperty>[
         obx_int.ModelProperty(
@@ -187,6 +187,11 @@ final _entities = <obx_int.ModelEntity>[
             id: const obx_int.IdUid(10, 5196976144236519777),
             name: 'transfer',
             type: 1,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(11, 1537591211026084395),
+            name: 'order',
+            type: 6,
             flags: 0)
       ],
       relations: <obx_int.ModelRelation>[],
@@ -436,7 +441,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
           final fontColorOffset = fbb.writeString(object.fontColor);
           final borderColorOffset = fbb.writeString(object.borderColor);
           final backgroundColorOffset = fbb.writeString(object.backgroundColor);
-          fbb.startTable(11);
+          fbb.startTable(12);
           fbb.addInt64(0, object.id);
           fbb.addOffset(1, valueOffset);
           fbb.addInt64(2, object.verse.targetId);
@@ -447,6 +452,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
           fbb.addBool(7, object.italics);
           fbb.addBool(8, object.bold);
           fbb.addBool(9, object.transfer);
+          fbb.addInt64(10, object.order);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -471,6 +477,8 @@ obx_int.ModelDefinition getObjectBoxModel() {
               const fb.BoolReader().vTableGet(buffer, rootOffset, 20, false);
           final transferParam =
               const fb.BoolReader().vTableGet(buffer, rootOffset, 22, false);
+          final orderParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 24, 0);
           final object = WordLocal(
               id: idParam,
               value: valueParam,
@@ -479,7 +487,8 @@ obx_int.ModelDefinition getObjectBoxModel() {
               backgroundColor: backgroundColorParam,
               italics: italicsParam,
               bold: boldParam,
-              transfer: transferParam);
+              transfer: transferParam,
+              order: orderParam);
           object.verse.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0);
           object.verse.attach(store);
@@ -660,6 +669,10 @@ class WordLocal_ {
   /// See [WordLocal.transfer].
   static final transfer =
       obx.QueryBooleanProperty<WordLocal>(_entities[3].properties[9]);
+
+  /// See [WordLocal.order].
+  static final order =
+      obx.QueryIntegerProperty<WordLocal>(_entities[3].properties[10]);
 }
 
 /// [WordStyleLocal] entity fields to define ObjectBox queries.

@@ -9,6 +9,7 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:domain/domain.dart' as _i494;
+import 'package:domain/src/use_cases/delete_words_usecase.dart' as _i630;
 import 'package:domain/src/use_cases/delete_wordstyle_usecase.dart' as _i18;
 import 'package:domain/src/use_cases/fetch_all_folders_usecase.dart' as _i652;
 import 'package:domain/src/use_cases/fetch_bible_usecase.dart' as _i1001;
@@ -27,6 +28,7 @@ import 'package:domain/src/use_cases/hide_onboarding_usecase.dart' as _i506;
 import 'package:domain/src/use_cases/put_folder_usecase.dart' as _i154;
 import 'package:domain/src/use_cases/put_font_size_usecase.dart' as _i289;
 import 'package:domain/src/use_cases/put_fragment_usecase.dart' as _i866;
+import 'package:domain/src/use_cases/put_many_words_usecase.dart' as _i504;
 import 'package:domain/src/use_cases/put_new_line_mode_usecase.dart' as _i10;
 import 'package:domain/src/use_cases/put_verse_usecase.dart' as _i861;
 import 'package:domain/src/use_cases/put_word_style_usecase.dart' as _i1015;
@@ -86,6 +88,10 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i10.PutNewLineModeUseCase(gh<_i494.InductiveRepository>()));
     gh.factory<_i117.FetchNewLineModeUseCase>(
         () => _i117.FetchNewLineModeUseCase(gh<_i494.InductiveRepository>()));
+    gh.factory<_i630.DeleteWordsUsecase>(
+        () => _i630.DeleteWordsUsecase(gh<_i494.InductiveRepository>()));
+    gh.factory<_i504.PutManyWordsUseCase>(
+        () => _i504.PutManyWordsUseCase(gh<_i494.InductiveRepository>()));
     return this;
   }
 }

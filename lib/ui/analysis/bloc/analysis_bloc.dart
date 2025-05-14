@@ -38,8 +38,8 @@ class AnalysisBloc extends Bloc<AnalysisEvent, AnalysisState> {
   ToolsBar? toolsBar;
   Tools? tool;
   WordStyle? style;
-  List<Word> cashWord = [];
-  List<Word> secondCash = [];
+  List<Map<String, List<Word>>> cashWord = [];
+  List<Map<String, List<Word>>> secondCash = [];
   double sizeText = 18;
   bool newLineByVerse = false;
 
@@ -95,6 +95,7 @@ class AnalysisBloc extends Bloc<AnalysisEvent, AnalysisState> {
   Future<void> _floatMenu(
       FloatingMenuEvent event, Emitter<AnalysisState> emit) async {
     tool = null;
+    style = null;
     if (event.toolsBar == toolsBar) {
       toolsBar = null;
     } else {
@@ -139,13 +140,129 @@ class AnalysisBloc extends Bloc<AnalysisEvent, AnalysisState> {
   Future<void> _addStyle(
       AddStyleWordEvent event, Emitter<AnalysisState> emit) async {
     if (tool == Tools.style && style != null) {
-      cashWord.add(event.word);
       secondCash.clear();
       if (event.word.fontColor == style!.fontColor &&
           event.word.borderColor == style!.borderColor &&
           event.word.backgroundColor == style!.backgroundColor &&
           event.word.bold == style!.bold &&
           event.word.italics == style!.italics) {
+        List<String> values = event.word.value.split(' ').toList();
+        if (values.length < 2) {
+          Word newWord = event.word.copyWith(
+            fontColor: '',
+            borderColor: '',
+            backgroundColor: '',
+            bold: false,
+            italics: false,
+          );
+          cashWord.add({
+            'oldElems': [event.word],
+            'newElems': [newWord],
+          });
+          _mainService.putWord(newWord);
+        } else {
+          int order = event.word.order;
+          List<Word> newWords = values
+              .map((e) => event.word.copyWith(
+                    id: 0,
+                    value: e,
+                    order: order++,
+                    fontColor: '',
+                    borderColor: '',
+                    backgroundColor: '',
+                    bold: false,
+                    italics: false,
+                    transfer: order - 1 == event.word.order
+                        ? event.word.transfer
+                        : false,
+                  ))
+              .toList();
+          cashWord.add({
+            'oldElems': [event.word],
+            'newElems': newWords,
+          });
+          _mainService.deleteWords([event.word]);
+          _mainService.putManyWords(newWords);
+        }
+      } else {
+        int index = text.indexOf(event.word);
+        Word newWord = event.word.copyWith(
+          fontColor: style!.fontColor,
+          borderColor: style!.borderColor,
+          backgroundColor: style!.backgroundColor,
+          bold: style!.bold,
+          italics: style!.italics,
+        );
+        List<Word> remove = [];
+        bool beforRecurring = false;
+        Word before = const Word();
+        Word after = const Word();
+
+        cashWord.add({
+          'oldElems': [event.word],
+          'newElems': [],
+        });
+
+        if (index > 0 && !newWord.transfer) {
+          before = text[index - 1];
+          if (_checkRecurringStyle(before, newWord) &&
+              newWord.verse.number == before.verse.number &&
+              before.value.split(' ').toList().length +
+                      newWord.value.split(' ').toList().length <=
+                  3) {
+            cashWord.last['oldElems']!.add(before.copyWith());
+            before = before.copyWith(value: '${before.value} ${newWord.value}');
+            remove.add(event.word);
+            beforRecurring = true;
+          }
+        }
+        if (index < text.length - 1) {
+          after = text[index + 1];
+          if (_checkRecurringStyle(newWord, after) &&
+              !after.transfer &&
+              newWord.verse.number == after.verse.number) {
+            if (beforRecurring) {
+              if (before.value.split(' ').toList().length +
+                      after.value.split(' ').toList().length <=
+                  3) {
+                cashWord.last['oldElems']!.add(after.copyWith());
+                before =
+                    before.copyWith(value: '${before.value} ${after.value}');
+                remove.add(after);
+              }
+            } else {
+              if (newWord.value.split(' ').toList().length +
+                      after.value.split(' ').toList().length <=
+                  3) {
+                cashWord.last['oldElems']!.add(after.copyWith());
+                newWord =
+                    newWord.copyWith(value: '${newWord.value} ${after.value}');
+                remove.add(after);
+              }
+            }
+          }
+        }
+        cashWord.last['newElems'] = beforRecurring ? [before] : [newWord];
+        _mainService.putWord(beforRecurring ? before : newWord);
+        if (remove.isNotEmpty) {
+          _mainService.deleteWords(remove);
+        }
+      }
+    }
+    if (toolsBar == ToolsBar.enter) {
+      Word newWord = event.word.copyWith(
+        transfer: !event.word.transfer,
+      );
+      cashWord.add({
+        'oldElems': [event.word],
+        'newElems': [newWord],
+      });
+      secondCash.clear();
+      _mainService.putWord(newWord);
+    }
+    if (toolsBar == ToolsBar.pencil && tool == Tools.eraser) {
+      List<String> values = event.word.value.split(' ').toList();
+      if (values.length < 2) {
         _mainService.putWord(event.word.copyWith(
           fontColor: '',
           borderColor: '',
@@ -154,31 +271,22 @@ class AnalysisBloc extends Bloc<AnalysisEvent, AnalysisState> {
           italics: false,
         ));
       } else {
-        _mainService.putWord(event.word.copyWith(
-          fontColor: style!.fontColor,
-          borderColor: style!.borderColor,
-          backgroundColor: style!.backgroundColor,
-          bold: style!.bold,
-          italics: style!.italics,
-        ));
+        int order = event.word.order;
+        _mainService.deleteWords([event.word]);
+        _mainService.putManyWords(values
+            .map((e) => event.word.copyWith(
+                  id: 0,
+                  value: e,
+                  order: order++,
+                  fontColor: '',
+                  borderColor: '',
+                  backgroundColor: '',
+                  bold: false,
+                  italics: false,
+                  transfer: false,
+                ))
+            .toList());
       }
-    }
-    if (toolsBar == ToolsBar.enter) {
-      cashWord.add(event.word);
-      secondCash.clear();
-      _mainService.putWord(event.word.copyWith(
-        transfer: !event.word.transfer,
-      ));
-    }
-    if (toolsBar == ToolsBar.pencil && tool == Tools.eraser) {
-      _mainService.putWord(event.word.copyWith(
-        fontColor: '',
-        borderColor: '',
-        backgroundColor: '',
-        bold: false,
-        italics: false,
-        transfer: false,
-      ));
     }
   }
 
@@ -199,11 +307,20 @@ class AnalysisBloc extends Bloc<AnalysisEvent, AnalysisState> {
 
   Future<void> _cancel(CancelEvent event, Emitter<AnalysisState> emit) async {
     if (event.back) {
-      secondCash.add(text.firstWhere((e) => e.id == cashWord.last.id));
-      _mainService.putWord(cashWord.removeLast());
+      List<Word> oldWords = cashWord.last['oldElems'] ?? [];
+      List<Word> newWords = cashWord.last['newElems'] ?? [];
+      newWords = newWords
+          .map((e) => text.firstWhere((word) => word.order == e.order))
+          .toList();
+      secondCash.add(cashWord.removeLast());
+      _mainService.deleteWords(newWords);
+      _mainService.putManyWords(oldWords);
     } else {
-      cashWord.add(text.firstWhere((e) => e.id == secondCash.last.id));
-      _mainService.putWord(secondCash.removeLast());
+      List<Word> oldWords = secondCash.last['oldElems'] ?? [];
+      List<Word> newWords = secondCash.last['newElems'] ?? [];
+      cashWord.add(secondCash.removeLast());
+      _mainService.deleteWords(oldWords);
+      _mainService.putManyWords(newWords);
     }
   }
 
@@ -321,6 +438,14 @@ class AnalysisBloc extends Bloc<AnalysisEvent, AnalysisState> {
       sizaText: sizeText,
       newLineByVerse: newLineByVerse,
     ));
+  }
+
+  bool _checkRecurringStyle(Word first, Word second) {
+    return (first.bold == second.bold &&
+        first.italics == second.italics &&
+        first.backgroundColor == second.backgroundColor &&
+        first.borderColor == second.borderColor &&
+        first.fontColor == second.fontColor);
   }
 
   @override

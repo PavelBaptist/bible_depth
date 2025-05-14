@@ -43,6 +43,8 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i494.PutFontSizeUseCase>(),
         gh<_i494.FetchNewLineModeUseCase>(),
         gh<_i494.PutNewLineModeUseCase>(),
+        gh<_i494.DeleteWordsUsecase>(),
+        gh<_i494.PutManyWordsUseCase>(),
       ),
       preResolve: true,
     );
